@@ -372,9 +372,7 @@ void mglDeleteBuffers(GLMContext ctx, GLsizei n, const GLuint *buffers)
         if (isBuffer(ctx, buffer))
         {
             Buffer *ptr;
-
             ptr = (Buffer *)searchHashTable(&STATE(buffer_table), buffer);
-
             if (ptr->data.buffer_data)
             {
                 if (ptr->storage_flags & GL_CLIENT_STORAGE_BIT)
@@ -403,9 +401,9 @@ void mglDeleteBuffers(GLMContext ctx, GLsizei n, const GLuint *buffers)
             deleteHashElement(&STATE(buffer_table), buffer);
 
             // remove any dangling references
-            GLuint target;
-
-            target = ptr->target;
+            const GLuint target = ptr->target;
+            printf("%d\n", target);
+            assert(target < MAX_BINDABLE_BUFFERS);
             if (STATE(buffers[target]))
             {
                 if (STATE(buffers[target])->name == buffer)

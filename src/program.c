@@ -639,8 +639,78 @@ GLint mglGetAttribLocation(GLMContext ctx, GLuint program, const GLchar *name)
 
 void mglGetProgramiv(GLMContext ctx, GLuint program, GLenum pname, GLint *params)
 {
-    // Unimplemented function
-    assert(0);
+    Program *ptr;
+
+    ptr = findProgram(ctx, program);
+
+    ERROR_CHECK_RETURN(ptr, GL_INVALID_VALUE);
+
+    switch (pname)
+    {
+    case GL_DELETE_STATUS:
+        *params = GL_FALSE;
+        break;
+
+    case GL_LINK_STATUS:
+        if (ptr->linked_glsl_program)
+        {
+            *params = GL_TRUE;
+        }
+        else
+        {
+            *params = GL_FALSE;
+        }
+        break;
+
+    case GL_VALIDATE_STATUS:
+        *params = GL_TRUE;
+        break;
+
+    case GL_INFO_LOG_LENGTH:
+        *params = 0;
+        break;
+
+    case GL_ATTACHED_SHADERS:
+        {
+            GLint count = 0;
+            for (int i = 0; i < _MAX_SHADER_TYPES; i++)
+            {
+                if (ptr->shader_slots[i])
+                {
+                    count++;
+                }
+            }
+            *params = count;
+        }
+        break;
+
+    case GL_ACTIVE_UNIFORMS:
+        {
+            GLint count = 0;
+            for (int stage = 0; stage < _MAX_SHADER_TYPES; stage++)
+            {
+                count += ptr->spirv_resources_list[stage][SPVC_RESOURCE_TYPE_UNIFORM_BUFFER].count;
+                count += ptr->spirv_resources_list[stage][SPVC_RESOURCE_TYPE_UNIFORM_CONSTANT].count;
+            }
+            *params = count;
+        }
+        break;
+
+    case GL_ACTIVE_ATTRIBUTES:
+        {
+            GLint count = 0;
+            for (int stage = 0; stage < _MAX_SHADER_TYPES; stage++)
+            {
+                count += ptr->spirv_resources_list[stage][SPVC_RESOURCE_TYPE_STAGE_INPUT].count;
+            }
+            *params = count;
+        }
+        break;
+
+    default:
+        ERROR_RETURN(GL_INVALID_ENUM);
+        break;
+    }
 }
 
 void mglGetProgramInfoLog(GLMContext ctx, GLuint program, GLsizei bufSize, GLsizei *length, GLchar *infoLog)

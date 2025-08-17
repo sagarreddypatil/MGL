@@ -58,9 +58,7 @@ void insertHashElement(HashTable *table, GLuint name, void *data)
     if (name < table->size)
     {
         assert(table->keys[name].data == NULL);
-
         table->keys[name].data = data;
-
         return;
     }
 
@@ -80,7 +78,4 @@ void deleteHashElement(HashTable *table, GLuint name)
     assert(name < table->size);
 
     table->keys[name].data = NULL;
-
-    // need to have metal delete object
-    assert(0);
 }
