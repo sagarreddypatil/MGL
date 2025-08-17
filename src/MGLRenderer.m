@@ -4025,7 +4025,15 @@ void mtlDrawElements(GLMContext glm_ctx, GLenum mode, GLsizei count, GLenum type
     if ([self processBuffer:gl_element_buffer] == false)
         return;
 
-    id<MTLBuffer> indexBuffer = (__bridge id<MTLBuffer>)(gl_element_buffer->data.mtl_data);
+    id<MTLBuffer> indexBuffer;
+    if (gl_element_buffer->data.mtl_data != NULL) {
+        indexBuffer = (__bridge id<MTLBuffer>)(gl_element_buffer->data.mtl_data);
+    } else {
+        // For small buffers, create a temporary MTL buffer from buffer_data
+        indexBuffer = [_device newBufferWithBytes:(void *)gl_element_buffer->data.buffer_data
+                                           length:gl_element_buffer->size
+                                          options:MTLResourceCPUCacheModeDefaultCache | MTLResourceStorageModeManaged];
+    }
     assert(indexBuffer);
 
     size_t offset = (char *)indices - (char *)NULL;
