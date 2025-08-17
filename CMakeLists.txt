@@ -21,6 +21,9 @@ add_library(mgl SHARED
     ${c_srcs}
     ${objc_srcs})
 
+target_compile_options(mgl PUBLIC -fsanitize=undefined,address)
+target_link_options(mgl PUBLIC -fsanitize=undefined,address)
+
 target_compile_definitions(mgl PUBLIC 
                                 ENABLE_OPT=0 
                                 SPIRV_CROSS_C_API_MSL=1
@@ -62,3 +65,6 @@ target_compile_definitions(mgl_test PUBLIC
                                 SPIRV_CROSS_C_API_CPP=1
                                 SPIRV_CROSS_C_API_REFLECT=1
                                 )
+
+target_compile_options(mgl_test PUBLIC -fsanitize=undefined,address)
+target_link_options(mgl_test PUBLIC -fsanitize=undefined,address)

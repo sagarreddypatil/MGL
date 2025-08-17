@@ -207,14 +207,15 @@ GLMContext createGLMContext(GLenum format, GLenum type, GLenum depth_format, GLe
 
     STATE(dirty_bits) = DIRTY_ALL;
 
-    initHashTable(&STATE(vao_table), 32);
-    initHashTable(&STATE(buffer_table), 32);
-    initHashTable(&STATE(texture_table), 32);
-    initHashTable(&STATE(shader_table), 32);
-    initHashTable(&STATE(program_table), 32);
-    initHashTable(&STATE(renderbuffer_table), 32);
-    initHashTable(&STATE(framebuffer_table), 32);
-    initHashTable(&STATE(sampler_table), 32);
+    const int hash_table_size = 128;
+    initHashTable(&STATE(vao_table), hash_table_size);
+    initHashTable(&STATE(buffer_table), hash_table_size);
+    initHashTable(&STATE(texture_table), hash_table_size);
+    initHashTable(&STATE(shader_table), hash_table_size);
+    initHashTable(&STATE(program_table), hash_table_size);
+    initHashTable(&STATE(renderbuffer_table), hash_table_size);
+    initHashTable(&STATE(framebuffer_table), hash_table_size);
+    initHashTable(&STATE(sampler_table), hash_table_size);
 
     init_dispatch(ctx);
 
