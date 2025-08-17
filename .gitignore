@@ -1,14 +1,4 @@
-config.mk
 build/
-libmgl.dylib
-external/OpenGL-Registry/
-external/SPIRV-Cross/
-external/SPIRV-Headers/
-external/SPIRV-Tools/
-external/ezxml/
-external/glslang/
+subprojects/*
+!subprojects/CMakeLists.txt
 *.DS_Store
-/SPIRV-Headers
-/SPIRV-Cross
-/MGL.gputrace
-/Info.plist
