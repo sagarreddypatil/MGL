@@ -401,9 +401,14 @@ void logDirtyBits(GLMContext ctx)
             }
             else
             {
-                ptr->data.mtl_data = (void *)NULL;
+                // For small buffers, still create a Metal buffer to avoid NULL assertion
+                buffer = [_device newBufferWithBytes:(void *)ptr->data.buffer_data
+                                              length:ptr->size
+                                             options:options];
+                assert(buffer);
 
-                // early return, do nothing
+                // Don't deallocate the original buffer for small sizes to maintain compatibility
+                ptr->data.mtl_data = (void *)CFBridgingRetain(buffer);
                 return;
             }
         }
