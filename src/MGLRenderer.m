@@ -3612,8 +3612,6 @@ void mtlFlushBufferRange(GLMContext glm_ctx, Buffer *buf, GLintptr offset, GLsiz
             assert(_currentCommandBuffer);
             if (_currentCommandBuffer.status < MTLCommandBufferStatusCommitted)
             {
-                [_currentCommandBuffer presentDrawable:_drawable];
-
                 [_currentCommandBuffer commit];
             }
 
