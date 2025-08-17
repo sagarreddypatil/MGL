@@ -2355,7 +2355,7 @@ int test_readpixels(GLFWwindow *window, int width, int height)
 
         glReadPixels(0, 0, 256, 256, GL_RGBA, GL_UNSIGNED_BYTE, buf);
 
-        glFlush();
+        SWAP_BUFFERS;
 
         glfwPollEvents();
     }
