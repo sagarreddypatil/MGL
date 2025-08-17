@@ -401,14 +401,9 @@ void logDirtyBits(GLMContext ctx)
             }
             else
             {
-                // For small buffers, still create a Metal buffer to avoid NULL assertion
-                buffer = [_device newBufferWithBytes:(void *)ptr->data.buffer_data
-                                              length:ptr->size
-                                             options:options];
-                assert(buffer);
+                ptr->data.mtl_data = (void *)NULL;
 
-                // Don't deallocate the original buffer for small sizes to maintain compatibility
-                ptr->data.mtl_data = (void *)CFBridgingRetain(buffer);
+                // early return, do nothing
                 return;
             }
         }
@@ -3465,6 +3460,18 @@ void mtlClearBuffer(GLMContext glm_ctx, GLuint type, GLbitfield mask)
     if (buf->data.mtl_data == NULL)
     {
         [self bindMTLBuffer:buf];
+    }
+
+    // For small buffers, bindMTLBuffer returns early and leaves mtl_data as NULL
+    // In this case, we should update the buffer_data directly
+    if (buf->data.mtl_data == NULL)
+    {
+        // Small buffer case - update buffer_data directly
+        if (buf->data.buffer_data)
+        {
+            memcpy((void *)(buf->data.buffer_data + offset), ptr, size);
+        }
+        return;
     }
 
     mtl_buffer = (__bridge id<MTLBuffer>)(buf->data.mtl_data);
