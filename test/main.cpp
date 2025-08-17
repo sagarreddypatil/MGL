@@ -3008,211 +3008,124 @@ void error_callback(int error_code, const char *description) {
   // exit(EXIT_FAILURE);
 }
 
-#if TEST_MGL_GLFW
-GLFWwindow *newTestWindow(int width, int height, const char *name) {
-  GLFWwindow *window;
-
-  glfwSetErrorCallback(error_callback);
-
-  if (!glfwInit())
-    exit(EXIT_FAILURE);
-
-  glfwWindowHint(GLFW_SCALE_TO_MONITOR, GLFW_TRUE);
-  // glfwWindowHint(GLFW_WIN32_KEYBOARD_MENU, GLFW_TRUE);
-
-  glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-  glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
-  glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-  glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-  glfwWindowHint(GLFW_COCOA_RETINA_FRAMEBUFFER, GL_TRUE);
-  glfwWindowHint(GLFW_FLOATING, GLFW_TRUE);
-
-  // force MGL
-  glfwWindowHint(GLFW_CONTEXT_CREATION_API, GLFW_NATIVE_CONTEXT_API);
-  glfwWindowHint(GLFW_DEPTH_BITS, 32);
-
-  fprintf(stderr, "creating window...\n");
-
-  window = glfwCreateWindow(width, width, name, NULL, NULL);
-  if (!window) {
-    glfwTerminate();
-    exit(EXIT_FAILURE);
-  }
-
-  GLMContext glm_ctx = createGLMContext(GL_BGRA, GL_UNSIGNED_INT_8_8_8_8_REV,
-                                        GL_DEPTH_COMPONENT, GL_FLOAT, 0, 0);
-  void *renderer = CppCreateMGLRendererFromContextAndBindToWindow(
-      glm_ctx,
-      glfwGetCocoaWindow(
-          window)); // FIXME should do something later with the renderer
-  if (!renderer) {
-    glfwTerminate();
-    exit(EXIT_FAILURE);
-  }
-
-  MGLsetCurrentContext(glm_ctx);
-  glfwSetWindowUserPointer(window, glm_ctx);
-
-  // glfwMakeContextCurrent(window);
-  glfwSwapInterval(0);
-
-  glfwGetError(NULL);
-
-  glfwGetWindowSize(window, &width, &height);
-
-  // hidpi
-  width *= 2;
-  height *= 2;
-
-  return window;
-}
-
-int run_test_case(int test_num, int width, int height) {
-  GLFWwindow *window;
-
+int run_test_case(int test_num, GLFWwindow *window, int width, int height) {
   switch (test_num) {
   case 0:
-    window = newTestWindow(width, height, "test_clear");
+    printf("Running test_clear\n");
     test_clear(window, width, height);
     break;
 
   case 1:
-    window = newTestWindow(width, height, "test_draw_arrays");
+    printf("Running test_draw_arrays\n");
     test_draw_arrays(window, width, height);
     break;
 
   case 2:
-    // window = newTestWindow(width, height,
-    // "test_draw_arrays_uniformMatrix4fv");
-    // test_draw_arrays_uniformMatrix4fv(window, width, height);
+    printf("Running test_draw_arrays_uniformMatrix4fv\n");
+    test_draw_arrays_uniformMatrix4fv(window, width, height);
     break;
 
   case 3:
-    window = newTestWindow(width, height, "test_draw_elements");
+    printf("Running test_draw_elements\n");
     test_draw_elements(window, width, height);
     break;
 
   case 4:
-    window =
-        newTestWindow(width, height, "test_draw_elements_vertex_attribute");
+    printf("Running test_draw_elements_vertex_attribute\n");
     test_draw_elements_vertex_attribute(window, width, height);
     break;
 
   case 5:
-    window = newTestWindow(width, height, "test_draw_range_elements");
+    printf("Running test_draw_range_elements\n");
     test_draw_range_elements(window, width, height);
     break;
 
   case 6:
-    window = newTestWindow(width, height, "test_draw_arrays_instanced");
+    printf("Running test_draw_arrays_instanced\n");
     test_draw_arrays_instanced(window, width, height);
     break;
 
   case 7:
-    window = newTestWindow(width, height, "test_draw_arrays_instanced_divisor");
+    printf("Running test_draw_arrays_instanced_divisor\n");
     test_draw_arrays_instanced_divisor(window, width, height);
     break;
 
   case 8:
-    window = newTestWindow(width, height, "test_uniform_buffer");
+    printf("Running test_uniform_buffer\n");
     test_uniform_buffer(window, width, height);
     break;
 
   case 9:
-    window = newTestWindow(width, height, "test_1D_textures");
+    printf("Running test_1D_textures\n");
     test_1D_textures(window, width, height);
     break;
 
   case 10:
-    window = newTestWindow(width, height, "test_2D_textures");
+    printf("Running test_2D_textures\n");
     test_2D_textures(window, width, height);
     break;
 
   case 11:
-    window = newTestWindow(width, height, "test_3D_textures");
+    printf("Running test_3D_textures\n");
     test_3D_textures(window, width, height);
     break;
 
   case 12:
-    window = newTestWindow(width, height, "test_2D_array_textures");
+    printf("Running test_2D_array_textures\n");
     test_2D_array_textures(window, width, height);
     break;
 
   case 13:
-    window = newTestWindow(width, height,
-                           "test_textures 0, 0, 0, GL_NEAREST, GL_NEAREST");
+    printf("Running test_textures 0, 0, 0, GL_NEAREST, GL_NEAREST\n");
     test_textures(window, width, height, 0, 0, 0, GL_NEAREST, GL_NEAREST);
     break;
 
   case 14:
-    window = newTestWindow(width, height,
-                           "test_textures 0, 0, 0, GL_LINEAR, GL_LINEAR");
+    printf("Running test_textures 0, 0, 0, GL_LINEAR, GL_LINEAR\n");
     test_textures(window, width, height, 0, 0, 0, GL_LINEAR, GL_LINEAR);
     break;
 
   case 15:
-    window = newTestWindow(width, height, "test_textures");
+    printf("Running test_textures with mipmap\n");
     test_textures(window, width, height, 1, 1, 0, GL_LINEAR_MIPMAP_NEAREST);
     break;
 
   case 16:
-    window = newTestWindow(width, height, "test_textures");
+    printf("Running test_textures with 8-level mipmap\n");
     test_textures(window, width, height, 1, 1, 8, GL_LINEAR_MIPMAP_NEAREST);
     break;
 
   case 17:
-    window = newTestWindow(width, height, "test_framebuffer");
+    printf("Running test_framebuffer\n");
     test_framebuffer(window, width, height);
     break;
 
   case 18:
-    window = newTestWindow(width, height, "test_readpixels");
+    printf("Running test_readpixels\n");
     test_readpixels(window, width, height);
     break;
 
   case 19:
-    window = newTestWindow(width, height, "test_compute_shader");
+    printf("Running test_compute_shader\n");
     test_compute_shader(window, width, height);
     break;
 
   case 20:
-    window = newTestWindow(width, height, "test_2D_array_textures_perf_mon");
+    printf("Running test_2D_array_textures_perf_mon\n");
     test_2D_array_textures_perf_mon(window, width, height);
     break;
 
   case 21:
-    window = newTestWindow(width, height, "test_draw_arrays_uniform1i");
+    printf("Running test_draw_arrays_uniform1i\n");
     test_draw_arrays_uniform1i(window, width, height);
+    break;
 
   default:
     return 0;
-    break;
   }
-
-  glfwTerminate();
 
   return 1;
 }
-
-int main_glfw(int argc, const char *argv[]) {
-  int width, height;
-
-  width = 512;
-  height = 512;
-
-#if 1
-  run_test_case(0, width, height);
-#else
-  int test_num;
-  test_num = 0;
-  while (run_test_case(test_num, width, height)) {
-    test_num++;
-  }
-#endif
-
-  return 0;
-}
-#endif
 
 #if TEST_MGL_SDL
 int main_sdl(int argc, const char *argv[]) {
@@ -3276,30 +3189,36 @@ int main_sdl(int argc, const char *argv[]) {
 
   glViewport(0, 0, wscaled, hscaled);
 
-  fprintf(stderr, "setup complete. testing...\n");
+  fprintf(stderr, "setup complete. starting test loop...\n");
 
-  // test_clear(window, width, height);
-  test_draw_arrays(window, width, height);
-  // test_draw_elements(window, width, height);
-  // test_draw_range_elements(window, width, height);
-  // test_draw_arrays_instanced(window, width, height);
-  // test_uniform_buffer(window, width, height);
-  // test_1D_textures(window, width, height);
-  // test_1D_array_textures(window, width, height);
-  // test_2D_textures(window, width, height);
+  int test_num = 0;
 
-  // test_3D_textures(window, width, height);
-  // test_2D_array_textures(window, width, height);
-  // test_textures(window, width, height, 0, 0);
-  // test_textures(window, width, height, 0, 0, 0, GL_NEAREST, GL_NEAREST);
-  // test_textures(window, width, height, 0, 0, 0, GL_LINEAR, GL_LINEAR);
-  // test_textures(window, width, height, 1, 1, 0, GL_LINEAR_MIPMAP_NEAREST);
-  // test_textures(window, width, height, 1, 1, 8, GL_LINEAR_MIPMAP_NEAREST);
-  // test_framebuffer(window, width, height);
-  // test_readpixels(window, width, height);
-  // test_compute_shader(window, width, height);
+  while (1) {
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-  // test_2D_array_textures_perf_mon(window, width, height);
+    if (!run_test_case(test_num, window, wscaled, hscaled)) {
+      printf("All tests completed. Restarting from test 0.\n");
+      test_num = 0;
+      continue;
+    }
+
+    printf("Test %d completed. Close window to continue to next test.\n",
+           test_num);
+
+    while (1) {
+      glfwPollEvents();
+      if (glfwWindowShouldClose(window)) {
+        test_num++;
+        printf("Window closed. Moving to next test.\n");
+
+        while (glfwPollEvents()) {
+        }
+        sdlevent.type = 0;
+        break;
+      }
+      SDL_Delay(100);
+    }
+  }
 
   SDL_Quit();
 
@@ -3308,9 +3227,6 @@ int main_sdl(int argc, const char *argv[]) {
 #endif
 
 int main(int argc, const char *argv[]) {
-#if TEST_MGL_GLFW
-  return main_glfw(argc, argv);
-#endif
 #if TEST_MGL_SDL
   return main_sdl(argc, argv);
 #endif
