@@ -2463,114 +2463,18 @@ int test_compute_shader(GLFWwindow *window, int width, int height)
     const char *compute_shader = GLSL(
         450 core, layout(local_size_x = 16, local_size_y = 16, local_size_z = 1) in;
 
-        // image bindings
-        layout(rgba8, binding = 0) uniform image2D img_output_0;
-        layout(rgba8, binding = 1) uniform image2D img_output_1;
-
-        // buffer binding
-        layout(binding = 2) buffer Cells { int cells[]; };
-
-        // uniform binding
-        layout(binding = 3) uniform Params { int cell_end_y; };
-
-        layout(binding = 4) uniform atomic_uint atomic_counter;
-
-        uint hash(uint x) {
-            x += (x << 10u);
-            x ^= (x >> 6u);
-            x += (x << 3u);
-            x ^= (x >> 11u);
-            x += (x << 15u);
-            return x;
-        }
-
-        float random(float f) {
-            const uint mantissaMask = 0x007FFFFFu;
-            const uint one = 0x3F800000u;
-
-            uint h = hash(floatBitsToUint(f));
-            h &= mantissaMask;
-            h |= one;
-
-            float r2 = uintBitsToFloat(h);
-            return r2 - 1.0;
-        }
+        layout(rgba8, binding = 0) uniform image2D img_output;
 
         void main() {
-            // play game of life (like)
-            uint neighbor_count;
-            vec4 n[9];
-            vec4 pixel;
-
-            uint gid_x;
-            uint gid_y;
-            uint gid_z;
-
-            ivec2 image_size;
-
-            gid_x = gl_GlobalInvocationID.x;
-            gid_y = gl_GlobalInvocationID.y;
-            gid_z = gl_GlobalInvocationID.z;
-
-            image_size = imageSize(img_output_0);
-
-            neighbor_count = 0;
-
-            if (gid_z == 0)
-            {
-                for (int y = 0; y < 3; y++)
-                {
-                    for (int x = 0; x < 3; x++)
-                    {
-                        n[y * 3 + x] = imageLoad(img_output_0, ivec2(gid_x + x - 1, gid_y + y - 1));
-
-                        if (!(x == 1 && y == 1))
-                        {
-                            if (n[y * 3 + x].w == 1.0)
-                                neighbor_count++;
-                        }
-                    }
-                }
-
-                if (neighbor_count == 3)
-                {
-                    pixel = vec4(n[4].w, n[4].w, n[4].w, 1.0);
-                }
-                else if (neighbor_count == 2)
-                {
-                    pixel = imageLoad(img_output_0, ivec2(gid_x, gid_y));
-
-                    if (pixel.w != 1.0)
-                    {
-                        pixel = vec4(0.0, 0.0, 0.0, 0.0);
-                    }
-                }
-                else if (neighbor_count == 0)
-                {
-                    float r;
-                    float delta;
-
-                    delta = 1.0 / 10.0;
-
-                    r = random(gid_x) * random(gid_y) * random(delta);
-
-                    if (r < 0.25)
-                        n[4].w = n[4].w + r;
-
-                    pixel = vec4(n[4].w, n[4].w, n[4].w, n[4].w);
-                }
-                else
-                {
-                    pixel = vec4(n[4].w / 4.0, n[4].w / 4.0, n[4].w / 4.0, n[4].w / 4.0);
-                }
-
-                imageStore(img_output_0, ivec2(gid_x, gid_y), pixel);
+            ivec2 coord = ivec2(gl_GlobalInvocationID.xy);
+            ivec2 size = imageSize(img_output);
+            
+            if (coord.x >= size.x || coord.y >= size.y) {
+                return;
             }
-            else
-            {
-                // pixel = imageLoad(img_output_1, ivec2(gid_x, gid_y));
-                // imageStore(img_output_0, ivec2(gid_x, gid_y), pixel);
-            }
+            
+            vec4 color = vec4(float(coord.x) / float(size.x), float(coord.y) / float(size.y), 0.5, 1.0);
+            imageStore(img_output, coord, color);
         });
 
     GLuint compute_program;
