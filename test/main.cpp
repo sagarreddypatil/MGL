@@ -1497,7 +1497,7 @@ int test_2D_textures(GLFWwindow *window, int width, int height)
 
     rotZ = glm::rotate(glm::identity<mat4>(), angle, glm::vec3(0, 0, 1));
 
-    mat_ubo = bindDataToVBO(GL_ARRAY_BUFFER, sizeof(texcoords), texcoords, GL_STATIC_DRAW);
+    mat_ubo = bindDataToVBO(GL_UNIFORM_BUFFER, sizeof(mat4), &rotZ[0][0], GL_STATIC_DRAW);
 
     float scale = -1.0;
     scale_ubo = bindDataToVBO(GL_ARRAY_BUFFER, sizeof(scale), &scale, GL_STATIC_DRAW);
