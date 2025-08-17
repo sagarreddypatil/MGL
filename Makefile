@@ -4,7 +4,7 @@ SHELL := /bin/bash
 
 # Find SDK path via xcode-select, backwards compatible with Xcode vers < 4.5
 # on M1 monterey, comment out the following line
-SDK_ROOT = $(shell xcrun --sdk macosx --show-sdk-path)
+# SDK_ROOT = $(shell xcrun --sdk macosx --show-sdk-path)
 
 # lets only install from external, devs complained about brew and we want the latest build from spirv
 spirv_cross_include_path ?= ./external/SPIRV-Cross
