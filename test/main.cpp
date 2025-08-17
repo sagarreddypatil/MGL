@@ -3057,7 +3057,7 @@ int run_test_case(int test_num, GLFWwindow *window, int width, int height)
 
     case 12:
         printf("Running test_2D_array_textures\n");
-        // test_2D_array_textures(window, width, height);
+        test_2D_array_textures(window, width, height);
         break;
 
     case 13:
@@ -3127,10 +3127,8 @@ int main_sdl(int argc, const char *argv[])
                                                                          // SDL_GL_GetProcAdress
                                                                          // work as expected
 
-    SDL_Window *window =
-        SDL_CreateWindow("MGL Test", 0, 0, 600, 600, SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI | SDL_WINDOW_OPENGL
-                         //| SDL_WINDOW_METAL
-        );
+    SDL_Window *window = SDL_CreateWindow("MGL Test", 0, 0, 600, 600,
+                                          SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI | SDL_WINDOW_METAL);
 
     if (window == NULL)
     {
@@ -3188,16 +3186,13 @@ int main_sdl(int argc, const char *argv[])
             continue;
         }
 
-        ++test_num;
-
         while (1)
         {
             glfwPollEvents();
             if (glfwWindowShouldClose(window))
             {
                 test_num++;
-                printf("Window closed. Moving to next test.\n");
-
+                printf("running test %d\n", test_num);
                 while (glfwPollEvents())
                 {
                 }
