@@ -4126,6 +4126,19 @@ void mtlDrawArraysInstanced(GLMContext glm_ctx, GLenum mode, GLint first, GLsize
         return;
 
     id<MTLBuffer> indexBuffer = (__bridge id<MTLBuffer>)(gl_element_buffer->data.mtl_data);
+    
+    // Handle small buffers (size <= 4095) that don't have MTL buffer objects
+    if (indexBuffer == nil && gl_element_buffer->size <= 4095)
+    {
+        // For small buffers, create a temporary Metal buffer from buffer_data
+        if (gl_element_buffer->data.buffer_data)
+        {
+            indexBuffer = [_device newBufferWithBytes:(void *)gl_element_buffer->data.buffer_data
+                                               length:gl_element_buffer->size
+                                              options:MTLResourceStorageModeManaged];
+        }
+    }
+    
     assert(indexBuffer);
 
     size_t offset = (char *)indices - (char *)NULL;
@@ -4180,6 +4193,19 @@ void mtlDrawElementsInstanced(GLMContext glm_ctx, GLenum mode, GLsizei count, GL
         return;
 
     id<MTLBuffer> indexBuffer = (__bridge id<MTLBuffer>)(gl_element_buffer->data.mtl_data);
+    
+    // Handle small buffers (size <= 4095) that don't have MTL buffer objects
+    if (indexBuffer == nil && gl_element_buffer->size <= 4095)
+    {
+        // For small buffers, create a temporary Metal buffer from buffer_data
+        if (gl_element_buffer->data.buffer_data)
+        {
+            indexBuffer = [_device newBufferWithBytes:(void *)gl_element_buffer->data.buffer_data
+                                               length:gl_element_buffer->size
+                                              options:MTLResourceStorageModeManaged];
+        }
+    }
+    
     assert(indexBuffer);
 
     size_t offset = (char *)indices - (char *)NULL;
@@ -4232,6 +4258,19 @@ void mtlDrawElementsBaseVertex(GLMContext glm_ctx, GLenum mode, GLsizei count, G
         return;
 
     id<MTLBuffer> indexBuffer = (__bridge id<MTLBuffer>)(gl_element_buffer->data.mtl_data);
+    
+    // Handle small buffers (size <= 4095) that don't have MTL buffer objects
+    if (indexBuffer == nil && gl_element_buffer->size <= 4095)
+    {
+        // For small buffers, create a temporary Metal buffer from buffer_data
+        if (gl_element_buffer->data.buffer_data)
+        {
+            indexBuffer = [_device newBufferWithBytes:(void *)gl_element_buffer->data.buffer_data
+                                               length:gl_element_buffer->size
+                                              options:MTLResourceStorageModeManaged];
+        }
+    }
+    
     assert(indexBuffer);
 
     size_t offset = (char *)indices - (char *)NULL;
@@ -4296,6 +4335,19 @@ void mtlDrawRangeElementsBaseVertex(GLMContext glm_ctx, GLenum mode, GLuint star
         return;
 
     id<MTLBuffer> indexBuffer = (__bridge id<MTLBuffer>)(gl_element_buffer->data.mtl_data);
+    
+    // Handle small buffers (size <= 4095) that don't have MTL buffer objects
+    if (indexBuffer == nil && gl_element_buffer->size <= 4095)
+    {
+        // For small buffers, create a temporary Metal buffer from buffer_data
+        if (gl_element_buffer->data.buffer_data)
+        {
+            indexBuffer = [_device newBufferWithBytes:(void *)gl_element_buffer->data.buffer_data
+                                               length:gl_element_buffer->size
+                                              options:MTLResourceStorageModeManaged];
+        }
+    }
+    
     assert(indexBuffer);
 
     size_t offset = (char *)indices - (char *)NULL;
@@ -4373,6 +4425,19 @@ void mtlDrawArraysIndirect(GLMContext glm_ctx, GLenum mode, const void *indirect
         return;
 
     id<MTLBuffer> indexBuffer = (__bridge id<MTLBuffer>)(gl_element_buffer->data.mtl_data);
+    
+    // Handle small buffers (size <= 4095) that don't have MTL buffer objects
+    if (indexBuffer == nil && gl_element_buffer->size <= 4095)
+    {
+        // For small buffers, create a temporary Metal buffer from buffer_data
+        if (gl_element_buffer->data.buffer_data)
+        {
+            indexBuffer = [_device newBufferWithBytes:(void *)gl_element_buffer->data.buffer_data
+                                               length:gl_element_buffer->size
+                                              options:MTLResourceStorageModeManaged];
+        }
+    }
+    
     assert(indexBuffer);
 
     // get indirect buffer
@@ -4460,6 +4525,19 @@ void mtlDrawArraysInstancedBaseInstance(GLMContext glm_ctx, GLenum mode, GLint f
         return;
 
     id<MTLBuffer> indexBuffer = (__bridge id<MTLBuffer>)(gl_element_buffer->data.mtl_data);
+    
+    // Handle small buffers (size <= 4095) that don't have MTL buffer objects
+    if (indexBuffer == nil && gl_element_buffer->size <= 4095)
+    {
+        // For small buffers, create a temporary Metal buffer from buffer_data
+        if (gl_element_buffer->data.buffer_data)
+        {
+            indexBuffer = [_device newBufferWithBytes:(void *)gl_element_buffer->data.buffer_data
+                                               length:gl_element_buffer->size
+                                              options:MTLResourceStorageModeManaged];
+        }
+    }
+    
     assert(indexBuffer);
 
     size_t offset = (char *)indices - (char *)NULL;
@@ -4519,6 +4597,19 @@ void mtlDrawElementsInstancedBaseInstance(GLMContext glm_ctx, GLenum mode, GLsiz
         return;
 
     id<MTLBuffer> indexBuffer = (__bridge id<MTLBuffer>)(gl_element_buffer->data.mtl_data);
+    
+    // Handle small buffers (size <= 4095) that don't have MTL buffer objects
+    if (indexBuffer == nil && gl_element_buffer->size <= 4095)
+    {
+        // For small buffers, create a temporary Metal buffer from buffer_data
+        if (gl_element_buffer->data.buffer_data)
+        {
+            indexBuffer = [_device newBufferWithBytes:(void *)gl_element_buffer->data.buffer_data
+                                               length:gl_element_buffer->size
+                                              options:MTLResourceStorageModeManaged];
+        }
+    }
+    
     assert(indexBuffer);
 
     size_t offset = (char *)indices - (char *)NULL;
@@ -4607,6 +4698,19 @@ void mtlMultiDrawArrays(GLMContext glm_ctx, GLenum mode, const GLint *first, con
         return;
 
     id<MTLBuffer> indexBuffer = (__bridge id<MTLBuffer>)(gl_element_buffer->data.mtl_data);
+    
+    // Handle small buffers (size <= 4095) that don't have MTL buffer objects
+    if (indexBuffer == nil && gl_element_buffer->size <= 4095)
+    {
+        // For small buffers, create a temporary Metal buffer from buffer_data
+        if (gl_element_buffer->data.buffer_data)
+        {
+            indexBuffer = [_device newBufferWithBytes:(void *)gl_element_buffer->data.buffer_data
+                                               length:gl_element_buffer->size
+                                              options:MTLResourceStorageModeManaged];
+        }
+    }
+    
     assert(indexBuffer);
 
     for (int i = 0; i < drawcount; i++)
@@ -4664,6 +4768,19 @@ void mtlMultiDrawElements(GLMContext glm_ctx, GLenum mode, const GLsizei *count,
         return;
 
     id<MTLBuffer> indexBuffer = (__bridge id<MTLBuffer>)(gl_element_buffer->data.mtl_data);
+    
+    // Handle small buffers (size <= 4095) that don't have MTL buffer objects
+    if (indexBuffer == nil && gl_element_buffer->size <= 4095)
+    {
+        // For small buffers, create a temporary Metal buffer from buffer_data
+        if (gl_element_buffer->data.buffer_data)
+        {
+            indexBuffer = [_device newBufferWithBytes:(void *)gl_element_buffer->data.buffer_data
+                                               length:gl_element_buffer->size
+                                              options:MTLResourceStorageModeManaged];
+        }
+    }
+    
     assert(indexBuffer);
 
     for (int i = 0; i < drawcount; i++)
@@ -4770,6 +4887,19 @@ void mtlMultiDrawArraysIndirect(GLMContext glm_ctx, GLenum mode, const void *ind
         return;
 
     id<MTLBuffer> indexBuffer = (__bridge id<MTLBuffer>)(gl_element_buffer->data.mtl_data);
+    
+    // Handle small buffers (size <= 4095) that don't have MTL buffer objects
+    if (indexBuffer == nil && gl_element_buffer->size <= 4095)
+    {
+        // For small buffers, create a temporary Metal buffer from buffer_data
+        if (gl_element_buffer->data.buffer_data)
+        {
+            indexBuffer = [_device newBufferWithBytes:(void *)gl_element_buffer->data.buffer_data
+                                               length:gl_element_buffer->size
+                                              options:MTLResourceStorageModeManaged];
+        }
+    }
+    
     assert(indexBuffer);
 
     // get indirect buffer
