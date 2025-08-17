@@ -553,7 +553,8 @@ void invalidateTexture(GLMContext ctx, Texture *tex)
             {
                 if (tex->faces[face].levels[i].data)
                 {
-                    vm_deallocate(mach_host_self(), tex->faces[face].levels[i].data, tex->faces[face].levels[i].data);
+                    vm_deallocate(mach_host_self(), tex->faces[face].levels[i].data,
+                                  tex->faces[face].levels[i].data_size);
                 }
             }
         }
@@ -824,13 +825,13 @@ void unpackTexture(GLMContext ctx, Texture *tex, GLuint face, GLuint level, void
 
     if (xoffset || yoffset || zoffset)
     {
-        xoffset = xoffset * pixel_size;                  // num pixels
-        yoffset = yoffset * pixel_size * width;          // num lines
-        zoffset = zoffset * pixel_size * width * height; // num planes
+        const size_t xbytes = xoffset * pixel_size;                  // num pixels
+        const size_t ybytes = yoffset * pixel_size * width;          // num lines
+        const size_t zbytes = zoffset * pixel_size * width * height; // num planes
 
-        dst += xoffset;
-        dst += yoffset;
-        dst += zoffset;
+        dst += xbytes;
+        dst += ybytes;
+        dst += zbytes;
     }
 
     assert(tex);
@@ -942,6 +943,12 @@ bool createTextureLevel(GLMContext ctx, Texture *tex, GLuint face, GLint level, 
         // need to check offset against size
         size_t offset;
         offset = (size_t)pixels;
+
+        // Bounds check: offset should be reasonable for a buffer offset
+        if (offset >= ptr->data.buffer_size)
+        {
+            ERROR_RETURN_VALUE(GL_INVALID_VALUE, false);
+        }
 
         pixels = &buffer_data[offset];
     }
@@ -1293,6 +1300,12 @@ bool texSubImage(GLMContext ctx, Texture *tex, GLuint face, GLint level, GLint x
         // need to check offset against size
         size_t offset;
         offset = (size_t)pixels;
+
+        // Bounds check: offset should be reasonable for a buffer offset
+        if (offset >= ptr->data.buffer_size)
+        {
+            ERROR_RETURN_VALUE(GL_INVALID_VALUE, false);
+        }
 
         pixels = &buffer_data[offset];
     }

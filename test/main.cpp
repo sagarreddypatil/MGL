@@ -1990,6 +1990,9 @@ int test_textures(GLFWwindow *window, int width, int height, int mipmap, int use
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, min_filter);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, mag_filter);
 
+    // Ensure no pixel unpack buffer is bound from previous tests
+    glBindBuffer(GL_PIXEL_UNPACK_BUFFER, 0);
+
     GLuint texsize;
 
     texsize = 1024;
