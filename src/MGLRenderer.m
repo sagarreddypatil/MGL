@@ -3239,7 +3239,11 @@ void mtlDispatchComputeIndirect(GLMContext glm_ctx, GLintptr indirect)
     if (ptr->data.mtl_data == NULL)
     {
         [self bindMTLBuffer:ptr];
-        RETURN_FALSE_ON_NULL(ptr->data.mtl_data);
+        // For small buffers (size <= 4095), mtl_data remains NULL intentionally
+        if (ptr->size >= 4096)
+        {
+            RETURN_FALSE_ON_NULL(ptr->data.mtl_data);
+        }
     }
 
     if (ptr->data.dirty_bits)
@@ -3714,7 +3718,7 @@ void mtlFlushBufferRange(GLMContext glm_ctx, Buffer *buf, GLintptr offset, GLsiz
     if ([texture isFramebufferOnly] == NO)
     {
         //[texture getBytes:pixelBytes bytesPerRow:bytesPerRow bytesPerImage:bytesPerImage fromRegion:region
-        //mipmapLevel:level slice:slice];
+        // mipmapLevel:level slice:slice];
     }
     else
     {
@@ -3967,7 +3971,18 @@ void mtlDrawArrays(GLMContext glm_ctx, GLenum mode, GLint first, GLsizei count)
     if ([self processBuffer:gl_element_buffer] == false)
         return;
 
-    id<MTLBuffer> indexBuffer = (__bridge id<MTLBuffer>)(gl_element_buffer->data.mtl_data);
+    id<MTLBuffer> indexBuffer;
+    if (gl_element_buffer->data.mtl_data != NULL)
+    {
+        indexBuffer = (__bridge id<MTLBuffer>)(gl_element_buffer->data.mtl_data);
+    }
+    else
+    {
+        // For small buffers, create a temporary MTL buffer from buffer_data
+        indexBuffer = [_device newBufferWithBytes:(void *)gl_element_buffer->data.buffer_data
+                                           length:gl_element_buffer->size
+                                          options:MTLResourceCPUCacheModeDefaultCache | MTLResourceStorageModeManaged];
+    }
     assert(indexBuffer);
 
     [_currentRenderEncoder drawIndexedPrimitives:primitiveType
