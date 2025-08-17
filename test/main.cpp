@@ -32,9 +32,6 @@
 #define GL_GLEXT_PROTOTYPES 1
 #include <GL/glcorearb.h>
 
-#define TEST_MGL_SDL 1
-
-#if TEST_MGL_SDL
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_syswm.h>
 #define SWAP_BUFFERS MGLswapBuffers((GLMContext)SDL_GetWindowData(window, "MGLRenderer"));
@@ -43,7 +40,6 @@ SDL_Event sdlevent;
 #define glfwPollEvents() SDL_PollEvent(&sdlevent)
 #define glfwWindowShouldClose(window)                                                                                  \
     (sdlevent.type == SDL_QUIT || (sdlevent.type == SDL_WINDOWEVENT && sdlevent.window.event == SDL_WINDOWEVENT_CLOSE))
-#endif
 
 extern "C"
 {
@@ -915,7 +911,7 @@ int test_draw_arrays_uniformMatrix4fv(GLFWwindow *window, int width, int height)
 
     const char *fragment_shader = GLSL(
         460 core, layout(location = 0) out vec4 frag_colour; layout(location = 1) uniform mat4 mp;
-        void main() { frag_colour = mp * vec4(1.0f, 1.0f, 1.0f, 1.0f); });
+        void main() { frag_colour = vec4(mp[0][0], mp[0][1], mp[0][2], 1.0f); });
 
     float points[] = {0.0f, 0.5f, 0.0f, 0.5f, -0.5f, 0.0f, -0.5f, -0.5f, 0.0f};
 
@@ -2468,11 +2464,12 @@ int test_compute_shader(GLFWwindow *window, int width, int height)
         void main() {
             ivec2 coord = ivec2(gl_GlobalInvocationID.xy);
             ivec2 size = imageSize(img_output);
-            
-            if (coord.x >= size.x || coord.y >= size.y) {
+
+            if (coord.x >= size.x || coord.y >= size.y)
+            {
                 return;
             }
-            
+
             vec4 color = vec4(float(coord.x) / float(size.x), float(coord.y) / float(size.y), 0.5, 1.0);
             imageStore(img_output, coord, color);
         });
@@ -2686,218 +2683,6 @@ int test_compute_shader(GLFWwindow *window, int width, int height)
     return 0;
 }
 
-int test_2D_array_textures_perf_mon(GLFWwindow *window, int width, int height)
-{
-    GLuint vbo = 0, ebo = 0, tex_vbo = 0, mat_ubo = 0;
-
-    const char *vertex_shader = GLSL(
-        450 core, layout(location = 0) in vec2 in_position; layout(location = 1) in vec2 in_texcords;
-
-        layout(location = 0) out vec2 out_texcoords; layout(location = 1) flat out int out_instanceID;
-
-        layout(binding = 0) uniform matrices { mat4 mvp; };
-
-        void main() {
-            float z;
-
-            z = gl_InstanceID * -0.5;
-
-            gl_Position = mvp * vec4(in_position, z, 1.0);
-            out_texcoords = in_texcords;
-            out_instanceID = gl_InstanceID;
-        });
-
-    const char *fragment_shader = GLSL(
-        450 core, layout(location = 0) in vec2 in_texcords; layout(location = 1) flat in int in_instanceID;
-
-        layout(location = 0) out vec4 frag_colour;
-
-        uniform sampler2DArray image;
-
-        void main() {
-            vec4 tex_color = texture(image, vec3(in_texcords, in_instanceID));
-
-            frag_colour = tex_color;
-        });
-
-    float points[] = {
-        -1.0f, -1.0f, -1.0f, 1.0f, 1.0f, 1.0f, 1.0f, -1.0f,
-    };
-
-    unsigned short elements[] = {0, 1, 3, 2};
-
-    float texcoords[] = {0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f};
-
-    // generate a FBO
-    GLuint fbo;
-    glGenFramebuffers(1, &fbo);
-    glBindFramebuffer(GL_FRAMEBUFFER, fbo);
-
-    GLuint tex_attachment;
-    tex_attachment = createTexture(GL_TEXTURE_2D, width, height);
-
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, tex_attachment, 0);
-
-    GLuint depth_attachment;
-    glGenRenderbuffers(1, &depth_attachment);
-    glBindRenderbuffer(GL_RENDERBUFFER, depth_attachment);
-    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT32F, width, height);
-    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depth_attachment);
-
-    GLenum status;
-    status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
-    switch (status)
-    {
-    case GL_FRAMEBUFFER_COMPLETE:
-        printf("good job\n");
-        break;
-
-    default:
-        assert(0);
-    }
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-    glCreateBuffers(1, &vbo);
-    glNamedBufferStorage(vbo, sizeof(points), points, GL_MAP_WRITE_BIT);
-
-    glCreateBuffers(1, &ebo);
-    glNamedBufferStorage(ebo, sizeof(elements), elements, GL_MAP_WRITE_BIT);
-
-    glCreateBuffers(1, &tex_vbo);
-    glNamedBufferStorage(tex_vbo, sizeof(points), texcoords, GL_MAP_WRITE_BIT);
-
-    float angle = M_1_PI / 6;
-
-    // Projection matrix : 45° Field of View, 4:3 ratio, display range : 0.1 unit
-    // <-> 100 units
-    glm::mat4 Projection = glm::perspective(glm::radians(60.0f), (float)width / (float)height, 0.1f, 100.0f);
-
-    // Or, for an ortho camera :
-    // glm::mat4 Projection = glm::ortho(-10.0f,10.0f,-10.0f,10.0f,0.0f,100.0f);
-    // // In world coordinates
-
-#undef _A
-#define _A 4
-    // Camera matrix
-    glm::mat4 View = glm::lookAt(glm::vec3(_A / 4, _A / 2, _A), // Camera is at (10,10,10), in World Space
-                                 glm::vec3(0, 0, 0),            // and looks at the origin
-                                 glm::vec3(0, 1, 0)             // Head is up (set to 0,-1,0 to look upside-down)
-    );
-
-    // Model matrix : an identity matrix (model will be at the origin)
-    glm::mat4 Model = glm::mat4(1.0f);
-
-    // Our ModelViewProjection : multiplication of our 3 matrices
-    glm::mat4 mvp = Projection * View * Model; // Remember, matrix multiplication is the other way around
-
-    glCreateBuffers(1, &mat_ubo);
-    glNamedBufferStorage(mat_ubo, sizeof(mat4), &mvp[0][0], GL_MAP_WRITE_BIT | GL_DYNAMIC_STORAGE_BIT);
-
-    GLuint vao = 0;
-    glCreateVertexArrays(1, &vao);
-
-    glVertexArrayVertexBuffer(vao, 0, vbo, 0, 2 * sizeof(float));
-    glVertexArrayAttribFormat(vao, 0, 2, GL_FLOAT, 0, 0);
-    glVertexArrayAttribBinding(vao, 0, 0);
-    glEnableVertexArrayAttrib(vao, 0);
-
-    glVertexArrayVertexBuffer(vao, 1, tex_vbo, 0, 2 * sizeof(float));
-    glVertexArrayAttribFormat(vao, 1, 2, GL_FLOAT, 0, 0);
-    glVertexArrayAttribBinding(vao, 1, 1);
-    glEnableVertexArrayAttrib(vao, 1);
-
-    glVertexArrayElementBuffer(vao, ebo);
-
-    glBindVertexArray(vao);
-
-    GLuint shader_program;
-    shader_program = compileGLSLProgram(2, GL_VERTEX_SHADER, vertex_shader, GL_FRAGMENT_SHADER, fragment_shader);
-    glUseProgram(shader_program);
-
-    GLuint matrices_loc = glGetUniformBlockIndex(shader_program, "matrices");
-    assert(matrices_loc == 0);
-
-    glBindBufferBase(GL_UNIFORM_BUFFER, 0, mat_ubo);
-
-#define _2d_array_size 128
-#define _2d_array_depth 8
-
-    GLuint tex;
-    glGenTextures(1, &tex);
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D_ARRAY, tex);
-
-    // test tex storage path
-    glTexStorage3D(GL_TEXTURE_2D_ARRAY, 1, GL_RGBA8, _2d_array_size, _2d_array_size, _2d_array_depth);
-
-    glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-    // test subimage path
-    GLuint *pixels;
-    pixels = (GLuint *)genTexturePixels(GL_RGBA, GL_UNSIGNED_BYTE, 0x08, _2d_array_size, _2d_array_size,
-                                        _2d_array_depth, true);
-
-    size_t image_size;
-    image_size = _2d_array_size * _2d_array_size; // image size in pixels
-
-    // and test pbo unpack path
-    GLuint pbo;
-    glCreateBuffers(1, &pbo);
-    glNamedBufferStorage(pbo, image_size * _2d_array_depth * sizeof(uint32_t), pixels, GL_MAP_WRITE_BIT);
-    glBindBuffer(GL_PIXEL_UNPACK_BUFFER, pbo);
-
-    for (int i = 0; i < _2d_array_depth; i++)
-    {
-        size_t offset;
-
-        offset = i * image_size * 4;
-
-        glTexSubImage3D(GL_TEXTURE_2D_ARRAY, 0, 0, 0, i, _2d_array_size, _2d_array_size, 1, GL_RGBA, GL_UNSIGNED_BYTE,
-                        (void *)offset);
-    }
-
-    glBindBuffer(GL_PIXEL_UNPACK_BUFFER, 0);
-
-    glViewport(0, 0, width, height);
-
-    glClearColor(0.2, 0.2, 0.2, 0.0);
-    glEnable(GL_DEPTH_TEST);
-    glDepthFunc(GL_LESS);
-
-    glViewport(0, 0, width, height);
-
-    glBindFramebuffer(GL_FRAMEBUFFER, fbo);
-    glDrawBuffer(GL_COLOR_ATTACHMENT0);
-
-    int count = 100000000;
-
-    while (count--)
-    {
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-        glDrawElementsInstanced(GL_TRIANGLE_STRIP, 4, GL_UNSIGNED_SHORT, 0, _2d_array_depth);
-
-        angle += (M_PI / 360);
-
-        Model = glm::rotate(glm::identity<mat4>(), angle, glm::vec3(0, 0, 1));
-
-        mvp = Projection * View * Model;
-
-        glNamedBufferSubData(mat_ubo, 0, sizeof(mat4), &mvp[0][0]);
-    }
-
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
-    glDrawBuffer(GL_FRONT);
-
-    return 0;
-}
-void error_callback(int error_code, const char *description)
-{
-    fprintf(stderr, "%s\n", description);
-    // exit(EXIT_FAILURE);
-}
-
 int run_test_case(int test_num, GLFWwindow *window, int width, int height)
 {
     switch (test_num)
@@ -3003,11 +2788,6 @@ int run_test_case(int test_num, GLFWwindow *window, int width, int height)
         break;
 
     case 20:
-        printf("Running test_2D_array_textures_perf_mon\n");
-        // test_2D_array_textures_perf_mon(window, width, height);
-        break;
-
-    case 21:
         printf("Running test_draw_arrays_uniform1i\n");
         test_draw_arrays_uniform1i(window, width, height);
         break;
@@ -3019,8 +2799,7 @@ int run_test_case(int test_num, GLFWwindow *window, int width, int height)
     return 1;
 }
 
-#if TEST_MGL_SDL
-int main_sdl(int argc, const char *argv[])
+int main(int argc, const char *argv[])
 {
     if (SDL_Init(SDL_INIT_VIDEO) < 0)
     {
@@ -3088,9 +2867,7 @@ int main_sdl(int argc, const char *argv[])
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         if (!run_test_case(test_num, window, wscaled, hscaled))
         {
-            printf("All tests completed. Restarting from test 0.\n");
-            test_num = 0;
-            continue;
+            break;
         }
 
         while (1)
@@ -3111,14 +2888,5 @@ int main_sdl(int argc, const char *argv[])
     }
 
     SDL_Quit();
-
     return 0;
-}
-#endif
-
-int main(int argc, const char *argv[])
-{
-#if TEST_MGL_SDL
-    return main_sdl(argc, argv);
-#endif
 }
