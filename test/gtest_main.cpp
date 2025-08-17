@@ -1565,7 +1565,7 @@ TEST_F(MGLTest, Texture3D)
 
     glBindBufferBase(GL_UNIFORM_BUFFER, 0, mat_ubo);
 
-#define _3d_size 64 // Smaller size for faster test
+    constexpr int _3d_size = 64; // Smaller size for faster test
     GLuint tex;
     glGenTextures(1, &tex);
     glBindTexture(GL_TEXTURE_3D, tex);
@@ -1685,8 +1685,8 @@ TEST_F(MGLTest, TextureArray2D)
 
     glBindBufferBase(GL_UNIFORM_BUFFER, 0, mat_ubo);
 
-#define _2d_array_size 64 // Smaller size for faster test
-#define _2d_array_depth 4 // Fewer layers for faster test
+    constexpr int _2d_array_size = 64; // Smaller size for faster test
+    constexpr int _2d_array_depth = 4; // Fewer layers for faster test
 
     GLuint tex;
     glGenTextures(1, &tex);
@@ -1743,6 +1743,239 @@ TEST_F(MGLTest, TextureArray2D)
     glDeleteProgram(shader_program);
     glDeleteTextures(1, &tex);
     free(pixels);
+}
+
+TEST_F(MGLTest, ComputeShader)
+{
+    const char *compute_shader = GLSL(
+        450 core, layout(local_size_x = 16, local_size_y = 16, local_size_z = 1) in;
+
+        layout(rgba8, binding = 0) uniform image2D img_output;
+
+        // simple cosine palette
+        vec3 palette(float t) { return 0.5 + 0.5 * cos(6.2831853 * (vec3(0.0, 0.33, 0.67) + t)); }
+
+        void main() {
+            ivec2 coord = ivec2(gl_GlobalInvocationID.xy);
+            ivec2 size = imageSize(img_output);
+
+            if (coord.x >= size.x || coord.y >= size.y)
+                return;
+
+            // normalized coords in [-1,1] with aspect correction
+            vec2 p = (vec2(coord) / vec2(size)) * 2.0 - 1.0;
+            float aspect = float(size.x) / float(size.y);
+            p.x *= aspect;
+
+            // Mandelbrot parameters
+            vec2 c = vec2(-0.75, 0.0) + p * 1.5; // center and zoom
+            vec2 z = vec2(0.0);
+            const int maxIter = 300;
+
+            int i;
+            for (i = 0; i < maxIter; ++i)
+            {
+                // z = z^2 + c
+                z = vec2(z.x * z.x - z.y * z.y, 2.0 * z.x * z.y) + c;
+                if (dot(z, z) > 4.0)
+                    break; // escaped
+            }
+
+            vec3 color;
+            if (i == maxIter)
+            {
+                color = vec3(0.0); // inside set = black
+            }
+            else
+            {
+                // smooth iteration count
+                float mu = float(i) + 1.0 - log(log(length(z))) / log(2.0);
+                float t = clamp(mu / float(maxIter), 0.0, 1.0);
+                color = palette(t);
+            }
+
+            imageStore(img_output, coord, vec4(color, 1.0));
+        });
+
+    GLuint compute_program;
+    compute_program = compileGLSLProgram(1, GL_COMPUTE_SHADER, compute_shader);
+    assert(compute_program);
+
+    GLuint sbo;
+    glCreateBuffers(1, &sbo);
+    glNamedBufferStorage(sbo, 1024 * sizeof(float), NULL, GL_MAP_READ_BIT | GL_MAP_WRITE_BIT | GL_CLIENT_STORAGE_BIT);
+    glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, sbo);
+
+    GLuint pbo;
+    GLuint cell_end_y;
+    cell_end_y = hscaled / 2;
+    glCreateBuffers(1, &pbo);
+    glNamedBufferStorage(pbo, sizeof(GLuint), &cell_end_y, GL_MAP_READ_BIT | GL_MAP_WRITE_BIT | GL_CLIENT_STORAGE_BIT);
+    glBindBufferBase(GL_UNIFORM_BUFFER, 0, pbo);
+
+    GLuint abo;
+    glCreateBuffers(1, &abo);
+    glNamedBufferStorage(abo, sizeof(GLuint), NULL, GL_MAP_READ_BIT | GL_MAP_WRITE_BIT | GL_CLIENT_STORAGE_BIT);
+    glBindBufferBase(GL_ATOMIC_COUNTER_BUFFER, 0, abo);
+
+    GLuint sampler;
+    glGenSamplers(1, &sampler);
+
+    glSamplerParameteri(sampler, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glSamplerParameteri(sampler, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glSamplerParameteri(sampler, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glSamplerParameteri(sampler, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+    // dimensions of the image
+    int tex_w = 256, tex_h = 256;
+    GLuint textures[2];
+    glCreateTextures(GL_TEXTURE_2D, 2, textures);
+    for (int i = 0; i < 2; i++)
+    {
+        glTextureStorage2D(textures[i], 1, GL_RGBA8, tex_w, tex_h);
+        glBindTexture(GL_TEXTURE_2D, textures[i]);
+        glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, tex_w, tex_h, GL_RGBA, GL_UNSIGNED_BYTE,
+                        genTexturePixels(GL_RGBA, GL_UNSIGNED_BYTE, 0x10, tex_w, tex_h));
+        glBindTexture(GL_TEXTURE_2D, 0);
+
+        glBindImageTexture(i, textures[i], 0, GL_FALSE, 0, GL_READ_WRITE, GL_RGBA8);
+    }
+
+    glUseProgram(compute_program);
+    glDispatchCompute((GLuint)tex_w, (GLuint)tex_h, 2);
+
+    // make sure writing to image has finished before read
+    glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT);
+
+    glFinish();
+
+    GLuint vbo = 0, ebo = 0, tex_vbo = 0, mat_ubo = 0;
+
+    const char *vertex_shader = GLSL(
+        450 core, layout(location = 0) in vec3 position; layout(location = 1) in vec2 in_texcords;
+
+        layout(location = 0) out vec2 out_texcoords;
+
+        layout(binding = 0) uniform matrices { mat4 mvp; };
+
+        void main() {
+            gl_Position = mvp * vec4(position, 1.0);
+            out_texcoords = in_texcords;
+        });
+
+    const char *fragment_shader = GLSL(
+        450 core, layout(location = 0) in vec2 in_texcords;
+
+        layout(location = 0) out vec4 frag_colour;
+
+        uniform sampler2D image;
+
+        void main() {
+            vec4 tex_color = texture(image, in_texcords);
+            frag_colour = tex_color;
+        });
+
+    float points[] = {
+        -1.0f, -1.0f, -1.0f, 1.0f, 1.0f, 1.0f, 1.0f, -1.0f,
+    };
+
+    unsigned short elements[] = {0, 1, 3, 2};
+
+    float texcoords[] = {0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f};
+
+    glCreateBuffers(1, &vbo);
+    glNamedBufferStorage(vbo, sizeof(points), points, GL_MAP_WRITE_BIT);
+
+    glCreateBuffers(1, &ebo);
+    glNamedBufferStorage(ebo, sizeof(elements), elements, GL_MAP_WRITE_BIT);
+
+    glCreateBuffers(1, &tex_vbo);
+    glNamedBufferStorage(tex_vbo, sizeof(points), texcoords, GL_MAP_WRITE_BIT);
+
+    float angle = M_1_PI / 6;
+
+    glm::mat4 Projection = glm::perspective(glm::radians(60.0f), (float)width / (float)height, 0.1f, 100.0f);
+    constexpr int _A = 1;
+    // Camera matrix
+    glm::mat4 View = glm::lookAt(glm::vec3(_A, _A, _A), // Camera is at (10,10,10), in World Space
+                                 glm::vec3(0, 0, 0),    // and looks at the origin
+                                 glm::vec3(0, 0, 1)     // Head is up (set to 0,-1,0 to look upside-down)
+    );
+
+    // Model matrix : an identity matrix (model will be at the origin)
+    glm::mat4 Model = glm::mat4(1.0f);
+
+    // Our ModelViewProjection : multiplication of our 3 matrices
+    glm::mat4 mvp = Projection * View * Model; // Remember, matrix multiplication is the other way around
+
+    glCreateBuffers(1, &mat_ubo);
+    glNamedBufferStorage(mat_ubo, sizeof(mat4), &mvp[0][0], GL_MAP_WRITE_BIT | GL_DYNAMIC_STORAGE_BIT);
+
+    GLuint vao = 0;
+    glCreateVertexArrays(1, &vao);
+
+    glVertexArrayVertexBuffer(vao, 0, vbo, 0, 2 * sizeof(float));
+    glVertexArrayAttribFormat(vao, 0, 2, GL_FLOAT, 0, 0);
+    glVertexArrayAttribBinding(vao, 0, 0);
+    glEnableVertexArrayAttrib(vao, 0);
+
+    glVertexArrayElementBuffer(vao, ebo);
+
+    glVertexArrayVertexBuffer(vao, 1, tex_vbo, 0, 2 * sizeof(float));
+    glVertexArrayAttribFormat(vao, 1, 2, GL_FLOAT, 0, 0);
+    glVertexArrayAttribBinding(vao, 1, 1);
+    glEnableVertexArrayAttrib(vao, 1);
+
+    glBindVertexArray(vao);
+
+    GLuint shader_program;
+    shader_program = compileGLSLProgram(2, GL_VERTEX_SHADER, vertex_shader, GL_FRAGMENT_SHADER, fragment_shader);
+    glUseProgram(shader_program);
+
+    GLuint matrices_loc = glGetUniformBlockIndex(shader_program, "matrices");
+    assert(matrices_loc == 0);
+
+    glBindBufferBase(GL_UNIFORM_BUFFER, 0, mat_ubo);
+
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D_ARRAY, textures[0]);
+
+    glViewport(0, 0, wscaled, hscaled);
+
+    glClearColor(0.2, 0.2, 0.2, 0.0);
+    glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LESS);
+
+    RunFrames(60, [&]() {
+        glUseProgram(shader_program);
+        glBindBufferBase(GL_UNIFORM_BUFFER, 0, mat_ubo);
+        // glBindTexture(GL_TEXTURE_2D, textures[0]);
+        // glBindSampler(GL_TEXTURE0 + 1, sampler);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glDrawElements(GL_TRIANGLE_STRIP, 4, GL_UNSIGNED_SHORT, 0);
+
+        angle += (M_PI / 360) * 0.25;
+        Model = glm::rotate(glm::identity<mat4>(), angle, glm::vec3(0, 0, 1));
+        mvp = Projection * View * Model;
+        glNamedBufferSubData(mat_ubo, 0, sizeof(mat4), &mvp[0][0]);
+        glFlush();
+        glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, sbo);
+        glBindBufferBase(GL_UNIFORM_BUFFER, 0, pbo);
+        glBindBufferBase(GL_ATOMIC_COUNTER_BUFFER, 0, abo);
+
+        for (int i = 0; i < 2; i++)
+        {
+            glBindSampler(GL_TEXTURE0 + i, sampler);
+            glBindImageTexture(i, textures[i], 0, GL_FALSE, 0, GL_READ_WRITE, GL_RGBA8);
+        }
+        glBindSampler(GL_TEXTURE0, 0);
+        glUseProgram(compute_program);
+        glDispatchCompute((GLuint)tex_w, (GLuint)tex_h, 2);
+
+        // make sure writing to image has finished before read
+        glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT);
+        glFlush();
+    });
 }
 
 int main(int argc, char **argv)
