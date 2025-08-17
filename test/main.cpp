@@ -2336,6 +2336,8 @@ int test_readpixels(GLFWwindow *window, int width, int height)
     tex = createTexture(GL_TEXTURE_2D, 256, 256, 0, genTexturePixels(GL_RGBA, GL_UNSIGNED_INT_8_8_8_8, 0x10, 256, 256));
     glBindTexture(GL_TEXTURE_2D, tex);
 
+    uint8_t *buf = (uint8_t *)malloc(256 * 256 * 4);
+
     while (!glfwWindowShouldClose(window))
     {
         glViewport(0, 0, width, height);
@@ -2347,10 +2349,6 @@ int test_readpixels(GLFWwindow *window, int width, int height)
 
         glDrawArrays(GL_TRIANGLES, 0, 3);
 
-        uint8_t *buf;
-
-        buf = (uint8_t *)malloc(256 * 256 * 4);
-
         glReadBuffer(GL_FRONT);
 
         glReadPixels(0, 0, 256, 256, GL_RGBA, GL_UNSIGNED_BYTE, buf);
@@ -2359,6 +2357,8 @@ int test_readpixels(GLFWwindow *window, int width, int height)
 
         glfwPollEvents();
     }
+
+    free(buf);
 
     return 0;
 }
