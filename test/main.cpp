@@ -2432,7 +2432,7 @@ const char *compute_shader1 = GLSL(
                 {
                     pixel = vec4(1.0, 1.0, 1.0, 1.0);
 
-                    imageStore(img_output_0, ivec(gid_x, gid_y), pixel);
+                    imageStore(img_output_0, ivec2(gid_x, gid_y), pixel);
                 }
                 else if (count == 2)
                 {
@@ -2443,13 +2443,13 @@ const char *compute_shader1 = GLSL(
                         pixel = vec4(0.0, 0.0, 0.0, 0.0);
                     }
 
-                    imageStore(img_output_0, ivec(gid_x, gid_y), pixel);
+                    imageStore(img_output_0, ivec2(gid_x, gid_y), pixel);
                 }
                 else
                 {
                     pixel = vec4(0.0, 0.0, 0.0, 0.0);
 
-                    imageStore(img_output_0, ivec(gid_x, gid_y), pixel);
+                    imageStore(img_output_0, ivec2(gid_x, gid_y), pixel);
                 }
             }
         }
@@ -2465,15 +2465,15 @@ int test_compute_shader(GLFWwindow *window, int width, int height)
 
         // image bindings
         layout(rgba8, binding = 0) uniform image2D img_output_0;
-        layout(rgba8, binding = 0) uniform image2D img_output_1;
+        layout(rgba8, binding = 1) uniform image2D img_output_1;
 
-        // buffer binding 0
-        layout(binding = 0) buffer Cells { int cells[]; };
+        // buffer binding
+        layout(binding = 2) buffer Cells { int cells[]; };
 
-        // uniform binding 0
-        layout(binding = 0) uniform Params { int cell_end_y; };
+        // uniform binding
+        layout(binding = 3) uniform Params { int cell_end_y; };
 
-        layout(binding = 0) uniform atomic_uint count;
+        layout(binding = 4) uniform atomic_uint atomic_counter;
 
         uint hash(uint x) {
             x += (x << 10u);
@@ -2498,7 +2498,7 @@ int test_compute_shader(GLFWwindow *window, int width, int height)
 
         void main() {
             // play game of life (like)
-            uint count;
+            uint neighbor_count;
             vec4 n[9];
             vec4 pixel;
 
@@ -2514,7 +2514,7 @@ int test_compute_shader(GLFWwindow *window, int width, int height)
 
             image_size = imageSize(img_output_0);
 
-            count = 0;
+            neighbor_count = 0;
 
             if (gid_z == 0)
             {
@@ -2524,19 +2524,19 @@ int test_compute_shader(GLFWwindow *window, int width, int height)
                     {
                         n[y * 3 + x] = imageLoad(img_output_0, ivec2(gid_x + x - 1, gid_y + y - 1));
 
-                        if ((x != 1) && (y != 1))
+                        if (!(x == 1 && y == 1))
                         {
                             if (n[y * 3 + x].w == 1.0)
-                                count++;
+                                neighbor_count++;
                         }
                     }
                 }
 
-                if (count == 3)
+                if (neighbor_count == 3)
                 {
                     pixel = vec4(n[4].w, n[4].w, n[4].w, 1.0);
                 }
-                else if (count == 2)
+                else if (neighbor_count == 2)
                 {
                     pixel = imageLoad(img_output_0, ivec2(gid_x, gid_y));
 
@@ -2545,7 +2545,7 @@ int test_compute_shader(GLFWwindow *window, int width, int height)
                         pixel = vec4(0.0, 0.0, 0.0, 0.0);
                     }
                 }
-                else if (count == 0)
+                else if (neighbor_count == 0)
                 {
                     float r;
                     float delta;
@@ -2561,7 +2561,7 @@ int test_compute_shader(GLFWwindow *window, int width, int height)
                 }
                 else
                 {
-                    pixel = vec4(n[4].w / 4.0);
+                    pixel = vec4(n[4].w / 4.0, n[4].w / 4.0, n[4].w / 4.0, n[4].w / 4.0);
                 }
 
                 imageStore(img_output_0, ivec2(gid_x, gid_y), pixel);

@@ -220,7 +220,10 @@ void addShadersToProgram(GLMContext ctx, Program *pptr, glslang_program_t *glsl_
         if (ptr)
         {
             // should have glsl shader here
-            assert(ptr->compiled_glsl_shader);
+            if (!ptr->compiled_glsl_shader)
+            {
+                ERROR_CHECK_RETURN(false, GL_INVALID_OPERATION);
+            }
 
             glslang_program_add_shader(glsl_program, ptr->compiled_glsl_shader);
         }
@@ -353,7 +356,7 @@ char *parseSPIRVShaderToMetal(GLMContext ctx, Program *ptr, int stage)
         size_t num_entry_points;
 
         res = spvc_compiler_get_entry_points(compiler_msl, &entry_points, &num_entry_points);
-        assert(res);
+        ERROR_CHECK_RETURN(res == SPVC_SUCCESS, GL_INVALID_OPERATION);
 
         for (int i = 0; i < num_entry_points; i++)
         {

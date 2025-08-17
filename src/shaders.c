@@ -306,8 +306,7 @@ void mglCompileShader(GLMContext ctx, GLuint shader)
     glsl_shader = glslang_shader_create(&glsl_input);
     if (glsl_shader == NULL)
     {
-        assert(0);
-
+        ERROR_CHECK_RETURN(false, GL_INVALID_OPERATION);
         return;
     }
 
