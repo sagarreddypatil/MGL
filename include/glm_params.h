@@ -25,14 +25,16 @@
 
 #include "glm_limits.h"
 
-typedef struct GLMHints_t {
+typedef struct GLMHints_t
+{
     GLuint line_smooth_hint;
     GLuint polygon_smooth_hint;
     GLuint texture_compression_hint;
     GLuint fragment_shader_derivative_hint;
 } GLMHints;
 
-typedef struct GLMCaps_t {
+typedef struct GLMCaps_t
+{
     GLboolean blend;
     GLboolean multisample;
     GLboolean sample_alpha_to_coverage;
@@ -79,14 +81,15 @@ typedef struct GLMCaps_t {
     GLboolean program_point_size;
     GLboolean primitive_restart;
     GLboolean primitive_restart_fixed_index;
-    
+
     GLboolean clip_distances[MAX_CLIP_DISTANCES];
 
     // local enables
     GLboolean use_color_mask[MAX_COLOR_ATTACHMENTS];
 } GLMCaps;
 
-typedef struct GLMParams_t {
+typedef struct GLMParams_t
+{
     GLfloat point_size;
     GLuint point_size_range;
     GLuint point_size_granularity;

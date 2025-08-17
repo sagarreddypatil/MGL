@@ -20,7 +20,6 @@
 
 #include "glm_context.h"
 
-
 void mglDispatchCompute(GLMContext ctx, GLuint num_groups_x, GLuint num_groups_y, GLuint num_groups_z)
 {
     ERROR_CHECK_RETURN(num_groups_x < ctx->state.var.max_compute_work_group_size[0], GL_INVALID_VALUE);
@@ -32,6 +31,5 @@ void mglDispatchCompute(GLMContext ctx, GLuint num_groups_x, GLuint num_groups_y
 
 void mglDispatchComputeIndirect(GLMContext ctx, GLintptr indirect)
 {
-        assert(0);
+    assert(0);
 }
-

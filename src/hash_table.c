@@ -46,7 +46,7 @@ GLuint getNewName(HashTable *table)
 void *searchHashTable(HashTable *table, GLuint name)
 {
     assert(table);
-    assert (name < table->size);
+    assert(name < table->size);
 
     return table->keys[name].data;
 }
@@ -65,7 +65,7 @@ void insertHashElement(HashTable *table, GLuint name, void *data)
     }
 
     // some calls allow the user to specifiy a name...
-    while(table->size < name)
+    while (table->size < name)
     {
         table->size *= 2;
         table->keys = (HashObj *)realloc(table->keys, table->size);
@@ -77,7 +77,7 @@ void insertHashElement(HashTable *table, GLuint name, void *data)
 void deleteHashElement(HashTable *table, GLuint name)
 {
     assert(table);
-    assert (name < table->size);
+    assert(name < table->size);
 
     table->keys[name].data = NULL;
 

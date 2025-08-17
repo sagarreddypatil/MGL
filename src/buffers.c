@@ -31,26 +31,40 @@
 
 GLuint bufferIndexFromTarget(GLMContext ctx, GLenum target)
 {
-    switch(target)
+    switch (target)
     {
-        case GL_ARRAY_BUFFER: return _ARRAY_BUFFER;
-        case GL_ELEMENT_ARRAY_BUFFER: return _ELEMENT_ARRAY_BUFFER;
-        case GL_UNIFORM_BUFFER: return _UNIFORM_BUFFER;
-        case GL_TEXTURE_BUFFER: return _TEXTURE_BUFFER;
-        case GL_TRANSFORM_FEEDBACK_BUFFER: return _TRANSFORM_FEEDBACK_BUFFER;
-        case GL_QUERY_BUFFER: return _QUERY_BUFFER;
-        case GL_PIXEL_PACK_BUFFER: return _PIXEL_PACK_BUFFER;
-        case GL_PIXEL_UNPACK_BUFFER: return _PIXEL_UNPACK_BUFFER;
-        case GL_ATOMIC_COUNTER_BUFFER: return _ATOMIC_COUNTER_BUFFER;
-        case GL_COPY_READ_BUFFER: return _COPY_READ_BUFFER;
-        case GL_COPY_WRITE_BUFFER: return _COPY_WRITE_BUFFER;
-        case GL_DISPATCH_INDIRECT_BUFFER: return _DISPATCH_INDIRECT_BUFFER;
-        case GL_DRAW_INDIRECT_BUFFER: return _DRAW_INDIRECT_BUFFER;
-        case GL_SHADER_STORAGE_BUFFER: return _SHADER_STORAGE_BUFFER;
+    case GL_ARRAY_BUFFER:
+        return _ARRAY_BUFFER;
+    case GL_ELEMENT_ARRAY_BUFFER:
+        return _ELEMENT_ARRAY_BUFFER;
+    case GL_UNIFORM_BUFFER:
+        return _UNIFORM_BUFFER;
+    case GL_TEXTURE_BUFFER:
+        return _TEXTURE_BUFFER;
+    case GL_TRANSFORM_FEEDBACK_BUFFER:
+        return _TRANSFORM_FEEDBACK_BUFFER;
+    case GL_QUERY_BUFFER:
+        return _QUERY_BUFFER;
+    case GL_PIXEL_PACK_BUFFER:
+        return _PIXEL_PACK_BUFFER;
+    case GL_PIXEL_UNPACK_BUFFER:
+        return _PIXEL_UNPACK_BUFFER;
+    case GL_ATOMIC_COUNTER_BUFFER:
+        return _ATOMIC_COUNTER_BUFFER;
+    case GL_COPY_READ_BUFFER:
+        return _COPY_READ_BUFFER;
+    case GL_COPY_WRITE_BUFFER:
+        return _COPY_WRITE_BUFFER;
+    case GL_DISPATCH_INDIRECT_BUFFER:
+        return _DISPATCH_INDIRECT_BUFFER;
+    case GL_DRAW_INDIRECT_BUFFER:
+        return _DRAW_INDIRECT_BUFFER;
+    case GL_SHADER_STORAGE_BUFFER:
+        return _SHADER_STORAGE_BUFFER;
 
-        default:
-            assert(0); // shouldn't get here without checking for error
-            break;
+    default:
+        assert(0); // shouldn't get here without checking for error
+        break;
     }
 
     assert(0);
@@ -117,23 +131,23 @@ Buffer *findBuffer(GLMContext ctx, GLuint buffer)
 
 bool checkTarget(GLMContext ctx, GLenum target)
 {
-    switch(target)
+    switch (target)
     {
-        case GL_ARRAY_BUFFER:
-        case GL_ELEMENT_ARRAY_BUFFER:
-        case GL_UNIFORM_BUFFER:
-        case GL_TEXTURE_BUFFER:
-        case GL_TRANSFORM_FEEDBACK_BUFFER:
-        case GL_QUERY_BUFFER:
-        case GL_PIXEL_PACK_BUFFER:
-        case GL_PIXEL_UNPACK_BUFFER:
-        case GL_ATOMIC_COUNTER_BUFFER:
-        case GL_COPY_READ_BUFFER:
-        case GL_COPY_WRITE_BUFFER:
-        case GL_DISPATCH_INDIRECT_BUFFER:
-        case GL_DRAW_INDIRECT_BUFFER:
-        case GL_SHADER_STORAGE_BUFFER:
-            return true;
+    case GL_ARRAY_BUFFER:
+    case GL_ELEMENT_ARRAY_BUFFER:
+    case GL_UNIFORM_BUFFER:
+    case GL_TEXTURE_BUFFER:
+    case GL_TRANSFORM_FEEDBACK_BUFFER:
+    case GL_QUERY_BUFFER:
+    case GL_PIXEL_PACK_BUFFER:
+    case GL_PIXEL_UNPACK_BUFFER:
+    case GL_ATOMIC_COUNTER_BUFFER:
+    case GL_COPY_READ_BUFFER:
+    case GL_COPY_WRITE_BUFFER:
+    case GL_DISPATCH_INDIRECT_BUFFER:
+    case GL_DRAW_INDIRECT_BUFFER:
+    case GL_SHADER_STORAGE_BUFFER:
+        return true;
     }
 
     return false;
@@ -141,18 +155,18 @@ bool checkTarget(GLMContext ctx, GLenum target)
 
 bool checkUsage(GLMContext ctx, GLenum usage)
 {
-    switch(usage)
+    switch (usage)
     {
-        case GL_STREAM_DRAW:
-        case GL_STREAM_READ:
-        case GL_STREAM_COPY:
-        case GL_STATIC_DRAW:
-        case GL_STATIC_READ:
-        case GL_STATIC_COPY:
-        case GL_DYNAMIC_DRAW:
-        case GL_DYNAMIC_READ:
-        case GL_DYNAMIC_COPY:
-            return true;
+    case GL_STREAM_DRAW:
+    case GL_STREAM_READ:
+    case GL_STREAM_COPY:
+    case GL_STATIC_DRAW:
+    case GL_STATIC_READ:
+    case GL_STATIC_COPY:
+    case GL_DYNAMIC_DRAW:
+    case GL_DYNAMIC_READ:
+    case GL_DYNAMIC_COPY:
+        return true;
     }
 
     return false;
@@ -160,11 +174,11 @@ bool checkUsage(GLMContext ctx, GLenum usage)
 
 size_t page_size_align(size_t size)
 {
-    if (size & (4096-1))
+    if (size & (4096 - 1))
     {
         size_t pad_size = 0;
 
-        pad_size = 4096 - (size & (4096-1));
+        pad_size = 4096 - (size & (4096 - 1));
 
         size += pad_size;
     }
@@ -187,7 +201,8 @@ void *getBufferData(GLMContext ctx, Buffer *ptr)
     return buffer_data;
 }
 
-void bufferStorage(GLMContext ctx, Buffer *ptr, GLenum target, GLuint index, GLsizeiptr size, const void *data, GLbitfield storage_flags, GLenum usage)
+void bufferStorage(GLMContext ctx, Buffer *ptr, GLenum target, GLuint index, GLsizeiptr size, const void *data,
+                   GLbitfield storage_flags, GLenum usage)
 {
     kern_return_t err;
     vm_address_t buffer_data;
@@ -196,10 +211,7 @@ void bufferStorage(GLMContext ctx, Buffer *ptr, GLenum target, GLuint index, GLs
     buffer_size = page_size_align(size);
 
     // Allocate directly from VM
-    err = vm_allocate((vm_map_t) mach_task_self(),
-                      (vm_address_t*) &buffer_data,
-                      buffer_size,
-                      VM_FLAGS_ANYWHERE);
+    err = vm_allocate((vm_map_t)mach_task_self(), (vm_address_t *)&buffer_data, buffer_size, VM_FLAGS_ANYWHERE);
     if (err)
     {
         ERROR_RETURN(GL_OUT_OF_MEMORY);
@@ -252,47 +264,48 @@ void bufferStorage(GLMContext ctx, Buffer *ptr, GLenum target, GLuint index, GLs
     }
 }
 
-bool clearBufferData(GLMContext ctx, Buffer *ptr, GLenum internalformat, GLintptr offset, GLsizeiptr size, GLenum format, GLenum type, const void *data)
+bool clearBufferData(GLMContext ctx, Buffer *ptr, GLenum internalformat, GLintptr offset, GLsizeiptr size,
+                     GLenum format, GLenum type, const void *data)
 {
-    switch(format)
+    switch (format)
     {
-        case GL_R8:
-        case GL_R16:
-        case GL_R16F:
-        case GL_R32F:
-        case GL_R8I:
-        case GL_R16I:
-        case GL_R32I:
-        case GL_R8UI:
-        case GL_R16UI:
-        case GL_R32UI:
-        case GL_RG8:
-        case GL_RG16:
-        case GL_RG16F:
-        case GL_RG32F:
-        case GL_RG8I:
-        case GL_RG16I:
-        case GL_RG32I:
-        case GL_RG8UI:
-        case GL_RG16UI:
-        case GL_RG32UI:
-        case GL_RGB32F:
-        case GL_RGB32I:
-        case GL_RGB32UI:
-        case GL_RGBA8:
-        case GL_RGBA16:
-        case GL_RGBA16F:
-        case GL_RGBA32F:
-        case GL_RGBA8I:
-        case GL_RGBA16I:
-        case GL_RGBA32I:
-        case GL_RGBA8UI:
-        case GL_RGBA16UI:
-        case GL_RGBA32UI:
-            break;
+    case GL_R8:
+    case GL_R16:
+    case GL_R16F:
+    case GL_R32F:
+    case GL_R8I:
+    case GL_R16I:
+    case GL_R32I:
+    case GL_R8UI:
+    case GL_R16UI:
+    case GL_R32UI:
+    case GL_RG8:
+    case GL_RG16:
+    case GL_RG16F:
+    case GL_RG32F:
+    case GL_RG8I:
+    case GL_RG16I:
+    case GL_RG32I:
+    case GL_RG8UI:
+    case GL_RG16UI:
+    case GL_RG32UI:
+    case GL_RGB32F:
+    case GL_RGB32I:
+    case GL_RGB32UI:
+    case GL_RGBA8:
+    case GL_RGBA16:
+    case GL_RGBA16F:
+    case GL_RGBA32F:
+    case GL_RGBA8I:
+    case GL_RGBA16I:
+    case GL_RGBA32I:
+    case GL_RGBA8UI:
+    case GL_RGBA16UI:
+    case GL_RGBA32UI:
+        break;
 
-        default:
-            ERROR_RETURN_VALUE(GL_INVALID_ENUM, false);
+    default:
+        ERROR_RETURN_VALUE(GL_INVALID_ENUM, false);
     }
 
     if (offset + size > ptr->size)
@@ -309,7 +322,7 @@ bool clearBufferData(GLMContext ctx, Buffer *ptr, GLenum internalformat, GLintpt
     GLubyte *dst;
     dst = (GLubyte *)data + offset;
 
-    for(int i=0; i<pixel_count; i++)
+    for (int i = 0; i < pixel_count; i++)
     {
         memcpy(dst, data, pixel_size);
         dst += pixel_size;
@@ -318,11 +331,10 @@ bool clearBufferData(GLMContext ctx, Buffer *ptr, GLenum internalformat, GLintpt
     assert(0);
 }
 
-
 #pragma mark GL Buffer Functions
 void mglGenBuffers(GLMContext ctx, GLsizei n, GLuint *buffers)
 {
-    while(n--)
+    while (n--)
     {
         *buffers++ = getNewName(&STATE(buffer_table));
     }
@@ -332,7 +344,7 @@ void mglCreateBuffers(GLMContext ctx, GLsizei n, GLuint *buffers)
 {
     GLuint name;
 
-    while(n--)
+    while (n--)
     {
         name = getNewName(&STATE(buffer_table));
 
@@ -353,7 +365,7 @@ void mglDeleteBuffers(GLMContext ctx, GLsizei n, const GLuint *buffers)
         return;
     }
 
-    while(n--)
+    while (n--)
     {
         buffer = *buffers++;
 
@@ -413,25 +425,24 @@ void mglDeleteBuffers(GLMContext ctx, GLsizei n, const GLuint *buffers)
                 }
             }
 
-            switch(target)
+            switch (target)
             {
-                case GL_UNIFORM:
-                case GL_TRANSFORM_FEEDBACK_BUFFER:
-                case GL_SHADER_STORAGE_BUFFER:
-                case GL_ATOMIC_COUNTER_BUFFER:
+            case GL_UNIFORM:
+            case GL_TRANSFORM_FEEDBACK_BUFFER:
+            case GL_SHADER_STORAGE_BUFFER:
+            case GL_ATOMIC_COUNTER_BUFFER: {
+                GLuint index;
+
+                index = bufferIndexFromTarget(ctx, target);
+
+                for (int i = 0; i < MAX_BINDABLE_BUFFERS; i++)
                 {
-                    GLuint index;
-
-                    index = bufferIndexFromTarget(ctx, target);
-
-                    for(int i=0; i<MAX_BINDABLE_BUFFERS; i++)
+                    if (ctx->state.buffer_base[index].buffers[i].buffer == buffer)
                     {
-                        if (ctx->state.buffer_base[index].buffers[i].buffer == buffer)
-                        {
-                            bzero(&ctx->state.buffer_base[index], sizeof(BufferBaseTarget));
-                        }
+                        bzero(&ctx->state.buffer_base[index], sizeof(BufferBaseTarget));
                     }
                 }
+            }
             }
 
             free(ptr);
@@ -478,19 +489,19 @@ void mglBindBuffer(GLMContext ctx, GLenum target, GLuint buffer)
 
 void mglBindBufferBase(GLMContext ctx, GLenum target, GLuint index, GLuint buffer)
 {
-    Buffer  *ptr;
+    Buffer *ptr;
     GLuint buffer_index;
 
-    switch(target)
+    switch (target)
     {
-        case GL_UNIFORM_BUFFER:
-        case GL_TRANSFORM_FEEDBACK_BUFFER:
-        case GL_SHADER_STORAGE_BUFFER:
-        case GL_ATOMIC_COUNTER_BUFFER:
-            break;
+    case GL_UNIFORM_BUFFER:
+    case GL_TRANSFORM_FEEDBACK_BUFFER:
+    case GL_SHADER_STORAGE_BUFFER:
+    case GL_ATOMIC_COUNTER_BUFFER:
+        break;
 
-        default:
-            ERROR_RETURN(GL_INVALID_ENUM);
+    default:
+        ERROR_RETURN(GL_INVALID_ENUM);
     }
 
     ERROR_CHECK_RETURN(index >= 0, GL_INVALID_VALUE);
@@ -523,10 +534,9 @@ void mglBindBufferBase(GLMContext ctx, GLenum target, GLuint index, GLuint buffe
     ctx->state.dirty_bits |= (DIRTY_BUFFER | DIRTY_BUFFER_BASE_STATE);
 }
 
-
 void mglBindBuffersBase(GLMContext ctx, GLenum target, GLuint first, GLsizei count, const GLuint *buffers)
 {
-    while(count--)
+    while (count--)
     {
         mglBindBufferBase(ctx, target, first++, *buffers++);
     }
@@ -534,19 +544,19 @@ void mglBindBuffersBase(GLMContext ctx, GLenum target, GLuint first, GLsizei cou
 
 void mglBindBufferRange(GLMContext ctx, GLenum target, GLuint index, GLuint buffer, GLintptr offset, GLsizeiptr size)
 {
-    Buffer  *ptr;
-    GLuint  buffer_index;
+    Buffer *ptr;
+    GLuint buffer_index;
 
-    switch(target)
+    switch (target)
     {
-        case GL_UNIFORM_BUFFER:
-        case GL_TRANSFORM_FEEDBACK_BUFFER:
-        case GL_SHADER_STORAGE_BUFFER:
-        case GL_ATOMIC_COUNTER_BUFFER:
-            break;
+    case GL_UNIFORM_BUFFER:
+    case GL_TRANSFORM_FEEDBACK_BUFFER:
+    case GL_SHADER_STORAGE_BUFFER:
+    case GL_ATOMIC_COUNTER_BUFFER:
+        break;
 
-        default:
-            ERROR_RETURN(GL_INVALID_ENUM);
+    default:
+        ERROR_RETURN(GL_INVALID_ENUM);
     }
 
     ERROR_CHECK_RETURN(index >= 0, GL_INVALID_VALUE);
@@ -598,10 +608,10 @@ kern_return_t initBufferData(GLMContext ctx, Buffer *ptr, GLsizeiptr size, const
                 if (data)
                 {
                     memcpy((void *)ptr->data.buffer_data, data, size);
-                    
+
                     ptr->data.dirty_bits |= DIRTY_BUFFER_DATA;
                 }
-                
+
                 return 0;
             }
         }
@@ -612,8 +622,8 @@ kern_return_t initBufferData(GLMContext ctx, Buffer *ptr, GLsizeiptr size, const
             {
                 // the mtl buffer has a deallocator for the vm allocate
                 ctx->mtl_funcs.mtlDeleteMTLObj(ctx, ptr->data.mtl_data);
-                
-                if(isUniformConstant)
+
+                if (isUniformConstant)
                 {
                     ptr->data.mtl_data = NULL;
                 }
@@ -622,7 +632,7 @@ kern_return_t initBufferData(GLMContext ctx, Buffer *ptr, GLsizeiptr size, const
             {
                 vm_deallocate(mach_host_self(), ptr->data.buffer_data, ptr->data.buffer_size);
             }
-            
+
             ptr->data.buffer_data = 0;
             ptr->data.buffer_size = 0;
         }
@@ -632,12 +642,12 @@ kern_return_t initBufferData(GLMContext ctx, Buffer *ptr, GLsizeiptr size, const
             {
                 ctx->mtl_funcs.mtlDeleteMTLObj(ctx, ptr->data.mtl_data);
             }
-            
-            if(isUniformConstant)
+
+            if (isUniformConstant)
             {
                 ptr->data.mtl_data = NULL;
             }
-            
+
             ptr->data.buffer_data = 0;
             ptr->data.buffer_size = 0;
         }
@@ -646,10 +656,7 @@ kern_return_t initBufferData(GLMContext ctx, Buffer *ptr, GLsizeiptr size, const
     buffer_size = page_size_align(size);
 
     // Allocate directly from VM
-    err = vm_allocate((vm_map_t) mach_task_self(),
-                      (vm_address_t*) &buffer_data,
-                      buffer_size,
-                      VM_FLAGS_ANYWHERE);
+    err = vm_allocate((vm_map_t)mach_task_self(), (vm_address_t *)&buffer_data, buffer_size, VM_FLAGS_ANYWHERE);
     if (err)
     {
         ERROR_RETURN_VALUE(GL_OUT_OF_MEMORY, err);
@@ -709,7 +716,7 @@ void mglBufferData(GLMContext ctx, GLenum target, GLsizeiptr size, const void *d
     ptr->target = target;
     ptr->usage = usage;
     ptr->storage_flags = GL_MAP_READ_BIT | GL_MAP_WRITE_BIT | GL_DYNAMIC_STORAGE_BIT;
- }
+}
 
 void mglNamedBufferData(GLMContext ctx, GLuint buffer, GLsizeiptr size, const void *data, GLenum usage)
 {
@@ -727,14 +734,13 @@ void mglNamedBufferData(GLMContext ctx, GLuint buffer, GLsizeiptr size, const vo
     // GL_INVALID_ENUM is generated if target is not one of the allowable values.
     ERROR_CHECK_RETURN(checkUsage(ctx, usage), GL_INVALID_ENUM);
 
-
     // buffer was created via buffer storage call for immutable storage
     if (ptr->storage_flags)
     {
         ERROR_RETURN(GL_INVALID_OPERATION);
     }
 
-    initBufferData(ctx, ptr, size, data,false);
+    initBufferData(ctx, ptr, size, data, false);
 
     // init fields local to buffer data
     ptr->usage = usage;
@@ -777,9 +783,10 @@ void mglBufferSubData(GLMContext ctx, GLenum target, GLintptr offset, GLsizeiptr
         ERROR_RETURN(GL_INVALID_OPERATION);
     }
 
-    // GL_INVALID_OPERATION is generated if the value of the GL_BUFFER_IMMUTABLE_STORAGE flag of the buffer object is GL_TRUE and the value of GL_BUFFER_STORAGE_FLAGS for the buffer object does not have the GL_DYNAMIC_STORAGE_BIT bit set.
-    if ((ptr->immutable_storage & BUFFER_IMMUTABLE_STORAGE_FLAG) &&
-        !(ptr->storage_flags & GL_DYNAMIC_STORAGE_BIT))
+    // GL_INVALID_OPERATION is generated if the value of the GL_BUFFER_IMMUTABLE_STORAGE flag of the buffer object is
+    // GL_TRUE and the value of GL_BUFFER_STORAGE_FLAGS for the buffer object does not have the GL_DYNAMIC_STORAGE_BIT
+    // bit set.
+    if ((ptr->immutable_storage & BUFFER_IMMUTABLE_STORAGE_FLAG) && !(ptr->storage_flags & GL_DYNAMIC_STORAGE_BIT))
     {
         ERROR_RETURN(GL_INVALID_OPERATION);
     }
@@ -787,7 +794,7 @@ void mglBufferSubData(GLMContext ctx, GLenum target, GLintptr offset, GLsizeiptr
     if (ptr->storage_flags & (GL_CLIENT_STORAGE_BIT | GL_DYNAMIC_STORAGE_BIT))
     {
         // copy it to the backing and use processGLState to upload new data
-        memcpy((char*)ptr->data.buffer_data + offset, data, size);
+        memcpy((char *)ptr->data.buffer_data + offset, data, size);
 
         ptr->data.dirty_bits |= DIRTY_BUFFER_DATA;
         ctx->state.dirty_bits |= DIRTY_BUFFER;
@@ -827,9 +834,10 @@ void mglNamedBufferSubData(GLMContext ctx, GLuint buffer, GLintptr offset, GLsiz
         ERROR_RETURN(GL_INVALID_OPERATION);
     }
 
-    // GL_INVALID_OPERATION is generated if the value of the GL_BUFFER_IMMUTABLE_STORAGE flag of the buffer object is GL_TRUE and the value of GL_BUFFER_STORAGE_FLAGS for the buffer object does not have the GL_DYNAMIC_STORAGE_BIT bit set.
-    if ((ptr->immutable_storage & BUFFER_IMMUTABLE_STORAGE_FLAG) &&
-        !(ptr->storage_flags & GL_DYNAMIC_STORAGE_BIT))
+    // GL_INVALID_OPERATION is generated if the value of the GL_BUFFER_IMMUTABLE_STORAGE flag of the buffer object is
+    // GL_TRUE and the value of GL_BUFFER_STORAGE_FLAGS for the buffer object does not have the GL_DYNAMIC_STORAGE_BIT
+    // bit set.
+    if ((ptr->immutable_storage & BUFFER_IMMUTABLE_STORAGE_FLAG) && !(ptr->storage_flags & GL_DYNAMIC_STORAGE_BIT))
     {
         ERROR_RETURN(GL_INVALID_OPERATION);
     }
@@ -837,7 +845,7 @@ void mglNamedBufferSubData(GLMContext ctx, GLuint buffer, GLintptr offset, GLsiz
     if (ptr->storage_flags & (GL_CLIENT_STORAGE_BIT | GL_DYNAMIC_STORAGE_BIT))
     {
         // copy it to the backing and use processGLState to upload new data
-        memcpy((char*)ptr->data.buffer_data + offset, data, size);
+        memcpy((char *)ptr->data.buffer_data + offset, data, size);
 
         if (ptr->data.mtl_data)
         {
@@ -859,7 +867,8 @@ void mglNamedBufferSubData(GLMContext ctx, GLuint buffer, GLintptr offset, GLsiz
     }
 }
 
-void copyBufferSubData(GLMContext ctx, Buffer *src_buf, Buffer *dst_buf, GLintptr readOffset, GLintptr writeOffset, GLsizeiptr size)
+void copyBufferSubData(GLMContext ctx, Buffer *src_buf, Buffer *dst_buf, GLintptr readOffset, GLintptr writeOffset,
+                       GLsizeiptr size)
 {
     GLuint *src_data, *dst_data;
 
@@ -922,7 +931,8 @@ void copyBufferSubData(GLMContext ctx, Buffer *src_buf, Buffer *dst_buf, GLintpt
     ctx->mtl_funcs.mtlMapUnmapBuffer(ctx, dst_buf, writeOffset, size, GL_WRITE_ONLY, false);
 }
 
-void mglCopyBufferSubData(GLMContext ctx, GLenum readTarget, GLenum writeTarget, GLintptr readOffset, GLintptr writeOffset, GLsizeiptr size)
+void mglCopyBufferSubData(GLMContext ctx, GLenum readTarget, GLenum writeTarget, GLintptr readOffset,
+                          GLintptr writeOffset, GLsizeiptr size)
 {
     GLuint index;
     Buffer *src_buf, *dst_buf;
@@ -952,7 +962,8 @@ void mglCopyBufferSubData(GLMContext ctx, GLenum readTarget, GLenum writeTarget,
     copyBufferSubData(ctx, src_buf, dst_buf, readOffset, writeOffset, size);
 }
 
-void mglCopyNamedBufferSubData(GLMContext ctx, GLuint readBuffer, GLuint writeBuffer, GLintptr readOffset, GLintptr writeOffset, GLsizeiptr size)
+void mglCopyNamedBufferSubData(GLMContext ctx, GLuint readBuffer, GLuint writeBuffer, GLintptr readOffset,
+                               GLintptr writeOffset, GLsizeiptr size)
 {
     Buffer *src_buf, *dst_buf;
 
@@ -989,7 +1000,8 @@ void mglCopyNamedBufferSubData(GLMContext ctx, GLuint readBuffer, GLuint writeBu
     copyBufferSubData(ctx, src_buf, dst_buf, readOffset, writeOffset, size);
 }
 
-void mglClearBufferData(GLMContext ctx, GLenum target, GLenum internalformat, GLenum format, GLenum type, const void *data)
+void mglClearBufferData(GLMContext ctx, GLenum target, GLenum internalformat, GLenum format, GLenum type,
+                        const void *data)
 {
     GLuint index;
     Buffer *ptr;
@@ -1010,7 +1022,8 @@ void mglClearBufferData(GLMContext ctx, GLenum target, GLenum internalformat, GL
     ERROR_CHECK_RETURN(err == true, GL_INVALID_ENUM);
 }
 
-void mglClearBufferSubData(GLMContext ctx, GLenum target, GLenum internalformat, GLintptr offset, GLsizeiptr size, GLenum format, GLenum type, const void *data)
+void mglClearBufferSubData(GLMContext ctx, GLenum target, GLenum internalformat, GLintptr offset, GLsizeiptr size,
+                           GLenum format, GLenum type, const void *data)
 {
     GLuint index;
     Buffer *ptr;
@@ -1031,7 +1044,8 @@ void mglClearBufferSubData(GLMContext ctx, GLenum target, GLenum internalformat,
     ERROR_CHECK_RETURN(err == true, GL_INVALID_ENUM);
 }
 
-void mglClearNamedBufferData(GLMContext ctx, GLuint buffer, GLenum internalformat, GLenum format, GLenum type, const void *data)
+void mglClearNamedBufferData(GLMContext ctx, GLuint buffer, GLenum internalformat, GLenum format, GLenum type,
+                             const void *data)
 {
     Buffer *ptr;
     GLboolean err;
@@ -1047,7 +1061,8 @@ void mglClearNamedBufferData(GLMContext ctx, GLuint buffer, GLenum internalforma
     ERROR_CHECK_RETURN(err == true, GL_INVALID_ENUM);
 }
 
-void mglClearNamedBufferSubData(GLMContext ctx, GLuint buffer, GLenum internalformat, GLintptr offset, GLsizeiptr size, GLenum format, GLenum type, const void *data)
+void mglClearNamedBufferSubData(GLMContext ctx, GLuint buffer, GLenum internalformat, GLintptr offset, GLsizeiptr size,
+                                GLenum format, GLenum type, const void *data)
 {
     Buffer *ptr;
     GLboolean err;
@@ -1072,15 +1087,15 @@ void *mglMapBuffer(GLMContext ctx, GLenum target, GLenum access)
     // GL_INVALID_ENUM is generated if target is not supported.
     ERROR_CHECK_RETURN_VALUE(checkTarget(ctx, target), GL_INVALID_ENUM, NULL);
 
-    switch(access)
+    switch (access)
     {
-        case GL_READ_ONLY:
-        case GL_WRITE_ONLY:
-        case GL_READ_WRITE:
-            break;
+    case GL_READ_ONLY:
+    case GL_WRITE_ONLY:
+    case GL_READ_WRITE:
+        break;
 
-        default:
-            ERROR_RETURN_VALUE(GL_INVALID_ENUM, NULL);
+    default:
+        ERROR_RETURN_VALUE(GL_INVALID_ENUM, NULL);
     }
 
     index = bufferIndexFromTarget(ctx, target);
@@ -1116,8 +1131,7 @@ GLboolean mglUnmapBuffer(GLMContext ctx, GLenum target)
 
     ERROR_CHECK_RETURN_VALUE((ptr != NULL), GL_INVALID_OPERATION, GL_FALSE);
 
-    if ((ptr->storage_flags & GL_MAP_PERSISTENT_BIT) &&
-        (ptr->access & GL_MAP_PERSISTENT_BIT))
+    if ((ptr->storage_flags & GL_MAP_PERSISTENT_BIT) && (ptr->access & GL_MAP_PERSISTENT_BIT))
     {
         // this will cause the buffer to be flushed on next draw command
         ptr->data.dirty_bits |= DIRTY_BUFFER_DATA;
@@ -1177,8 +1191,8 @@ void *mglMapBufferRange(GLMContext ctx, GLenum target, GLintptr offset, GLsizeip
     }
 
     if (access_flags & ~(GL_MAP_READ_BIT | GL_MAP_WRITE_BIT | GL_MAP_PERSISTENT_BIT | GL_MAP_COHERENT_BIT |
-                   GL_MAP_INVALIDATE_RANGE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT | GL_MAP_FLUSH_EXPLICIT_BIT |
-                   GL_MAP_UNSYNCHRONIZED_BIT))
+                         GL_MAP_INVALIDATE_RANGE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT | GL_MAP_FLUSH_EXPLICIT_BIT |
+                         GL_MAP_UNSYNCHRONIZED_BIT))
     {
         ERROR_RETURN_VALUE(GL_INVALID_VALUE, NULL);
     }
@@ -1225,7 +1239,6 @@ void *mglMapNamedBufferRange(GLMContext ctx, GLuint buffer, GLintptr offset, GLs
     // Unimplemented function
     assert(0);
 }
-
 
 void mglFlushMappedBufferRange(GLMContext ctx, GLenum target, GLintptr offset, GLsizeiptr length)
 {
@@ -1284,7 +1297,8 @@ void mglFlushMappedNamedBufferRange(GLMContext ctx, GLuint buffer, GLintptr offs
     assert(0);
 }
 
-void mglBindBuffersRange(GLMContext ctx, GLenum target, GLuint first, GLsizei count, const GLuint *buffers, const GLintptr *offsets, const GLsizeiptr *sizes)
+void mglBindBuffersRange(GLMContext ctx, GLenum target, GLuint first, GLsizei count, const GLuint *buffers,
+                         const GLintptr *offsets, const GLsizeiptr *sizes)
 {
     // Unimplemented function
     assert(0);
@@ -1304,8 +1318,8 @@ void mglBufferStorage(GLMContext ctx, GLenum target, GLsizeiptr size, const void
         ERROR_RETURN(GL_INVALID_OPERATION);
     }
 
-    if (storage_flags & ~(GL_DYNAMIC_STORAGE_BIT | GL_MAP_READ_BIT | GL_MAP_WRITE_BIT | GL_MAP_PERSISTENT_BIT | GL_MAP_COHERENT_BIT |
-                  GL_CLIENT_STORAGE_BIT))
+    if (storage_flags & ~(GL_DYNAMIC_STORAGE_BIT | GL_MAP_READ_BIT | GL_MAP_WRITE_BIT | GL_MAP_PERSISTENT_BIT |
+                          GL_MAP_COHERENT_BIT | GL_CLIENT_STORAGE_BIT))
     {
         ERROR_RETURN(GL_INVALID_VALUE);
     }
@@ -1332,8 +1346,8 @@ void mglNamedBufferStorage(GLMContext ctx, GLuint buffer, GLsizeiptr size, const
         ERROR_RETURN(GL_INVALID_OPERATION);
     }
 
-    if (storage_flags & ~(GL_DYNAMIC_STORAGE_BIT | GL_MAP_READ_BIT | GL_MAP_WRITE_BIT | GL_MAP_PERSISTENT_BIT | GL_MAP_COHERENT_BIT |
-                  GL_CLIENT_STORAGE_BIT))
+    if (storage_flags & ~(GL_DYNAMIC_STORAGE_BIT | GL_MAP_READ_BIT | GL_MAP_WRITE_BIT | GL_MAP_PERSISTENT_BIT |
+                          GL_MAP_COHERENT_BIT | GL_CLIENT_STORAGE_BIT))
     {
         ERROR_RETURN(GL_INVALID_VALUE);
     }
@@ -1369,49 +1383,49 @@ void mglGetBufferParameteriv(GLMContext ctx, GLenum target, GLenum pname, GLint 
 
     ERROR_CHECK_RETURN((ptr != NULL), GL_INVALID_OPERATION);
 
-    switch(pname)
+    switch (pname)
     {
-        case GL_BUFFER_ACCESS:
-            *params = ptr->access;
-            break;
+    case GL_BUFFER_ACCESS:
+        *params = ptr->access;
+        break;
 
-        case GL_BUFFER_ACCESS_FLAGS:
-            *params = ptr->access_flags;
-            break;
+    case GL_BUFFER_ACCESS_FLAGS:
+        *params = ptr->access_flags;
+        break;
 
-        case GL_BUFFER_IMMUTABLE_STORAGE:
-            break;
+    case GL_BUFFER_IMMUTABLE_STORAGE:
+        break;
 
-        case GL_BUFFER_MAPPED:
-            *params = ptr->mapped;
-            break;
+    case GL_BUFFER_MAPPED:
+        *params = ptr->mapped;
+        break;
 
-        case GL_BUFFER_MAP_LENGTH:
-            assert(ptr->mapped_length < INT_MAX);
-            *params = (GLint)ptr->mapped_length;
-            break;
+    case GL_BUFFER_MAP_LENGTH:
+        assert(ptr->mapped_length < INT_MAX);
+        *params = (GLint)ptr->mapped_length;
+        break;
 
-        case GL_BUFFER_MAP_OFFSET:
-            assert(ptr->mapped_offset < INT_MAX);
-            *params = (GLint)ptr->mapped_offset;
-            break;
+    case GL_BUFFER_MAP_OFFSET:
+        assert(ptr->mapped_offset < INT_MAX);
+        *params = (GLint)ptr->mapped_offset;
+        break;
 
-        case GL_BUFFER_SIZE:
-            assert(ptr->size < INT_MAX);
-            *params = (GLint)ptr->size;
-            break;
+    case GL_BUFFER_SIZE:
+        assert(ptr->size < INT_MAX);
+        *params = (GLint)ptr->size;
+        break;
 
-        case GL_BUFFER_STORAGE_FLAGS:
-            *params = ptr->storage_flags;
-            break;
+    case GL_BUFFER_STORAGE_FLAGS:
+        *params = ptr->storage_flags;
+        break;
 
-        case GL_BUFFER_USAGE:
-            *params = ptr->usage;
-            break;
+    case GL_BUFFER_USAGE:
+        *params = ptr->usage;
+        break;
 
-        default:
-            ERROR_RETURN(GL_INVALID_ENUM);
-            break;
+    default:
+        ERROR_RETURN(GL_INVALID_ENUM);
+        break;
     }
 }
 
@@ -1423,14 +1437,14 @@ void mglGetBufferPointerv(GLMContext ctx, GLenum target, GLenum pname, void **pa
     // GL_INVALID_ENUM is generated if target is not supported.
     ERROR_CHECK_RETURN(checkTarget(ctx, target), GL_INVALID_ENUM);
 
-    switch(pname)
+    switch (pname)
     {
-        case GL_BUFFER_MAP_POINTER:
-            break;
+    case GL_BUFFER_MAP_POINTER:
+        break;
 
-        default:
-            ERROR_RETURN(GL_INVALID_ENUM);
-            break;
+    default:
+        ERROR_RETURN(GL_INVALID_ENUM);
+        break;
     }
 
     ERROR_CHECK_RETURN((params != NULL), GL_INVALID_OPERATION);
@@ -1440,9 +1454,12 @@ void mglGetBufferPointerv(GLMContext ctx, GLenum target, GLenum pname, void **pa
 
     ERROR_CHECK_RETURN((ptr != NULL), GL_INVALID_OPERATION);
 
-    if (ptr->mapped) {
+    if (ptr->mapped)
+    {
         *params = (void *)ptr->data.buffer_data;
-    } else {
+    }
+    else
+    {
         *params = NULL;
     }
 }
@@ -1497,29 +1514,28 @@ void mglGetNamedBufferParameteriv(GLMContext ctx, GLuint buffer, GLenum pname, G
         ERROR_RETURN(GL_INVALID_OPERATION);
     }
 
-
     ERROR_CHECK_RETURN(params == NULL, GL_INVALID_ENUM);
 
-    switch(pname)
+    switch (pname)
     {
-        case GL_BUFFER_ACCESS:
-            *params = ptr->access;
-            break;
+    case GL_BUFFER_ACCESS:
+        *params = ptr->access;
+        break;
 
-        case GL_BUFFER_MAPPED:
-            *params = ptr->mapped;
-            break;
+    case GL_BUFFER_MAPPED:
+        *params = ptr->mapped;
+        break;
 
-        case GL_BUFFER_SIZE:
-            *params = (GLint)ptr->size;
-            break;
+    case GL_BUFFER_SIZE:
+        *params = (GLint)ptr->size;
+        break;
 
-        case GL_BUFFER_USAGE:
-            *params = ptr->usage;
-            break;
+    case GL_BUFFER_USAGE:
+        *params = ptr->usage;
+        break;
 
-        default:
-            ERROR_RETURN(GL_INVALID_OPERATION);
+    default:
+        ERROR_RETURN(GL_INVALID_OPERATION);
     }
 }
 
@@ -1533,45 +1549,44 @@ void mglGetNamedBufferParameteri64v(GLMContext ctx, GLuint buffer, GLenum pname,
         ERROR_RETURN(GL_INVALID_OPERATION);
     }
 
-
     ERROR_CHECK_RETURN(params == NULL, GL_INVALID_ENUM);
 
-    switch(pname)
+    switch (pname)
     {
-        case GL_BUFFER_ACCESS:
-            *params = ptr->access;
-            break;
+    case GL_BUFFER_ACCESS:
+        *params = ptr->access;
+        break;
 
-        case GL_BUFFER_ACCESS_FLAGS:
-            *params = ptr->access_flags;
-            break;
+    case GL_BUFFER_ACCESS_FLAGS:
+        *params = ptr->access_flags;
+        break;
 
-        case GL_BUFFER_IMMUTABLE_STORAGE:
-            *params = ptr->immutable_storage;
-            break;
+    case GL_BUFFER_IMMUTABLE_STORAGE:
+        *params = ptr->immutable_storage;
+        break;
 
-        case GL_BUFFER_MAPPED:
-            *params = ptr->mapped;
-            break;
+    case GL_BUFFER_MAPPED:
+        *params = ptr->mapped;
+        break;
 
-        case GL_BUFFER_MAP_LENGTH:
-            *params = ptr->mapped_length;
-            break;
+    case GL_BUFFER_MAP_LENGTH:
+        *params = ptr->mapped_length;
+        break;
 
-        case GL_BUFFER_MAP_OFFSET:
-            *params = ptr->mapped_offset;
-            break;
+    case GL_BUFFER_MAP_OFFSET:
+        *params = ptr->mapped_offset;
+        break;
 
-        case GL_BUFFER_SIZE:
-            *params = ptr->size;
-            break;
+    case GL_BUFFER_SIZE:
+        *params = ptr->size;
+        break;
 
-        case GL_BUFFER_USAGE:
-            *params = ptr->usage;
-            break;
+    case GL_BUFFER_USAGE:
+        *params = ptr->usage;
+        break;
 
-        default:
-            ERROR_RETURN(GL_INVALID_OPERATION);
+    default:
+        ERROR_RETURN(GL_INVALID_OPERATION);
     }
 }
 
@@ -1586,4 +1601,3 @@ void mglGetNamedBufferSubData(GLMContext ctx, GLuint buffer, GLintptr offset, GL
     // Unimplemented function
     assert(0);
 }
-

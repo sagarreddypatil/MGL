@@ -26,21 +26,21 @@
 
 bool check_draw_modes(GLenum mode)
 {
-    switch(mode)
+    switch (mode)
     {
-        case GL_POINTS:
-        case GL_LINE_STRIP:
-        case GL_LINE_LOOP:
-        case GL_LINES:
-        case GL_LINE_STRIP_ADJACENCY:
-        case GL_LINES_ADJACENCY:
-        case GL_TRIANGLE_STRIP:
-        case GL_TRIANGLE_FAN:
-        case GL_TRIANGLES:
-        case GL_TRIANGLE_STRIP_ADJACENCY:
-        case GL_TRIANGLES_ADJACENCY:
-        case GL_PATCHES:
-            return true;
+    case GL_POINTS:
+    case GL_LINE_STRIP:
+    case GL_LINE_LOOP:
+    case GL_LINES:
+    case GL_LINE_STRIP_ADJACENCY:
+    case GL_LINES_ADJACENCY:
+    case GL_TRIANGLE_STRIP:
+    case GL_TRIANGLE_FAN:
+    case GL_TRIANGLES:
+    case GL_TRIANGLE_STRIP_ADJACENCY:
+    case GL_TRIANGLES_ADJACENCY:
+    case GL_PATCHES:
+        return true;
     }
 
     // need to verify against geometry shaders when I get there
@@ -50,11 +50,11 @@ bool check_draw_modes(GLenum mode)
 
 bool check_element_type(GLenum mode)
 {
-    switch(mode)
+    switch (mode)
     {
-        case GL_UNSIGNED_SHORT:
-        case GL_UNSIGNED_INT:
-            return true;
+    case GL_UNSIGNED_SHORT:
+    case GL_UNSIGNED_INT:
+        return true;
     }
 
     return false;
@@ -70,7 +70,7 @@ bool processVAO(GLMContext ctx)
     if (vao->dirty_bits & DIRTY_VAO_BUFFER_BASE)
     {
         // map buffer bindings to vertex array
-        for(int i=0; i<ctx->state.max_vertex_attribs; i++)
+        for (int i = 0; i < ctx->state.max_vertex_attribs; i++)
         {
             if (vao->enabled_attribs & (0x1 << i))
             {
@@ -82,7 +82,7 @@ bool processVAO(GLMContext ctx)
             }
 
             // early out
-            if ((VAO_STATE(enabled_attribs) >> (i+1)) == 0)
+            if ((VAO_STATE(enabled_attribs) >> (i + 1)) == 0)
                 break;
         }
 
@@ -110,7 +110,7 @@ bool validate_vao(GLMContext ctx, bool uses_elements)
 
     enabled_attribs = ctx->state.vao->enabled_attribs;
 
-    int i=0;
+    int i = 0;
     do
     {
         if (enabled_attribs & 0x1)
@@ -122,7 +122,7 @@ bool validate_vao(GLMContext ctx, bool uses_elements)
 
         i++;
         enabled_attribs >>= 1;
-    } while(enabled_attribs);
+    } while (enabled_attribs);
 
     if (uses_elements)
     {
@@ -146,13 +146,13 @@ bool validate_program(GLMContext ctx)
 
 GLsizei getTypeSize(GLenum type)
 {
-    switch(type)
+    switch (type)
     {
-        case GL_UNSIGNED_SHORT:
-            return sizeof(unsigned short);
+    case GL_UNSIGNED_SHORT:
+        return sizeof(unsigned short);
 
-        case GL_UNSIGNED_INT:
-            return sizeof(unsigned int);
+    case GL_UNSIGNED_INT:
+        return sizeof(unsigned int);
     }
 
     assert(0);
@@ -168,7 +168,7 @@ void mglDrawArrays(GLMContext ctx, GLenum mode, GLint first, GLsizei count)
 
     ERROR_CHECK_RETURN(count > 0, GL_INVALID_VALUE);
 
-    if(validate_vao(ctx, false) == false)
+    if (validate_vao(ctx, false) == false)
     {
         ERROR_RETURN(GL_INVALID_OPERATION);
     }
@@ -186,7 +186,7 @@ void mglDrawElements(GLMContext ctx, GLenum mode, GLsizei count, GLenum type, co
 
     ERROR_CHECK_RETURN(check_element_type(type), GL_INVALID_VALUE);
 
-    if(validate_vao(ctx, true) == false)
+    if (validate_vao(ctx, true) == false)
     {
         ERROR_RETURN(GL_INVALID_OPERATION);
     }
@@ -196,7 +196,8 @@ void mglDrawElements(GLMContext ctx, GLenum mode, GLsizei count, GLenum type, co
     ctx->mtl_funcs.mtlDrawElements(ctx, mode, count, type, indices);
 }
 
-void mglDrawRangeElements(GLMContext ctx, GLenum mode, GLuint start, GLuint end, GLsizei count, GLenum type, const void *indices)
+void mglDrawRangeElements(GLMContext ctx, GLenum mode, GLuint start, GLuint end, GLsizei count, GLenum type,
+                          const void *indices)
 {
     ERROR_CHECK_RETURN(check_draw_modes(mode), GL_INVALID_ENUM);
 
@@ -206,7 +207,7 @@ void mglDrawRangeElements(GLMContext ctx, GLenum mode, GLuint start, GLuint end,
 
     ERROR_CHECK_RETURN(check_element_type(type), GL_INVALID_VALUE);
 
-    if(validate_vao(ctx, true) == false)
+    if (validate_vao(ctx, true) == false)
     {
         ERROR_RETURN(GL_INVALID_OPERATION);
     }
@@ -226,7 +227,7 @@ void mglDrawArraysInstanced(GLMContext ctx, GLenum mode, GLint first, GLsizei co
 
     ERROR_CHECK_RETURN(instancecount > 0, GL_INVALID_VALUE);
 
-    if(validate_vao(ctx, false) == false)
+    if (validate_vao(ctx, false) == false)
     {
         ERROR_RETURN(GL_INVALID_OPERATION);
     }
@@ -236,7 +237,8 @@ void mglDrawArraysInstanced(GLMContext ctx, GLenum mode, GLint first, GLsizei co
     ctx->mtl_funcs.mtlDrawArraysInstanced(ctx, mode, first, count, instancecount);
 }
 
-void mglDrawElementsInstanced(GLMContext ctx, GLenum mode, GLsizei count, GLenum type, const void *indices, GLsizei instancecount)
+void mglDrawElementsInstanced(GLMContext ctx, GLenum mode, GLsizei count, GLenum type, const void *indices,
+                              GLsizei instancecount)
 {
     ERROR_CHECK_RETURN(check_draw_modes(mode), GL_INVALID_ENUM);
 
@@ -246,7 +248,7 @@ void mglDrawElementsInstanced(GLMContext ctx, GLenum mode, GLsizei count, GLenum
 
     ERROR_CHECK_RETURN(instancecount > 0, GL_INVALID_VALUE);
 
-    if(validate_vao(ctx, true) == false)
+    if (validate_vao(ctx, true) == false)
     {
         ERROR_RETURN(GL_INVALID_OPERATION);
     }
@@ -256,7 +258,8 @@ void mglDrawElementsInstanced(GLMContext ctx, GLenum mode, GLsizei count, GLenum
     ctx->mtl_funcs.mtlDrawElementsInstanced(ctx, mode, count, type, indices, instancecount);
 }
 
-void mglDrawElementsBaseVertex(GLMContext ctx, GLenum mode, GLsizei count, GLenum type, const void *indices, GLint basevertex)
+void mglDrawElementsBaseVertex(GLMContext ctx, GLenum mode, GLsizei count, GLenum type, const void *indices,
+                               GLint basevertex)
 {
     ERROR_CHECK_RETURN(check_draw_modes(mode), GL_INVALID_ENUM);
 
@@ -264,7 +267,7 @@ void mglDrawElementsBaseVertex(GLMContext ctx, GLenum mode, GLsizei count, GLenu
 
     ERROR_CHECK_RETURN(check_element_type(type), GL_INVALID_VALUE);
 
-    if(validate_vao(ctx, true) == false)
+    if (validate_vao(ctx, true) == false)
     {
         ERROR_RETURN(GL_INVALID_OPERATION);
     }
@@ -274,7 +277,8 @@ void mglDrawElementsBaseVertex(GLMContext ctx, GLenum mode, GLsizei count, GLenu
     ctx->mtl_funcs.mtlDrawElementsBaseVertex(ctx, mode, count, type, indices, basevertex);
 }
 
-void mglDrawRangeElementsBaseVertex(GLMContext ctx, GLenum mode, GLuint start, GLuint end, GLsizei count, GLenum type, const void *indices, GLint basevertex)
+void mglDrawRangeElementsBaseVertex(GLMContext ctx, GLenum mode, GLuint start, GLuint end, GLsizei count, GLenum type,
+                                    const void *indices, GLint basevertex)
 {
     ERROR_CHECK_RETURN(check_draw_modes(mode), GL_INVALID_ENUM);
 
@@ -284,7 +288,7 @@ void mglDrawRangeElementsBaseVertex(GLMContext ctx, GLenum mode, GLuint start, G
 
     ERROR_CHECK_RETURN(end > start, GL_INVALID_VALUE);
 
-    if(validate_vao(ctx, true) == false)
+    if (validate_vao(ctx, true) == false)
     {
         ERROR_RETURN(GL_INVALID_OPERATION);
     }
@@ -294,7 +298,8 @@ void mglDrawRangeElementsBaseVertex(GLMContext ctx, GLenum mode, GLuint start, G
     ctx->mtl_funcs.mtlDrawRangeElementsBaseVertex(ctx, mode, start, end, count, type, indices, basevertex);
 }
 
-void mglDrawElementsInstancedBaseVertex(GLMContext ctx, GLenum mode, GLsizei count, GLenum type, const void *indices, GLsizei instancecount, GLint basevertex)
+void mglDrawElementsInstancedBaseVertex(GLMContext ctx, GLenum mode, GLsizei count, GLenum type, const void *indices,
+                                        GLsizei instancecount, GLint basevertex)
 {
     ERROR_CHECK_RETURN(check_draw_modes(mode), GL_INVALID_ENUM);
 
@@ -302,7 +307,7 @@ void mglDrawElementsInstancedBaseVertex(GLMContext ctx, GLenum mode, GLsizei cou
 
     ERROR_CHECK_RETURN(instancecount > 0, GL_INVALID_VALUE);
 
-    if(validate_vao(ctx, true) == false)
+    if (validate_vao(ctx, true) == false)
     {
         ERROR_RETURN(GL_INVALID_OPERATION);
     }
@@ -318,7 +323,7 @@ void mglDrawArraysIndirect(GLMContext ctx, GLenum mode, const void *indirect)
 
     ERROR_CHECK_RETURN(STATE(buffers[_DRAW_INDIRECT_BUFFER]), GL_INVALID_OPERATION);
 
-    if(validate_vao(ctx, false) == false)
+    if (validate_vao(ctx, false) == false)
     {
         ERROR_RETURN(GL_INVALID_OPERATION);
     }
@@ -334,7 +339,7 @@ void mglDrawElementsIndirect(GLMContext ctx, GLenum mode, GLenum type, const voi
 
     ERROR_CHECK_RETURN(check_element_type(type), GL_INVALID_VALUE);
 
-    if(validate_vao(ctx, true) == false)
+    if (validate_vao(ctx, true) == false)
     {
         ERROR_RETURN(GL_INVALID_OPERATION);
     }
@@ -346,7 +351,8 @@ void mglDrawElementsIndirect(GLMContext ctx, GLenum mode, GLenum type, const voi
     ctx->mtl_funcs.mtlDrawArraysIndirect(ctx, mode, indirect);
 }
 
-void mglDrawArraysInstancedBaseInstance(GLMContext ctx, GLenum mode, GLint first, GLsizei count, GLsizei instancecount, GLuint baseinstance)
+void mglDrawArraysInstancedBaseInstance(GLMContext ctx, GLenum mode, GLint first, GLsizei count, GLsizei instancecount,
+                                        GLuint baseinstance)
 {
     ERROR_CHECK_RETURN(first >= 0, GL_INVALID_VALUE);
 
@@ -358,7 +364,7 @@ void mglDrawArraysInstancedBaseInstance(GLMContext ctx, GLenum mode, GLint first
 
     ERROR_CHECK_RETURN(check_draw_modes(mode), GL_INVALID_ENUM);
 
-    if(validate_vao(ctx, false) == false)
+    if (validate_vao(ctx, false) == false)
     {
         ERROR_RETURN(GL_INVALID_OPERATION);
     }
@@ -368,7 +374,8 @@ void mglDrawArraysInstancedBaseInstance(GLMContext ctx, GLenum mode, GLint first
     ctx->mtl_funcs.mtlDrawArraysInstancedBaseInstance(ctx, mode, first, count, instancecount, baseinstance);
 }
 
-void mglDrawElementsInstancedBaseInstance(GLMContext ctx, GLenum mode, GLsizei count, GLenum type, const void *indices, GLsizei instancecount, GLuint baseinstance)
+void mglDrawElementsInstancedBaseInstance(GLMContext ctx, GLenum mode, GLsizei count, GLenum type, const void *indices,
+                                          GLsizei instancecount, GLuint baseinstance)
 {
     ERROR_CHECK_RETURN(count > 0, GL_INVALID_VALUE);
 
@@ -380,7 +387,7 @@ void mglDrawElementsInstancedBaseInstance(GLMContext ctx, GLenum mode, GLsizei c
 
     ERROR_CHECK_RETURN(check_element_type(type), GL_INVALID_VALUE);
 
-    if(validate_vao(ctx, true) == false)
+    if (validate_vao(ctx, true) == false)
     {
         ERROR_RETURN(GL_INVALID_OPERATION);
     }
@@ -390,7 +397,9 @@ void mglDrawElementsInstancedBaseInstance(GLMContext ctx, GLenum mode, GLsizei c
     ctx->mtl_funcs.mtlDrawElementsInstancedBaseInstance(ctx, mode, count, type, indices, instancecount, baseinstance);
 }
 
-void mglDrawElementsInstancedBaseVertexBaseInstance(GLMContext ctx, GLenum mode, GLsizei count, GLenum type, const void *indices, GLsizei instancecount, GLint basevertex, GLuint baseinstance)
+void mglDrawElementsInstancedBaseVertexBaseInstance(GLMContext ctx, GLenum mode, GLsizei count, GLenum type,
+                                                    const void *indices, GLsizei instancecount, GLint basevertex,
+                                                    GLuint baseinstance)
 {
     ERROR_CHECK_RETURN(count > 0, GL_INVALID_VALUE);
 
@@ -402,21 +411,22 @@ void mglDrawElementsInstancedBaseVertexBaseInstance(GLMContext ctx, GLenum mode,
 
     ERROR_CHECK_RETURN(check_element_type(type), GL_INVALID_VALUE);
 
-    if(validate_vao(ctx, true) == false)
+    if (validate_vao(ctx, true) == false)
     {
         ERROR_RETURN(GL_INVALID_OPERATION);
     }
 
     ERROR_CHECK_RETURN(validate_program(ctx), GL_INVALID_OPERATION);
 
-    ctx->mtl_funcs.mtlDrawElementsInstancedBaseVertexBaseInstance(ctx, mode, count, type, indices, instancecount, basevertex, baseinstance);
+    ctx->mtl_funcs.mtlDrawElementsInstancedBaseVertexBaseInstance(ctx, mode, count, type, indices, instancecount,
+                                                                  basevertex, baseinstance);
 }
 
 void mglMultiDrawArrays(GLMContext ctx, GLenum mode, const GLint *first, const GLsizei *count, GLsizei drawcount)
 {
     ERROR_CHECK_RETURN(check_draw_modes(mode), GL_INVALID_ENUM);
 
-    if(validate_vao(ctx, false) == false)
+    if (validate_vao(ctx, false) == false)
     {
         ERROR_RETURN(GL_INVALID_OPERATION);
     }
@@ -426,7 +436,8 @@ void mglMultiDrawArrays(GLMContext ctx, GLenum mode, const GLint *first, const G
     ctx->mtl_funcs.mtlMultiDrawArrays(ctx, mode, first, count, drawcount);
 }
 
-void mglMultiDrawElements(GLMContext ctx, GLenum mode, const GLsizei *count, GLenum type, const void *const*indices, GLsizei drawcount)
+void mglMultiDrawElements(GLMContext ctx, GLenum mode, const GLsizei *count, GLenum type, const void *const *indices,
+                          GLsizei drawcount)
 {
     ERROR_CHECK_RETURN(check_draw_modes(mode), GL_INVALID_ENUM);
 
@@ -436,7 +447,7 @@ void mglMultiDrawElements(GLMContext ctx, GLenum mode, const GLsizei *count, GLe
 
     ERROR_CHECK_RETURN(check_element_type(type), GL_INVALID_VALUE);
 
-    if(validate_vao(ctx, true) == false)
+    if (validate_vao(ctx, true) == false)
     {
         ERROR_RETURN(GL_INVALID_OPERATION);
     }
@@ -446,7 +457,8 @@ void mglMultiDrawElements(GLMContext ctx, GLenum mode, const GLsizei *count, GLe
     ctx->mtl_funcs.mtlMultiDrawElements(ctx, mode, count, type, indices, drawcount);
 }
 
-void mglMultiDrawElementsBaseVertex(GLMContext ctx, GLenum mode, const GLsizei *count, GLenum type, const void *const*indices, GLsizei drawcount, const GLint *basevertex)
+void mglMultiDrawElementsBaseVertex(GLMContext ctx, GLenum mode, const GLsizei *count, GLenum type,
+                                    const void *const *indices, GLsizei drawcount, const GLint *basevertex)
 {
     ERROR_CHECK_RETURN(check_draw_modes(mode), GL_INVALID_ENUM);
 
@@ -456,7 +468,7 @@ void mglMultiDrawElementsBaseVertex(GLMContext ctx, GLenum mode, const GLsizei *
 
     ERROR_CHECK_RETURN(check_element_type(type), GL_INVALID_VALUE);
 
-    if(validate_vao(ctx, true) == false)
+    if (validate_vao(ctx, true) == false)
     {
         ERROR_RETURN(GL_INVALID_OPERATION);
     }
@@ -474,7 +486,7 @@ void mglMultiDrawArraysIndirect(GLMContext ctx, GLenum mode, const void *indirec
 
     ERROR_CHECK_RETURN(stride % 4 == 0, GL_INVALID_VALUE);
 
-    if(validate_vao(ctx, false) == false)
+    if (validate_vao(ctx, false) == false)
     {
         ERROR_RETURN(GL_INVALID_OPERATION);
     }
@@ -486,7 +498,8 @@ void mglMultiDrawArraysIndirect(GLMContext ctx, GLenum mode, const void *indirec
     ctx->mtl_funcs.mtlMultiDrawArraysIndirect(ctx, mode, indirect, drawcount, stride);
 }
 
-void mglMultiDrawElementsIndirect(GLMContext ctx, GLenum mode, GLenum type, const void *indirect, GLsizei drawcount, GLsizei stride)
+void mglMultiDrawElementsIndirect(GLMContext ctx, GLenum mode, GLenum type, const void *indirect, GLsizei drawcount,
+                                  GLsizei stride)
 {
     ERROR_CHECK_RETURN(check_draw_modes(mode), GL_INVALID_ENUM);
 
@@ -496,7 +509,7 @@ void mglMultiDrawElementsIndirect(GLMContext ctx, GLenum mode, GLenum type, cons
 
     ERROR_CHECK_RETURN(check_element_type(type), GL_INVALID_VALUE);
 
-    if(validate_vao(ctx, true) == false)
+    if (validate_vao(ctx, true) == false)
     {
         ERROR_RETURN(GL_INVALID_OPERATION);
     }
@@ -507,4 +520,3 @@ void mglMultiDrawElementsIndirect(GLMContext ctx, GLenum mode, GLenum type, cons
 
     ctx->mtl_funcs.mtlMultiDrawElementsIndirect(ctx, mode, type, indirect, drawcount, stride);
 }
-

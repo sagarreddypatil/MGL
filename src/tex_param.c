@@ -27,131 +27,131 @@ Texture *getTex(GLMContext ctx, GLuint name, GLenum target);
 #pragma mark set params
 bool setTexParmi(GLMContext ctx, TextureParameter *tex_params, GLenum pname, const GLint *param)
 {
-    switch(pname)
+    switch (pname)
     {
-        case GL_DEPTH_STENCIL_TEXTURE_MODE:
-            switch(*param)
-            {
-                case GL_DEPTH_COMPONENT:
-                case GL_STENCIL_INDEX:
-                    tex_params->depth_stencil_mode = *param;
-                    break;
-
-                default:
-                    assert(0);
-            }
-            break;
-
-        case GL_TEXTURE_BASE_LEVEL:
-            tex_params->base_level = *param;
-            // need to compare this against something...
-            break;
-
-        case GL_TEXTURE_COMPARE_FUNC:
-            switch(*param)
-            {
-                case GL_LEQUAL:
-                case GL_GEQUAL:
-                case GL_LESS:
-                case GL_GREATER:
-                case GL_EQUAL:
-                case GL_NOTEQUAL:
-                case GL_ALWAYS:
-                case GL_NEVER:
-                    tex_params->compare_func = *param;
-                    break;
-
-                default:
-                    assert(0);
-            }
-            break;
-
-        case GL_TEXTURE_COMPARE_MODE:
-            switch(*param)
-            {
-                case GL_COMPARE_REF_TO_TEXTURE:
-                case GL_NONE:
-                    tex_params->compare_mode = *param;
-                    break;
-
-                default:
-                    assert(0);
-            }
-            break;
-
-        case GL_TEXTURE_MIN_FILTER:
-            switch(*param)
-            {
-                case GL_NEAREST:
-                case GL_LINEAR:
-                case GL_NEAREST_MIPMAP_NEAREST:
-                case GL_LINEAR_MIPMAP_NEAREST:
-                case GL_NEAREST_MIPMAP_LINEAR:
-                case GL_LINEAR_MIPMAP_LINEAR:
-                    tex_params->min_filter = *param;
-                    break;
-
-                default:
-                    assert(0);
-            }
-            break;
-
-        case GL_TEXTURE_MAG_FILTER:
-            switch(*param)
-            {
-                case GL_NEAREST:
-                case GL_LINEAR:
-                    tex_params->mag_filter = *param;
-                    break;
-
-                default:
-                    assert(0);
-            }
-            break;
-
-        case GL_TEXTURE_MIN_LOD:
-            tex_params->min_lod = *param;
-            break;
-
-        case GL_TEXTURE_MAX_LOD:
-            tex_params->max_lod = *param;
-            break;
-
-        case GL_TEXTURE_MAX_LEVEL:
-            tex_params->max_level = *param;
-            break;
-
-        case GL_TEXTURE_SWIZZLE_R:
-            tex_params->swizzle_r = *param;
-            break;
-
-        case GL_TEXTURE_SWIZZLE_G:
-            tex_params->swizzle_g = *param;
-            break;
-
-        case GL_TEXTURE_SWIZZLE_B:
-            tex_params->swizzle_b = *param;
-            break;
-
-        case GL_TEXTURE_SWIZZLE_A:
-            tex_params->swizzle_a = *param;
-            break;
-
-        case GL_TEXTURE_WRAP_S:
-            tex_params->wrap_s = *param;
-            break;
-
-        case GL_TEXTURE_WRAP_T:
-            tex_params->wrap_t = *param;
-            break;
-
-        case GL_TEXTURE_WRAP_R:
-            tex_params->wrap_r = *param;
+    case GL_DEPTH_STENCIL_TEXTURE_MODE:
+        switch (*param)
+        {
+        case GL_DEPTH_COMPONENT:
+        case GL_STENCIL_INDEX:
+            tex_params->depth_stencil_mode = *param;
             break;
 
         default:
-            return false;
+            assert(0);
+        }
+        break;
+
+    case GL_TEXTURE_BASE_LEVEL:
+        tex_params->base_level = *param;
+        // need to compare this against something...
+        break;
+
+    case GL_TEXTURE_COMPARE_FUNC:
+        switch (*param)
+        {
+        case GL_LEQUAL:
+        case GL_GEQUAL:
+        case GL_LESS:
+        case GL_GREATER:
+        case GL_EQUAL:
+        case GL_NOTEQUAL:
+        case GL_ALWAYS:
+        case GL_NEVER:
+            tex_params->compare_func = *param;
             break;
+
+        default:
+            assert(0);
+        }
+        break;
+
+    case GL_TEXTURE_COMPARE_MODE:
+        switch (*param)
+        {
+        case GL_COMPARE_REF_TO_TEXTURE:
+        case GL_NONE:
+            tex_params->compare_mode = *param;
+            break;
+
+        default:
+            assert(0);
+        }
+        break;
+
+    case GL_TEXTURE_MIN_FILTER:
+        switch (*param)
+        {
+        case GL_NEAREST:
+        case GL_LINEAR:
+        case GL_NEAREST_MIPMAP_NEAREST:
+        case GL_LINEAR_MIPMAP_NEAREST:
+        case GL_NEAREST_MIPMAP_LINEAR:
+        case GL_LINEAR_MIPMAP_LINEAR:
+            tex_params->min_filter = *param;
+            break;
+
+        default:
+            assert(0);
+        }
+        break;
+
+    case GL_TEXTURE_MAG_FILTER:
+        switch (*param)
+        {
+        case GL_NEAREST:
+        case GL_LINEAR:
+            tex_params->mag_filter = *param;
+            break;
+
+        default:
+            assert(0);
+        }
+        break;
+
+    case GL_TEXTURE_MIN_LOD:
+        tex_params->min_lod = *param;
+        break;
+
+    case GL_TEXTURE_MAX_LOD:
+        tex_params->max_lod = *param;
+        break;
+
+    case GL_TEXTURE_MAX_LEVEL:
+        tex_params->max_level = *param;
+        break;
+
+    case GL_TEXTURE_SWIZZLE_R:
+        tex_params->swizzle_r = *param;
+        break;
+
+    case GL_TEXTURE_SWIZZLE_G:
+        tex_params->swizzle_g = *param;
+        break;
+
+    case GL_TEXTURE_SWIZZLE_B:
+        tex_params->swizzle_b = *param;
+        break;
+
+    case GL_TEXTURE_SWIZZLE_A:
+        tex_params->swizzle_a = *param;
+        break;
+
+    case GL_TEXTURE_WRAP_S:
+        tex_params->wrap_s = *param;
+        break;
+
+    case GL_TEXTURE_WRAP_T:
+        tex_params->wrap_t = *param;
+        break;
+
+    case GL_TEXTURE_WRAP_R:
+        tex_params->wrap_r = *param;
+        break;
+
+    default:
+        return false;
+        break;
     }
 
     return true;
@@ -159,34 +159,31 @@ bool setTexParmi(GLMContext ctx, TextureParameter *tex_params, GLenum pname, con
 
 bool setTexParamsi(GLMContext ctx, TextureParameter *tex_params, GLenum pname, const GLint *params)
 {
-    switch(pname)
+    switch (pname)
     {
-        case GL_TEXTURE_BORDER_COLOR:
-            for(int i=0; i<4; i++)
-                tex_params->border_color[i] = (GLint)params[i];
-            break;
+    case GL_TEXTURE_BORDER_COLOR:
+        for (int i = 0; i < 4; i++)
+            tex_params->border_color[i] = (GLint)params[i];
+        break;
 
-        case GL_TEXTURE_SWIZZLE_RGBA:
-         if ((params[0] != GL_RED) ||
-             (params[1] != GL_GREEN) ||
-             (params[2] != GL_BLUE) ||
-             (params[3] != GL_ALPHA))
-            {
-                tex_params->swizzled = true;
-                tex_params->swizzle_r = params[0];
-                tex_params->swizzle_g = params[1];
-                tex_params->swizzle_b = params[2];
-                tex_params->swizzle_a = params[3];
-            }
-            else
-            {
-                tex_params->swizzled = false;
-            }
-            break;
+    case GL_TEXTURE_SWIZZLE_RGBA:
+        if ((params[0] != GL_RED) || (params[1] != GL_GREEN) || (params[2] != GL_BLUE) || (params[3] != GL_ALPHA))
+        {
+            tex_params->swizzled = true;
+            tex_params->swizzle_r = params[0];
+            tex_params->swizzle_g = params[1];
+            tex_params->swizzle_b = params[2];
+            tex_params->swizzle_a = params[3];
+        }
+        else
+        {
+            tex_params->swizzled = false;
+        }
+        break;
 
-        default:
-            return false;
-            break;
+    default:
+        return false;
+        break;
     }
 
     return true;
@@ -194,16 +191,16 @@ bool setTexParamsi(GLMContext ctx, TextureParameter *tex_params, GLenum pname, c
 
 bool setTexParamsIiv(GLMContext ctx, TextureParameter *tex_params, GLenum pname, const GLint *params)
 {
-    switch(pname)
+    switch (pname)
     {
-        case GL_TEXTURE_BORDER_COLOR:
-            for(int i=0; i<4; i++)
-                tex_params->border_color_i[i] = params[i];
-            break;
+    case GL_TEXTURE_BORDER_COLOR:
+        for (int i = 0; i < 4; i++)
+            tex_params->border_color_i[i] = params[i];
+        break;
 
-        default:
-            return false;
-            break;
+    default:
+        return false;
+        break;
     }
 
     return true;
@@ -211,16 +208,16 @@ bool setTexParamsIiv(GLMContext ctx, TextureParameter *tex_params, GLenum pname,
 
 bool setTexParamsIuiv(GLMContext ctx, TextureParameter *tex_params, GLenum pname, const GLuint *params)
 {
-    switch(pname)
+    switch (pname)
     {
-        case GL_TEXTURE_BORDER_COLOR:
-            for(int i=0; i<4; i++)
-                tex_params->border_color_ui[i] = params[i];
-            break;
+    case GL_TEXTURE_BORDER_COLOR:
+        for (int i = 0; i < 4; i++)
+            tex_params->border_color_ui[i] = params[i];
+        break;
 
-        default:
-            return false;
-            break;
+    default:
+        return false;
+        break;
     }
 
     return true;
@@ -228,19 +225,19 @@ bool setTexParamsIuiv(GLMContext ctx, TextureParameter *tex_params, GLenum pname
 
 bool setTexParmf(GLMContext ctx, TextureParameter *tex_params, GLenum pname, const GLfloat *param)
 {
-    switch(pname)
+    switch (pname)
     {
-        case GL_TEXTURE_LOD_BIAS:
-            tex_params->lod_bias = *param;
-            break;
+    case GL_TEXTURE_LOD_BIAS:
+        tex_params->lod_bias = *param;
+        break;
 
-        case GL_TEXTURE_MAX_ANISOTROPY:
-            tex_params->max_anisotropy = *param;
-            break;
+    case GL_TEXTURE_MAX_ANISOTROPY:
+        tex_params->max_anisotropy = *param;
+        break;
 
-        default:
-            return false;
-            break;
+    default:
+        return false;
+        break;
     }
 
     return true;
@@ -248,23 +245,23 @@ bool setTexParmf(GLMContext ctx, TextureParameter *tex_params, GLenum pname, con
 
 bool setTexParamsf(GLMContext ctx, TextureParameter *tex_params, GLenum pname, const GLfloat *params)
 {
-    switch(pname)
+    switch (pname)
     {
-        case GL_TEXTURE_BORDER_COLOR:
-            for(int i=0; i<4; i++)
-                tex_params->border_color[i] = params[i];
-            break;
+    case GL_TEXTURE_BORDER_COLOR:
+        for (int i = 0; i < 4; i++)
+            tex_params->border_color[i] = params[i];
+        break;
 
-        case GL_TEXTURE_SWIZZLE_RGBA:
-            tex_params->swizzle_r = (GLint)params[0];
-            tex_params->swizzle_g = (GLint)params[1];
-            tex_params->swizzle_b = (GLint)params[2];
-            tex_params->swizzle_a = (GLint)params[3];
-            break;
+    case GL_TEXTURE_SWIZZLE_RGBA:
+        tex_params->swizzle_r = (GLint)params[0];
+        tex_params->swizzle_g = (GLint)params[1];
+        tex_params->swizzle_b = (GLint)params[2];
+        tex_params->swizzle_a = (GLint)params[3];
+        break;
 
-        default:
-            return false;
-            break;
+    default:
+        return false;
+        break;
     }
 
     return true;
@@ -273,77 +270,77 @@ bool setTexParamsf(GLMContext ctx, TextureParameter *tex_params, GLenum pname, c
 #pragma mark get params
 static bool getTexParmi(GLMContext ctx, TextureParameter *tex_params, const GLenum pname, GLint *ret)
 {
-    switch(pname)
+    switch (pname)
     {
-        case GL_DEPTH_STENCIL_TEXTURE_MODE:
-            *ret = tex_params->depth_stencil_mode;
-            break;
+    case GL_DEPTH_STENCIL_TEXTURE_MODE:
+        *ret = tex_params->depth_stencil_mode;
+        break;
 
-        case GL_TEXTURE_BASE_LEVEL:
-            *ret = tex_params->base_level;
-            // need to compare this against something...
-            break;
+    case GL_TEXTURE_BASE_LEVEL:
+        *ret = tex_params->base_level;
+        // need to compare this against something...
+        break;
 
-        case GL_TEXTURE_COMPARE_FUNC:
-            *ret = tex_params->compare_func;
-                break;
-            break;
+    case GL_TEXTURE_COMPARE_FUNC:
+        *ret = tex_params->compare_func;
+        break;
+        break;
 
-        case GL_TEXTURE_COMPARE_MODE:
-            *ret = tex_params->compare_mode;
-            break;
+    case GL_TEXTURE_COMPARE_MODE:
+        *ret = tex_params->compare_mode;
+        break;
 
-        case GL_TEXTURE_MIN_FILTER:
-            *ret = tex_params->min_filter;
-            break;
+    case GL_TEXTURE_MIN_FILTER:
+        *ret = tex_params->min_filter;
+        break;
 
-        case GL_TEXTURE_MAG_FILTER:
-            *ret = tex_params->mag_filter;
-            break;
+    case GL_TEXTURE_MAG_FILTER:
+        *ret = tex_params->mag_filter;
+        break;
 
-        case GL_TEXTURE_MIN_LOD:
-            *ret = tex_params->min_lod;
-            break;
+    case GL_TEXTURE_MIN_LOD:
+        *ret = tex_params->min_lod;
+        break;
 
-        case GL_TEXTURE_MAX_LOD:
-            *ret = tex_params->max_lod;
-            break;
+    case GL_TEXTURE_MAX_LOD:
+        *ret = tex_params->max_lod;
+        break;
 
-        case GL_TEXTURE_MAX_LEVEL:
-            *ret = tex_params->max_level;
-            break;
+    case GL_TEXTURE_MAX_LEVEL:
+        *ret = tex_params->max_level;
+        break;
 
-        case GL_TEXTURE_SWIZZLE_R:
-            *ret = tex_params->swizzle_r;
-            break;
+    case GL_TEXTURE_SWIZZLE_R:
+        *ret = tex_params->swizzle_r;
+        break;
 
-        case GL_TEXTURE_SWIZZLE_G:
-            *ret = tex_params->swizzle_g;
-            break;
+    case GL_TEXTURE_SWIZZLE_G:
+        *ret = tex_params->swizzle_g;
+        break;
 
-        case GL_TEXTURE_SWIZZLE_B:
-            *ret = tex_params->swizzle_b;
-            break;
+    case GL_TEXTURE_SWIZZLE_B:
+        *ret = tex_params->swizzle_b;
+        break;
 
-        case GL_TEXTURE_SWIZZLE_A:
-            *ret = tex_params->swizzle_a;
-            break;
+    case GL_TEXTURE_SWIZZLE_A:
+        *ret = tex_params->swizzle_a;
+        break;
 
-        case GL_TEXTURE_WRAP_S:
-            *ret = tex_params->wrap_s;
-            break;
+    case GL_TEXTURE_WRAP_S:
+        *ret = tex_params->wrap_s;
+        break;
 
-        case GL_TEXTURE_WRAP_T:
-            *ret = tex_params->wrap_t;
-            break;
+    case GL_TEXTURE_WRAP_T:
+        *ret = tex_params->wrap_t;
+        break;
 
-        case GL_TEXTURE_WRAP_R:
-            *ret = tex_params->wrap_r;
-            break;
+    case GL_TEXTURE_WRAP_R:
+        *ret = tex_params->wrap_r;
+        break;
 
-        default:
-            return false;
-            break;
+    default:
+        return false;
+        break;
     }
 
     return true;
@@ -435,19 +432,19 @@ static bool getTexParamsf(GLMContext ctx, TextureParameter *tex_params, GLenum p
 
 static bool getTexParmf(GLMContext ctx, TextureParameter *tex_params, GLenum pname, GLfloat *ret)
 {
-    switch(pname)
+    switch (pname)
     {
-        case GL_TEXTURE_LOD_BIAS:
-            *ret = tex_params->lod_bias;
-            break;
+    case GL_TEXTURE_LOD_BIAS:
+        *ret = tex_params->lod_bias;
+        break;
 
-        case GL_TEXTURE_MAX_ANISOTROPY:
-            *ret = tex_params->max_anisotropy;
-            break;
+    case GL_TEXTURE_MAX_ANISOTROPY:
+        *ret = tex_params->max_anisotropy;
+        break;
 
-        default:
-            return false;
-            break;
+    default:
+        return false;
+        break;
     }
 
     return true;
@@ -522,7 +519,7 @@ void mglTexParameterfv(GLMContext ctx, GLenum target, GLenum pname, const GLfloa
 
     ERROR_CHECK_RETURN(tex, GL_INVALID_OPERATION);
 
-   // more than one param... try setTexParamsf
+    // more than one param... try setTexParamsf
     if (setTexParamsf(ctx, &tex->params, pname, params))
     {
         tex->dirty_bits |= DIRTY_TEX_PARAM;
@@ -642,7 +639,7 @@ void mglTextureParameterf(GLMContext ctx, GLuint texture, GLenum pname, GLfloat 
 
     ERROR_CHECK_RETURN(tex, GL_INVALID_OPERATION);
 
-    if(setTexParmf(ctx, &tex->params, pname, &param))
+    if (setTexParmf(ctx, &tex->params, pname, &param))
     {
         tex->dirty_bits |= DIRTY_TEX_PARAM;
     }
@@ -656,7 +653,7 @@ void mglTextureParameterfv(GLMContext ctx, GLuint texture, GLenum pname, const G
 
     ERROR_CHECK_RETURN(tex, GL_INVALID_OPERATION);
 
-    if(setTexParmf(ctx, &tex->params, pname, param))
+    if (setTexParmf(ctx, &tex->params, pname, param))
     {
         tex->dirty_bits |= DIRTY_TEX_PARAM;
     }
@@ -670,7 +667,7 @@ void mglTextureParameteri(GLMContext ctx, GLuint texture, GLenum pname, GLint pa
 
     ERROR_CHECK_RETURN(tex, GL_INVALID_OPERATION);
 
-    if(setTexParmi(ctx, &tex->params, pname, &param))
+    if (setTexParmi(ctx, &tex->params, pname, &param))
     {
         tex->dirty_bits |= DIRTY_TEX_PARAM;
     }
@@ -684,7 +681,7 @@ void mglTextureParameteriv(GLMContext ctx, GLuint texture, GLenum pname, const G
 
     ERROR_CHECK_RETURN(tex, GL_INVALID_OPERATION);
 
-    if(setTexParmi(ctx, &tex->params, pname, param))
+    if (setTexParmi(ctx, &tex->params, pname, param))
     {
         tex->dirty_bits |= DIRTY_TEX_PARAM;
     }
@@ -762,7 +759,7 @@ void mglGetTexParameterfv(GLMContext ctx, GLenum target, GLenum pname, GLfloat *
     GLint iparam;
     iparam = 0;
 
-    if(getParam(ctx, &tex->params, pname, &iparam, params))
+    if (getParam(ctx, &tex->params, pname, &iparam, params))
     {
         if (iparam)
         {
@@ -782,7 +779,7 @@ void mglGetTexParameteriv(GLMContext ctx, GLenum target, GLenum pname, GLint *pa
     GLfloat fparam;
     fparam = 0.0;
 
-    if(getParam(ctx, &tex->params, pname, params, &fparam))
+    if (getParam(ctx, &tex->params, pname, params, &fparam))
     {
         if (fparam)
         {

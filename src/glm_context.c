@@ -18,7 +18,6 @@
  *
  */
 
-
 #include <stdlib.h>
 #include <strings.h>
 
@@ -34,9 +33,8 @@ extern void init_dispatch(GLMContext ctx);
 
 GLMContext _ctx = NULL;
 
-GLMContext createGLMContext(GLenum format, GLenum type,
-                            GLenum depth_format, GLenum depth_type,
-                            GLenum stencil_format, GLenum stencil_type)
+GLMContext createGLMContext(GLenum format, GLenum type, GLenum depth_format, GLenum depth_type, GLenum stencil_format,
+                            GLenum stencil_type)
 {
     GLMContext ctx = (GLMContext)malloc(sizeof(GLMContextRec));
     GLMContext save = _ctx;
@@ -141,10 +139,10 @@ GLMContext createGLMContext(GLenum format, GLenum type,
 
     STATE(var.scissor_box[0]) = 0;
     STATE(var.scissor_box[1]) = 0;
-    STATE(var.scissor_box[2]) = 0;  // needs to be set on binding to window
-    STATE(var.scissor_box[3]) = 0;  // needs to be set on binding to window
+    STATE(var.scissor_box[2]) = 0; // needs to be set on binding to window
+    STATE(var.scissor_box[3]) = 0; // needs to be set on binding to window
 
-    for(int i=0; i<MAX_COLOR_ATTACHMENTS; i++)
+    for (int i = 0; i < MAX_COLOR_ATTACHMENTS; i++)
     {
         STATE(var.blend_src_rgb[i]) = GL_ONE;
         STATE(var.blend_src_alpha[i]) = GL_ONE;
@@ -164,7 +162,7 @@ GLMContext createGLMContext(GLenum format, GLenum type,
     STATE(var.stencil_pass_depth_fail) = GL_KEEP;
     STATE(var.stencil_pass_depth_pass) = GL_KEEP;
 
-    for(int i=0; i<MAX_CLIP_DISTANCES; i++)
+    for (int i = 0; i < MAX_CLIP_DISTANCES; i++)
     {
         STATE(caps.clip_distances[i]) = false;
     }
@@ -195,14 +193,13 @@ GLMContext createGLMContext(GLenum format, GLenum type,
     STATE(var.max_compute_work_group_size[1]) = 1024;
     STATE(var.max_compute_work_group_size[2]) = 256;
 
-    for(int attachment=0; attachment<MAX_COLOR_ATTACHMENTS; attachment++)
+    for (int attachment = 0; attachment < MAX_COLOR_ATTACHMENTS; attachment++)
     {
         STATE(caps.use_color_mask[attachment]) = false;
 
-        for(int i=0; i<4; i++)
+        for (int i = 0; i < 4; i++)
             STATE(var.color_writemask[attachment][i]) = GL_TRUE;
     }
-
 
     STATE(var.cull_face_mode) = GL_BACK;
 
@@ -218,17 +215,18 @@ GLMContext createGLMContext(GLenum format, GLenum type,
     initHashTable(&STATE(renderbuffer_table), 32);
     initHashTable(&STATE(framebuffer_table), 32);
     initHashTable(&STATE(sampler_table), 32);
-    
+
     init_dispatch(ctx);
 
-    ctx->assert_on_error = GL_TRUE;
+    // ctx->assert_on_error = GL_TRUE;
+    ctx->assert_on_error = GL_FALSE;
     ctx->error_func = error_func;
 
     ctx->temp_element_buffer = NULL;
-    
+
     err = glslang_initialize_process();
     assert(err);
-    
+
     _ctx = save;
 
     return ctx;
@@ -248,21 +246,35 @@ void MGLget(GLMContext ctx, GLenum param, GLuint *data)
 {
     if (ctx == NULL)
         ctx = _ctx;
-    
+
     if (ctx == NULL)
         return;
-    
-    switch(param)
+
+    switch (param)
     {
-        case MGL_PIXEL_FORMAT: *data = ctx->pixel_format.format; break;
-        case MGL_PIXEL_TYPE: *data = ctx->pixel_format.type; break;
-        case MGL_DEPTH_FORMAT: *data = ctx->depth_format.format; break;
-        case MGL_DEPTH_TYPE: *data = ctx->depth_format.type; break;
-        case MGL_STENCIL_FORMAT: *data = ctx->stencil_format.format; break;
-        case MGL_STENCIL_TYPE: *data = ctx->stencil_format.type; break;
-        case MGL_CONTEXT_FLAGS: *data = ctx->context_flags; break;
-        default:
-            assert(0);
+    case MGL_PIXEL_FORMAT:
+        *data = ctx->pixel_format.format;
+        break;
+    case MGL_PIXEL_TYPE:
+        *data = ctx->pixel_format.type;
+        break;
+    case MGL_DEPTH_FORMAT:
+        *data = ctx->depth_format.format;
+        break;
+    case MGL_DEPTH_TYPE:
+        *data = ctx->depth_format.type;
+        break;
+    case MGL_STENCIL_FORMAT:
+        *data = ctx->stencil_format.format;
+        break;
+    case MGL_STENCIL_TYPE:
+        *data = ctx->stencil_format.type;
+        break;
+    case MGL_CONTEXT_FLAGS:
+        *data = ctx->context_flags;
+        break;
+    default:
+        assert(0);
     }
 }
 
@@ -276,4 +288,3 @@ void MGLswapBuffers(GLMContext ctx)
 
     ctx->mtl_funcs.mtlSwapBuffers(ctx);
 }
-

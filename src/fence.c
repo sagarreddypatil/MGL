@@ -48,13 +48,13 @@ GLsync mglFenceSync(GLMContext ctx, GLenum condition, GLbitfield flags)
 {
     Sync *ptr;
 
-    switch(condition)
+    switch (condition)
     {
-        case GL_SYNC_GPU_COMMANDS_COMPLETE:
-            break;
+    case GL_SYNC_GPU_COMMANDS_COMPLETE:
+        break;
 
-        default:
-            assert(0);
+    default:
+        assert(0);
     }
 
     // must be zero
@@ -66,7 +66,6 @@ GLsync mglFenceSync(GLMContext ctx, GLenum condition, GLbitfield flags)
 
     return ptr;
 }
-
 
 GLboolean mglIsSync(GLMContext ctx, GLsync sync)
 {
@@ -98,7 +97,7 @@ void mglDeleteSync(GLMContext ctx, GLsync sync)
     free(sync);
 }
 
-GLenum  mglClientWaitSync(GLMContext ctx, GLsync sync, GLbitfield flags, GLuint64 timeout)
+GLenum mglClientWaitSync(GLMContext ctx, GLsync sync, GLbitfield flags, GLuint64 timeout)
 {
     if (flags & ~GL_SYNC_FLUSH_COMMANDS_BIT)
     {
@@ -156,33 +155,33 @@ void mglGetSynciv(GLMContext ctx, GLsync sync, GLenum pname, GLsizei count, GLsi
         assert(0);
     }
 
-    while(count--)
+    while (count--)
     {
-        switch(pname)
+        switch (pname)
         {
-            case GL_OBJECT_TYPE:
-                *values = GL_SYNC_FENCE;
-                break;
+        case GL_OBJECT_TYPE:
+            *values = GL_SYNC_FENCE;
+            break;
 
-            case GL_SYNC_STATUS:
-                if (sync->mtl_event)
-                    *values = GL_UNSIGNALED;
-                else
-                    *values = GL_SIGNALED;
-                break;
+        case GL_SYNC_STATUS:
+            if (sync->mtl_event)
+                *values = GL_UNSIGNALED;
+            else
+                *values = GL_SIGNALED;
+            break;
 
-            case GL_SYNC_CONDITION:
-                if (sync->mtl_event == NULL)
-                    *values = GL_SYNC_GPU_COMMANDS_COMPLETE;
-                break;
+        case GL_SYNC_CONDITION:
+            if (sync->mtl_event == NULL)
+                *values = GL_SYNC_GPU_COMMANDS_COMPLETE;
+            break;
 
-            case GL_SYNC_FLAGS:
-                *values = 0;
-                break;
+        case GL_SYNC_FLAGS:
+            *values = 0;
+            break;
 
-            default:
-                assert(0);
-                break;
+        default:
+            assert(0);
+            break;
         }
 
         values++;
@@ -197,7 +196,11 @@ void mglTextureBarrier(GLMContext ctx)
 
 void mglMemoryBarrier(GLMContext ctx, GLbitfield barriers)
 {
-    if (barriers & ~(GL_VERTEX_ATTRIB_ARRAY_BARRIER_BIT | GL_ELEMENT_ARRAY_BARRIER_BIT | GL_UNIFORM_BARRIER_BIT |  GL_TEXTURE_FETCH_BARRIER_BIT | GL_SHADER_IMAGE_ACCESS_BARRIER_BIT | GL_COMMAND_BARRIER_BIT | GL_PIXEL_BUFFER_BARRIER_BIT | GL_TEXTURE_UPDATE_BARRIER_BIT | GL_BUFFER_UPDATE_BARRIER_BIT | GL_FRAMEBUFFER_BARRIER_BIT | GL_TRANSFORM_FEEDBACK_BARRIER_BIT | GL_ATOMIC_COUNTER_BARRIER_BIT | GL_SHADER_STORAGE_BARRIER_BIT))
+    if (barriers & ~(GL_VERTEX_ATTRIB_ARRAY_BARRIER_BIT | GL_ELEMENT_ARRAY_BARRIER_BIT | GL_UNIFORM_BARRIER_BIT |
+                     GL_TEXTURE_FETCH_BARRIER_BIT | GL_SHADER_IMAGE_ACCESS_BARRIER_BIT | GL_COMMAND_BARRIER_BIT |
+                     GL_PIXEL_BUFFER_BARRIER_BIT | GL_TEXTURE_UPDATE_BARRIER_BIT | GL_BUFFER_UPDATE_BARRIER_BIT |
+                     GL_FRAMEBUFFER_BARRIER_BIT | GL_TRANSFORM_FEEDBACK_BARRIER_BIT | GL_ATOMIC_COUNTER_BARRIER_BIT |
+                     GL_SHADER_STORAGE_BARRIER_BIT))
     {
         // extra bits...
         ERROR_RETURN(GL_INVALID_VALUE);
@@ -207,10 +210,10 @@ void mglMemoryBarrier(GLMContext ctx, GLbitfield barriers)
 void mglMemoryBarrierByRegion(GLMContext ctx, GLbitfield barriers)
 {
 
-    if (barriers & ~(GL_ATOMIC_COUNTER_BARRIER_BIT | GL_FRAMEBUFFER_BARRIER_BIT | GL_SHADER_IMAGE_ACCESS_BARRIER_BIT | GL_SHADER_STORAGE_BARRIER_BIT | GL_TEXTURE_FETCH_BARRIER_BIT | GL_UNIFORM_BARRIER_BIT))
+    if (barriers & ~(GL_ATOMIC_COUNTER_BARRIER_BIT | GL_FRAMEBUFFER_BARRIER_BIT | GL_SHADER_IMAGE_ACCESS_BARRIER_BIT |
+                     GL_SHADER_STORAGE_BARRIER_BIT | GL_TEXTURE_FETCH_BARRIER_BIT | GL_UNIFORM_BARRIER_BIT))
     {
         // extra bits...
         ERROR_RETURN(GL_INVALID_VALUE);
     }
 }
-

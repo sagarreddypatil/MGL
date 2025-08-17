@@ -31,8 +31,10 @@ void mglTexParameterf(GLMContext ctx, GLenum target, GLenum pname, GLfloat param
 void mglTexParameterfv(GLMContext ctx, GLenum target, GLenum pname, const GLfloat *params);
 void mglTexParameteri(GLMContext ctx, GLenum target, GLenum pname, GLint param);
 void mglTexParameteriv(GLMContext ctx, GLenum target, GLenum pname, const GLint *params);
-void mglTexImage1D(GLMContext ctx, GLenum target, GLint level, GLint internalformat, GLsizei width, GLint border, GLenum format, GLenum type, const void *pixels);
-void mglTexImage2D(GLMContext ctx, GLenum target, GLint level, GLint internalformat, GLsizei width, GLsizei height, GLint border, GLenum format, GLenum type, const void *pixels);
+void mglTexImage1D(GLMContext ctx, GLenum target, GLint level, GLint internalformat, GLsizei width, GLint border,
+                   GLenum format, GLenum type, const void *pixels);
+void mglTexImage2D(GLMContext ctx, GLenum target, GLint level, GLint internalformat, GLsizei width, GLsizei height,
+                   GLint border, GLenum format, GLenum type, const void *pixels);
 void mglDrawBuffer(GLMContext ctx, GLenum buf);
 void mglClear(GLMContext ctx, GLbitfield mask);
 void mglClearColor(GLMContext ctx, GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha);
@@ -53,13 +55,14 @@ void mglDepthFunc(GLMContext ctx, GLenum func);
 void mglPixelStoref(GLMContext ctx, GLenum pname, GLfloat param);
 void mglPixelStorei(GLMContext ctx, GLenum pname, GLint param);
 void mglReadBuffer(GLMContext ctx, GLenum src);
-void mglReadPixels(GLMContext ctx, GLint x, GLint y, GLsizei width, GLsizei height, GLenum format, GLenum type, void *pixels);
+void mglReadPixels(GLMContext ctx, GLint x, GLint y, GLsizei width, GLsizei height, GLenum format, GLenum type,
+                   void *pixels);
 void mglGetBooleanv(GLMContext ctx, GLenum pname, GLboolean *data);
 void mglGetDoublev(GLMContext ctx, GLenum pname, GLdouble *data);
-GLenum  mglGetError(GLMContext ctx);
+GLenum mglGetError(GLMContext ctx);
 void mglGetFloatv(GLMContext ctx, GLenum pname, GLfloat *data);
 void mglGetIntegerv(GLMContext ctx, GLenum pname, GLint *data);
-const GLubyte  *mglGetString(GLMContext ctx, GLenum name);
+const GLubyte *mglGetString(GLMContext ctx, GLenum name);
 void mglGetTexImage(GLMContext ctx, GLenum target, GLint level, GLenum format, GLenum type, void *pixels);
 void mglGetTexParameterfv(GLMContext ctx, GLenum target, GLenum pname, GLfloat *params);
 void mglGetTexParameteriv(GLMContext ctx, GLenum target, GLenum pname, GLint *params);
@@ -73,10 +76,11 @@ void mglEndList(GLMContext ctx);
 void mglCallList(GLMContext ctx, GLuint list);
 void mglCallLists(GLMContext ctx, GLsizei n, GLenum type, const void *lists);
 void mglDeleteLists(GLMContext ctx, GLuint list, GLsizei range);
-GLuint  mglGenLists(GLMContext ctx, GLsizei range);
+GLuint mglGenLists(GLMContext ctx, GLsizei range);
 void mglListBase(GLMContext ctx, GLuint base);
 void mglBegin(GLMContext ctx, GLenum mode);
-void mglBitmap(GLMContext ctx, GLsizei width, GLsizei height, GLfloat xorig, GLfloat yorig, GLfloat xmove, GLfloat ymove, const GLubyte *bitmap);
+void mglBitmap(GLMContext ctx, GLsizei width, GLsizei height, GLfloat xorig, GLfloat yorig, GLfloat xmove,
+               GLfloat ymove, const GLubyte *bitmap);
 void mglColor3b(GLMContext ctx, GLbyte red, GLbyte green, GLbyte blue);
 void mglColor3bv(GLMContext ctx, const GLbyte *v);
 void mglColor3d(GLMContext ctx, GLdouble red, GLdouble green, GLdouble blue);
@@ -251,7 +255,7 @@ void mglTexGeni(GLMContext ctx, GLenum coord, GLenum pname, GLint param);
 void mglTexGeniv(GLMContext ctx, GLenum coord, GLenum pname, const GLint *params);
 void mglFeedbackBuffer(GLMContext ctx, GLsizei size, GLenum type, GLfloat *buffer);
 void mglSelectBuffer(GLMContext ctx, GLsizei size, GLuint *buffer);
-GLint  mglRenderMode(GLMContext ctx, GLenum mode);
+GLint mglRenderMode(GLMContext ctx, GLenum mode);
 void mglInitNames(GLMContext ctx);
 void mglLoadName(GLMContext ctx, GLuint name);
 void mglPassThrough(GLMContext ctx, GLfloat token);
@@ -263,10 +267,13 @@ void mglIndexMask(GLMContext ctx, GLuint mask);
 void mglAccum(GLMContext ctx, GLenum op, GLfloat value);
 void mglPopAttrib(GLMContext ctx);
 void mglPushAttrib(GLMContext ctx, GLbitfield mask);
-void mglMap1d(GLMContext ctx, GLenum target, GLdouble u1, GLdouble u2, GLint stride, GLint order, const GLdouble *points);
+void mglMap1d(GLMContext ctx, GLenum target, GLdouble u1, GLdouble u2, GLint stride, GLint order,
+              const GLdouble *points);
 void mglMap1f(GLMContext ctx, GLenum target, GLfloat u1, GLfloat u2, GLint stride, GLint order, const GLfloat *points);
-void mglMap2d(GLMContext ctx, GLenum target, GLdouble u1, GLdouble u2, GLint ustride, GLint uorder, GLdouble v1, GLdouble v2, GLint vstride, GLint vorder, const GLdouble *points);
-void mglMap2f(GLMContext ctx, GLenum target, GLfloat u1, GLfloat u2, GLint ustride, GLint uorder, GLfloat v1, GLfloat v2, GLint vstride, GLint vorder, const GLfloat *points);
+void mglMap2d(GLMContext ctx, GLenum target, GLdouble u1, GLdouble u2, GLint ustride, GLint uorder, GLdouble v1,
+              GLdouble v2, GLint vstride, GLint vorder, const GLdouble *points);
+void mglMap2f(GLMContext ctx, GLenum target, GLfloat u1, GLfloat u2, GLint ustride, GLint uorder, GLfloat v1,
+              GLfloat v2, GLint vstride, GLint vorder, const GLfloat *points);
 void mglMapGrid1d(GLMContext ctx, GLint un, GLdouble u1, GLdouble u2);
 void mglMapGrid1f(GLMContext ctx, GLint un, GLfloat u1, GLfloat u2);
 void mglMapGrid2d(GLMContext ctx, GLint un, GLdouble u1, GLdouble u2, GLint vn, GLdouble v1, GLdouble v2);
@@ -310,14 +317,16 @@ void mglGetTexGendv(GLMContext ctx, GLenum coord, GLenum pname, GLdouble *params
 void mglGetTexGenfv(GLMContext ctx, GLenum coord, GLenum pname, GLfloat *params);
 void mglGetTexGeniv(GLMContext ctx, GLenum coord, GLenum pname, GLint *params);
 GLboolean mglIsList(GLMContext ctx, GLuint list);
-void mglFrustum(GLMContext ctx, GLdouble left, GLdouble right, GLdouble bottom, GLdouble top, GLdouble zNear, GLdouble zFar);
+void mglFrustum(GLMContext ctx, GLdouble left, GLdouble right, GLdouble bottom, GLdouble top, GLdouble zNear,
+                GLdouble zFar);
 void mglLoadIdentity(GLMContext ctx);
 void mglLoadMatrixf(GLMContext ctx, const GLfloat *m);
 void mglLoadMatrixd(GLMContext ctx, const GLdouble *m);
 void mglMatrixMode(GLMContext ctx, GLenum mode);
 void mglMultMatrixf(GLMContext ctx, const GLfloat *m);
 void mglMultMatrixd(GLMContext ctx, const GLdouble *m);
-void mglOrtho(GLMContext ctx, GLdouble left, GLdouble right, GLdouble bottom, GLdouble top, GLdouble zNear, GLdouble zFar);
+void mglOrtho(GLMContext ctx, GLdouble left, GLdouble right, GLdouble bottom, GLdouble top, GLdouble zNear,
+              GLdouble zFar);
 void mglPopMatrix(GLMContext ctx);
 void mglPushMatrix(GLMContext ctx);
 void mglRotated(GLMContext ctx, GLdouble angle, GLdouble x, GLdouble y, GLdouble z);
@@ -330,12 +339,17 @@ void mglDrawArrays(GLMContext ctx, GLenum mode, GLint first, GLsizei count);
 void mglDrawElements(GLMContext ctx, GLenum mode, GLsizei count, GLenum type, const void *indices);
 void mglGetPointerv(GLMContext ctx, GLenum pname, void **params);
 void mglPolygonOffset(GLMContext ctx, GLfloat factor, GLfloat units);
-void mglCopyTexImage1D(GLMContext ctx, GLenum target, GLint level, GLenum internalformat, GLint x, GLint y, GLsizei width, GLint border);
-void mglCopyTexImage2D(GLMContext ctx, GLenum target, GLint level, GLenum internalformat, GLint x, GLint y, GLsizei width, GLsizei height, GLint border);
+void mglCopyTexImage1D(GLMContext ctx, GLenum target, GLint level, GLenum internalformat, GLint x, GLint y,
+                       GLsizei width, GLint border);
+void mglCopyTexImage2D(GLMContext ctx, GLenum target, GLint level, GLenum internalformat, GLint x, GLint y,
+                       GLsizei width, GLsizei height, GLint border);
 void mglCopyTexSubImage1D(GLMContext ctx, GLenum target, GLint level, GLint xoffset, GLint x, GLint y, GLsizei width);
-void mglCopyTexSubImage2D(GLMContext ctx, GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint x, GLint y, GLsizei width, GLsizei height);
-void mglTexSubImage1D(GLMContext ctx, GLenum target, GLint level, GLint xoffset, GLsizei width, GLenum format, GLenum type, const void *pixels);
-void mglTexSubImage2D(GLMContext ctx, GLenum target, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, GLenum format, GLenum type, const void *pixels);
+void mglCopyTexSubImage2D(GLMContext ctx, GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint x, GLint y,
+                          GLsizei width, GLsizei height);
+void mglTexSubImage1D(GLMContext ctx, GLenum target, GLint level, GLint xoffset, GLsizei width, GLenum format,
+                      GLenum type, const void *pixels);
+void mglTexSubImage2D(GLMContext ctx, GLenum target, GLint level, GLint xoffset, GLint yoffset, GLsizei width,
+                      GLsizei height, GLenum format, GLenum type, const void *pixels);
 void mglBindTexture(GLMContext ctx, GLenum target, GLuint texture);
 void mglDeleteTextures(GLMContext ctx, GLsizei n, const GLuint *textures);
 void mglGenTextures(GLMContext ctx, GLsizei n, GLuint *textures);
@@ -356,18 +370,29 @@ void mglIndexub(GLMContext ctx, GLubyte c);
 void mglIndexubv(GLMContext ctx, const GLubyte *c);
 void mglPopClientAttrib(GLMContext ctx);
 void mglPushClientAttrib(GLMContext ctx, GLbitfield mask);
-void mglDrawRangeElements(GLMContext ctx, GLenum mode, GLuint start, GLuint end, GLsizei count, GLenum type, const void *indices);
-void mglTexImage3D(GLMContext ctx, GLenum target, GLint level, GLint internalformat, GLsizei width, GLsizei height, GLsizei depth, GLint border, GLenum format, GLenum type, const void *pixels);
-void mglTexSubImage3D(GLMContext ctx, GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLenum type, const void *pixels);
-void mglCopyTexSubImage3D(GLMContext ctx, GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLint x, GLint y, GLsizei width, GLsizei height);
+void mglDrawRangeElements(GLMContext ctx, GLenum mode, GLuint start, GLuint end, GLsizei count, GLenum type,
+                          const void *indices);
+void mglTexImage3D(GLMContext ctx, GLenum target, GLint level, GLint internalformat, GLsizei width, GLsizei height,
+                   GLsizei depth, GLint border, GLenum format, GLenum type, const void *pixels);
+void mglTexSubImage3D(GLMContext ctx, GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset,
+                      GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLenum type, const void *pixels);
+void mglCopyTexSubImage3D(GLMContext ctx, GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset,
+                          GLint x, GLint y, GLsizei width, GLsizei height);
 void mglActiveTexture(GLMContext ctx, GLenum texture);
 void mglSampleCoverage(GLMContext ctx, GLfloat value, GLboolean invert);
-void mglCompressedTexImage3D(GLMContext ctx, GLenum target, GLint level, GLenum internalformat, GLsizei width, GLsizei height, GLsizei depth, GLint border, GLsizei imageSize, const void *data);
-void mglCompressedTexImage2D(GLMContext ctx, GLenum target, GLint level, GLenum internalformat, GLsizei width, GLsizei height, GLint border, GLsizei imageSize, const void *data);
-void mglCompressedTexImage1D(GLMContext ctx, GLenum target, GLint level, GLenum internalformat, GLsizei width, GLint border, GLsizei imageSize, const void *data);
-void mglCompressedTexSubImage3D(GLMContext ctx, GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLsizei imageSize, const void *data);
-void mglCompressedTexSubImage2D(GLMContext ctx, GLenum target, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, GLenum format, GLsizei imageSize, const void *data);
-void mglCompressedTexSubImage1D(GLMContext ctx, GLenum target, GLint level, GLint xoffset, GLsizei width, GLenum format, GLsizei imageSize, const void *data);
+void mglCompressedTexImage3D(GLMContext ctx, GLenum target, GLint level, GLenum internalformat, GLsizei width,
+                             GLsizei height, GLsizei depth, GLint border, GLsizei imageSize, const void *data);
+void mglCompressedTexImage2D(GLMContext ctx, GLenum target, GLint level, GLenum internalformat, GLsizei width,
+                             GLsizei height, GLint border, GLsizei imageSize, const void *data);
+void mglCompressedTexImage1D(GLMContext ctx, GLenum target, GLint level, GLenum internalformat, GLsizei width,
+                             GLint border, GLsizei imageSize, const void *data);
+void mglCompressedTexSubImage3D(GLMContext ctx, GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset,
+                                GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLsizei imageSize,
+                                const void *data);
+void mglCompressedTexSubImage2D(GLMContext ctx, GLenum target, GLint level, GLint xoffset, GLint yoffset, GLsizei width,
+                                GLsizei height, GLenum format, GLsizei imageSize, const void *data);
+void mglCompressedTexSubImage1D(GLMContext ctx, GLenum target, GLint level, GLint xoffset, GLsizei width, GLenum format,
+                                GLsizei imageSize, const void *data);
 void mglGetCompressedTexImage(GLMContext ctx, GLenum target, GLint level, void *img);
 void mglClientActiveTexture(GLMContext ctx, GLenum texture);
 void mglMultiTexCoord1d(GLMContext ctx, GLenum target, GLdouble s);
@@ -406,9 +431,11 @@ void mglLoadTransposeMatrixf(GLMContext ctx, const GLfloat *m);
 void mglLoadTransposeMatrixd(GLMContext ctx, const GLdouble *m);
 void mglMultTransposeMatrixf(GLMContext ctx, const GLfloat *m);
 void mglMultTransposeMatrixd(GLMContext ctx, const GLdouble *m);
-void mglBlendFuncSeparate(GLMContext ctx, GLenum sfactorRGB, GLenum dfactorRGB, GLenum sfactorAlpha, GLenum dfactorAlpha);
+void mglBlendFuncSeparate(GLMContext ctx, GLenum sfactorRGB, GLenum dfactorRGB, GLenum sfactorAlpha,
+                          GLenum dfactorAlpha);
 void mglMultiDrawArrays(GLMContext ctx, GLenum mode, const GLint *first, const GLsizei *count, GLsizei drawcount);
-void mglMultiDrawElements(GLMContext ctx, GLenum mode, const GLsizei *count, GLenum type, const void *const*indices, GLsizei drawcount);
+void mglMultiDrawElements(GLMContext ctx, GLenum mode, const GLsizei *count, GLenum type, const void *const *indices,
+                          GLsizei drawcount);
 void mglPointParameterf(GLMContext ctx, GLenum pname, GLfloat param);
 void mglPointParameterfv(GLMContext ctx, GLenum pname, const GLfloat *params);
 void mglPointParameteri(GLMContext ctx, GLenum pname, GLint param);
@@ -480,23 +507,25 @@ void mglStencilMaskSeparate(GLMContext ctx, GLenum face, GLuint mask);
 void mglAttachShader(GLMContext ctx, GLuint program, GLuint shader);
 void mglBindAttribLocation(GLMContext ctx, GLuint program, GLuint index, const GLchar *name);
 void mglCompileShader(GLMContext ctx, GLuint shader);
-GLuint  mglCreateProgram(GLMContext ctx);
-GLuint  mglCreateShader(GLMContext ctx, GLenum type);
+GLuint mglCreateProgram(GLMContext ctx);
+GLuint mglCreateShader(GLMContext ctx, GLenum type);
 void mglDeleteProgram(GLMContext ctx, GLuint program);
 void mglDeleteShader(GLMContext ctx, GLuint shader);
 void mglDetachShader(GLMContext ctx, GLuint program, GLuint shader);
 void mglDisableVertexAttribArray(GLMContext ctx, GLuint index);
 void mglEnableVertexAttribArray(GLMContext ctx, GLuint index);
-void mglGetActiveAttrib(GLMContext ctx, GLuint program, GLuint index, GLsizei bufSize, GLsizei *length, GLint *size, GLenum *type, GLchar *name);
-void mglGetActiveUniform(GLMContext ctx, GLuint program, GLuint index, GLsizei bufSize, GLsizei *length, GLint *size, GLenum *type, GLchar *name);
+void mglGetActiveAttrib(GLMContext ctx, GLuint program, GLuint index, GLsizei bufSize, GLsizei *length, GLint *size,
+                        GLenum *type, GLchar *name);
+void mglGetActiveUniform(GLMContext ctx, GLuint program, GLuint index, GLsizei bufSize, GLsizei *length, GLint *size,
+                         GLenum *type, GLchar *name);
 void mglGetAttachedShaders(GLMContext ctx, GLuint program, GLsizei maxCount, GLsizei *count, GLuint *shaders);
-GLint  mglGetAttribLocation(GLMContext ctx, GLuint program, const GLchar *name);
+GLint mglGetAttribLocation(GLMContext ctx, GLuint program, const GLchar *name);
 void mglGetProgramiv(GLMContext ctx, GLuint program, GLenum pname, GLint *params);
 void mglGetProgramInfoLog(GLMContext ctx, GLuint program, GLsizei bufSize, GLsizei *length, GLchar *infoLog);
 void mglGetShaderiv(GLMContext ctx, GLuint shader, GLenum pname, GLint *params);
 void mglGetShaderInfoLog(GLMContext ctx, GLuint shader, GLsizei bufSize, GLsizei *length, GLchar *infoLog);
 void mglGetShaderSource(GLMContext ctx, GLuint shader, GLsizei bufSize, GLsizei *length, GLchar *source);
-GLint  mglGetUniformLocation(GLMContext ctx, GLuint program, const GLchar *name);
+GLint mglGetUniformLocation(GLMContext ctx, GLuint program, const GLchar *name);
 void mglGetUniformfv(GLMContext ctx, GLuint program, GLint location, GLfloat *params);
 void mglGetUniformiv(GLMContext ctx, GLuint program, GLint location, GLint *params);
 void mglGetVertexAttribdv(GLMContext ctx, GLuint index, GLenum pname, GLdouble *params);
@@ -506,7 +535,7 @@ void mglGetVertexAttribPointerv(GLMContext ctx, GLuint index, GLenum pname, void
 GLboolean mglIsProgram(GLMContext ctx, GLuint program);
 GLboolean mglIsShader(GLMContext ctx, GLuint shader);
 void mglLinkProgram(GLMContext ctx, GLuint program);
-void mglShaderSource(GLMContext ctx, GLuint shader, GLsizei count, const GLchar *const*string, const GLint *length);
+void mglShaderSource(GLMContext ctx, GLuint shader, GLsizei count, const GLchar *const *string, const GLint *length);
 void mglUseProgram(GLMContext ctx, GLuint program);
 void mglUniform1f(GLMContext ctx, GLint location, GLfloat v0);
 void mglUniform2f(GLMContext ctx, GLint location, GLfloat v0, GLfloat v1);
@@ -564,7 +593,8 @@ void mglVertexAttrib4sv(GLMContext ctx, GLuint index, const GLshort *v);
 void mglVertexAttrib4ubv(GLMContext ctx, GLuint index, const GLubyte *v);
 void mglVertexAttrib4uiv(GLMContext ctx, GLuint index, const GLuint *v);
 void mglVertexAttrib4usv(GLMContext ctx, GLuint index, const GLushort *v);
-void mglVertexAttribPointer(GLMContext ctx, GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const void *pointer);
+void mglVertexAttribPointer(GLMContext ctx, GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride,
+                            const void *pointer);
 void mglUniformMatrix2x3fv(GLMContext ctx, GLint location, GLsizei count, GLboolean transpose, const GLfloat *value);
 void mglUniformMatrix3x2fv(GLMContext ctx, GLint location, GLsizei count, GLboolean transpose, const GLfloat *value);
 void mglUniformMatrix2x4fv(GLMContext ctx, GLint location, GLsizei count, GLboolean transpose, const GLfloat *value);
@@ -581,12 +611,15 @@ void mglBeginTransformFeedback(GLMContext ctx, GLenum primitiveMode);
 void mglEndTransformFeedback(GLMContext ctx);
 void mglBindBufferRange(GLMContext ctx, GLenum target, GLuint index, GLuint buffer, GLintptr offset, GLsizeiptr size);
 void mglBindBufferBase(GLMContext ctx, GLenum target, GLuint index, GLuint buffer);
-void mglTransformFeedbackVaryings(GLMContext ctx, GLuint program, GLsizei count, const GLchar *const*varyings, GLenum bufferMode);
-void mglGetTransformFeedbackVarying(GLMContext ctx, GLuint program, GLuint index, GLsizei bufSize, GLsizei *length, GLsizei *size, GLenum *type, GLchar *name);
+void mglTransformFeedbackVaryings(GLMContext ctx, GLuint program, GLsizei count, const GLchar *const *varyings,
+                                  GLenum bufferMode);
+void mglGetTransformFeedbackVarying(GLMContext ctx, GLuint program, GLuint index, GLsizei bufSize, GLsizei *length,
+                                    GLsizei *size, GLenum *type, GLchar *name);
 void mglClampColor(GLMContext ctx, GLenum target, GLenum clamp);
 void mglBeginConditionalRender(GLMContext ctx, GLuint id, GLenum mode);
 void mglEndConditionalRender(GLMContext ctx);
-void mglVertexAttribIPointer(GLMContext ctx, GLuint index, GLint size, GLenum type, GLsizei stride, const void *pointer);
+void mglVertexAttribIPointer(GLMContext ctx, GLuint index, GLint size, GLenum type, GLsizei stride,
+                             const void *pointer);
 void mglGetVertexAttribIiv(GLMContext ctx, GLuint index, GLenum pname, GLint *params);
 void mglGetVertexAttribIuiv(GLMContext ctx, GLuint index, GLenum pname, GLuint *params);
 void mglVertexAttribI1i(GLMContext ctx, GLuint index, GLint x);
@@ -611,7 +644,7 @@ void mglVertexAttribI4ubv(GLMContext ctx, GLuint index, const GLubyte *v);
 void mglVertexAttribI4usv(GLMContext ctx, GLuint index, const GLushort *v);
 void mglGetUniformuiv(GLMContext ctx, GLuint program, GLint location, GLuint *params);
 void mglBindFragDataLocation(GLMContext ctx, GLuint program, GLuint color, const GLchar *name);
-GLint  mglGetFragDataLocation(GLMContext ctx, GLuint program, const GLchar *name);
+GLint mglGetFragDataLocation(GLMContext ctx, GLuint program, const GLchar *name);
 void mglUniform1ui(GLMContext ctx, GLint location, GLuint v0);
 void mglUniform2ui(GLMContext ctx, GLint location, GLuint v0, GLuint v1);
 void mglUniform3ui(GLMContext ctx, GLint location, GLuint v0, GLuint v1, GLuint v2);
@@ -628,7 +661,7 @@ void mglClearBufferiv(GLMContext ctx, GLenum buffer, GLint drawbuffer, const GLi
 void mglClearBufferuiv(GLMContext ctx, GLenum buffer, GLint drawbuffer, const GLuint *value);
 void mglClearBufferfv(GLMContext ctx, GLenum buffer, GLint drawbuffer, const GLfloat *value);
 void mglClearBufferfi(GLMContext ctx, GLenum buffer, GLint drawbuffer, GLfloat depth, GLint stencil);
-const GLubyte  *mglGetStringi(GLMContext ctx, GLenum name, GLuint index);
+const GLubyte *mglGetStringi(GLMContext ctx, GLenum name, GLuint index);
 GLboolean mglIsRenderbuffer(GLMContext ctx, GLuint renderbuffer);
 void mglBindRenderbuffer(GLMContext ctx, GLenum target, GLuint renderbuffer);
 void mglDeleteRenderbuffers(GLMContext ctx, GLsizei n, const GLuint *renderbuffers);
@@ -639,16 +672,24 @@ GLboolean mglIsFramebuffer(GLMContext ctx, GLuint framebuffer);
 void mglBindFramebuffer(GLMContext ctx, GLenum target, GLuint framebuffer);
 void mglDeleteFramebuffers(GLMContext ctx, GLsizei n, const GLuint *framebuffers);
 void mglGenFramebuffers(GLMContext ctx, GLsizei n, GLuint *framebuffers);
-GLenum  mglCheckFramebufferStatus(GLMContext ctx, GLenum target);
-void mglFramebufferTexture1D(GLMContext ctx, GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level);
-void mglFramebufferTexture2D(GLMContext ctx, GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level);
-void mglFramebufferTexture3D(GLMContext ctx, GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level, GLint zoffset);
-void mglFramebufferRenderbuffer(GLMContext ctx, GLenum target, GLenum attachment, GLenum renderbuffertarget, GLuint renderbuffer);
-void mglGetFramebufferAttachmentParameteriv(GLMContext ctx, GLenum target, GLenum attachment, GLenum pname, GLint *params);
+GLenum mglCheckFramebufferStatus(GLMContext ctx, GLenum target);
+void mglFramebufferTexture1D(GLMContext ctx, GLenum target, GLenum attachment, GLenum textarget, GLuint texture,
+                             GLint level);
+void mglFramebufferTexture2D(GLMContext ctx, GLenum target, GLenum attachment, GLenum textarget, GLuint texture,
+                             GLint level);
+void mglFramebufferTexture3D(GLMContext ctx, GLenum target, GLenum attachment, GLenum textarget, GLuint texture,
+                             GLint level, GLint zoffset);
+void mglFramebufferRenderbuffer(GLMContext ctx, GLenum target, GLenum attachment, GLenum renderbuffertarget,
+                                GLuint renderbuffer);
+void mglGetFramebufferAttachmentParameteriv(GLMContext ctx, GLenum target, GLenum attachment, GLenum pname,
+                                            GLint *params);
 void mglGenerateMipmap(GLMContext ctx, GLenum target);
-void mglBlitFramebuffer(GLMContext ctx, GLint srcX0, GLint srcY0, GLint srcX1, GLint srcY1, GLint dstX0, GLint dstY0, GLint dstX1, GLint dstY1, GLbitfield mask, GLenum filter);
-void mglRenderbufferStorageMultisample(GLMContext ctx, GLenum target, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height);
-void mglFramebufferTextureLayer(GLMContext ctx, GLenum target, GLenum attachment, GLuint texture, GLint level, GLint layer);
+void mglBlitFramebuffer(GLMContext ctx, GLint srcX0, GLint srcY0, GLint srcX1, GLint srcY1, GLint dstX0, GLint dstY0,
+                        GLint dstX1, GLint dstY1, GLbitfield mask, GLenum filter);
+void mglRenderbufferStorageMultisample(GLMContext ctx, GLenum target, GLsizei samples, GLenum internalformat,
+                                       GLsizei width, GLsizei height);
+void mglFramebufferTextureLayer(GLMContext ctx, GLenum target, GLenum attachment, GLuint texture, GLint level,
+                                GLint layer);
 void *mglMapBufferRange(GLMContext ctx, GLenum target, GLintptr offset, GLsizeiptr length, GLbitfield access);
 void mglFlushMappedBufferRange(GLMContext ctx, GLenum target, GLintptr offset, GLsizeiptr length);
 void mglBindVertexArray(GLMContext ctx, GLuint array);
@@ -656,41 +697,54 @@ void mglDeleteVertexArrays(GLMContext ctx, GLsizei n, const GLuint *arrays);
 void mglGenVertexArrays(GLMContext ctx, GLsizei n, GLuint *arrays);
 GLboolean mglIsVertexArray(GLMContext ctx, GLuint array);
 void mglDrawArraysInstanced(GLMContext ctx, GLenum mode, GLint first, GLsizei count, GLsizei instancecount);
-void mglDrawElementsInstanced(GLMContext ctx, GLenum mode, GLsizei count, GLenum type, const void *indices, GLsizei instancecount);
+void mglDrawElementsInstanced(GLMContext ctx, GLenum mode, GLsizei count, GLenum type, const void *indices,
+                              GLsizei instancecount);
 void mglTexBuffer(GLMContext ctx, GLenum target, GLenum internalformat, GLuint buffer);
 void mglPrimitiveRestartIndex(GLMContext ctx, GLuint index);
-void mglCopyBufferSubData(GLMContext ctx, GLenum readTarget, GLenum writeTarget, GLintptr readOffset, GLintptr writeOffset, GLsizeiptr size);
-void mglGetUniformIndices(GLMContext ctx, GLuint program, GLsizei uniformCount, const GLchar *const*uniformNames, GLuint *uniformIndices);
-void mglGetActiveUniformsiv(GLMContext ctx, GLuint program, GLsizei uniformCount, const GLuint *uniformIndices, GLenum pname, GLint *params);
-void mglGetActiveUniformName(GLMContext ctx, GLuint program, GLuint uniformIndex, GLsizei bufSize, GLsizei *length, GLchar *uniformName);
-GLuint  mglGetUniformBlockIndex(GLMContext ctx, GLuint program, const GLchar *uniformBlockName);
+void mglCopyBufferSubData(GLMContext ctx, GLenum readTarget, GLenum writeTarget, GLintptr readOffset,
+                          GLintptr writeOffset, GLsizeiptr size);
+void mglGetUniformIndices(GLMContext ctx, GLuint program, GLsizei uniformCount, const GLchar *const *uniformNames,
+                          GLuint *uniformIndices);
+void mglGetActiveUniformsiv(GLMContext ctx, GLuint program, GLsizei uniformCount, const GLuint *uniformIndices,
+                            GLenum pname, GLint *params);
+void mglGetActiveUniformName(GLMContext ctx, GLuint program, GLuint uniformIndex, GLsizei bufSize, GLsizei *length,
+                             GLchar *uniformName);
+GLuint mglGetUniformBlockIndex(GLMContext ctx, GLuint program, const GLchar *uniformBlockName);
 void mglGetActiveUniformBlockiv(GLMContext ctx, GLuint program, GLuint uniformBlockIndex, GLenum pname, GLint *params);
-void mglGetActiveUniformBlockName(GLMContext ctx, GLuint program, GLuint uniformBlockIndex, GLsizei bufSize, GLsizei *length, GLchar *uniformBlockName);
+void mglGetActiveUniformBlockName(GLMContext ctx, GLuint program, GLuint uniformBlockIndex, GLsizei bufSize,
+                                  GLsizei *length, GLchar *uniformBlockName);
 void mglUniformBlockBinding(GLMContext ctx, GLuint program, GLuint uniformBlockIndex, GLuint uniformBlockBinding);
 void mglBindBufferRange(GLMContext ctx, GLenum target, GLuint index, GLuint buffer, GLintptr offset, GLsizeiptr size);
 void mglBindBufferBase(GLMContext ctx, GLenum target, GLuint index, GLuint buffer);
 void mglGetIntegeri_v(GLMContext ctx, GLenum target, GLuint index, GLint *data);
-void mglDrawElementsBaseVertex(GLMContext ctx, GLenum mode, GLsizei count, GLenum type, const void *indices, GLint basevertex);
-void mglDrawRangeElementsBaseVertex(GLMContext ctx, GLenum mode, GLuint start, GLuint end, GLsizei count, GLenum type, const void *indices, GLint basevertex);
-void mglDrawElementsInstancedBaseVertex(GLMContext ctx, GLenum mode, GLsizei count, GLenum type, const void *indices, GLsizei instancecount, GLint basevertex);
-void mglMultiDrawElementsBaseVertex(GLMContext ctx, GLenum mode, const GLsizei *count, GLenum type, const void *const*indices, GLsizei drawcount, const GLint *basevertex);
+void mglDrawElementsBaseVertex(GLMContext ctx, GLenum mode, GLsizei count, GLenum type, const void *indices,
+                               GLint basevertex);
+void mglDrawRangeElementsBaseVertex(GLMContext ctx, GLenum mode, GLuint start, GLuint end, GLsizei count, GLenum type,
+                                    const void *indices, GLint basevertex);
+void mglDrawElementsInstancedBaseVertex(GLMContext ctx, GLenum mode, GLsizei count, GLenum type, const void *indices,
+                                        GLsizei instancecount, GLint basevertex);
+void mglMultiDrawElementsBaseVertex(GLMContext ctx, GLenum mode, const GLsizei *count, GLenum type,
+                                    const void *const *indices, GLsizei drawcount, const GLint *basevertex);
 void mglProvokingVertex(GLMContext ctx, GLenum mode);
-GLsync  mglFenceSync(GLMContext ctx, GLenum condition, GLbitfield flags);
+GLsync mglFenceSync(GLMContext ctx, GLenum condition, GLbitfield flags);
 GLboolean mglIsSync(GLMContext ctx, GLsync sync);
 void mglDeleteSync(GLMContext ctx, GLsync sync);
-GLenum  mglClientWaitSync(GLMContext ctx, GLsync sync, GLbitfield flags, GLuint64 timeout);
+GLenum mglClientWaitSync(GLMContext ctx, GLsync sync, GLbitfield flags, GLuint64 timeout);
 void mglWaitSync(GLMContext ctx, GLsync sync, GLbitfield flags, GLuint64 timeout);
 void mglGetInteger64v(GLMContext ctx, GLenum pname, GLint64 *data);
 void mglGetSynciv(GLMContext ctx, GLsync sync, GLenum pname, GLsizei count, GLsizei *length, GLint *values);
 void mglGetInteger64i_v(GLMContext ctx, GLenum target, GLuint index, GLint64 *data);
 void mglGetBufferParameteri64v(GLMContext ctx, GLenum target, GLenum pname, GLint64 *params);
 void mglFramebufferTexture(GLMContext ctx, GLenum target, GLenum attachment, GLuint texture, GLint level);
-void mglTexImage2DMultisample(GLMContext ctx, GLenum target, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height, GLboolean fixedsamplelocations);
-void mglTexImage3DMultisample(GLMContext ctx, GLenum target, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height, GLsizei depth, GLboolean fixedsamplelocations);
+void mglTexImage2DMultisample(GLMContext ctx, GLenum target, GLsizei samples, GLenum internalformat, GLsizei width,
+                              GLsizei height, GLboolean fixedsamplelocations);
+void mglTexImage3DMultisample(GLMContext ctx, GLenum target, GLsizei samples, GLenum internalformat, GLsizei width,
+                              GLsizei height, GLsizei depth, GLboolean fixedsamplelocations);
 void mglGetMultisamplefv(GLMContext ctx, GLenum pname, GLuint index, GLfloat *val);
 void mglSampleMaski(GLMContext ctx, GLuint maskNumber, GLbitfield mask);
-void mglBindFragDataLocationIndexed(GLMContext ctx, GLuint program, GLuint colorNumber, GLuint index, const GLchar *name);
-GLint  mglGetFragDataIndex(GLMContext ctx, GLuint program, const GLchar *name);
+void mglBindFragDataLocationIndexed(GLMContext ctx, GLuint program, GLuint colorNumber, GLuint index,
+                                    const GLchar *name);
+GLint mglGetFragDataIndex(GLMContext ctx, GLuint program, const GLchar *name);
 void mglGenSamplers(GLMContext ctx, GLsizei count, GLuint *samplers);
 void mglDeleteSamplers(GLMContext ctx, GLsizei count, const GLuint *samplers);
 GLboolean mglIsSampler(GLMContext ctx, GLuint sampler);
@@ -772,11 +826,14 @@ void mglUniformMatrix3x4dv(GLMContext ctx, GLint location, GLsizei count, GLbool
 void mglUniformMatrix4x2dv(GLMContext ctx, GLint location, GLsizei count, GLboolean transpose, const GLdouble *value);
 void mglUniformMatrix4x3dv(GLMContext ctx, GLint location, GLsizei count, GLboolean transpose, const GLdouble *value);
 void mglGetUniformdv(GLMContext ctx, GLuint program, GLint location, GLdouble *params);
-GLint  mglGetSubroutineUniformLocation(GLMContext ctx, GLuint program, GLenum shadertype, const GLchar *name);
-GLuint  mglGetSubroutineIndex(GLMContext ctx, GLuint program, GLenum shadertype, const GLchar *name);
-void mglGetActiveSubroutineUniformiv(GLMContext ctx, GLuint program, GLenum shadertype, GLuint index, GLenum pname, GLint *values);
-void mglGetActiveSubroutineUniformName(GLMContext ctx, GLuint program, GLenum shadertype, GLuint index, GLsizei bufSize, GLsizei *length, GLchar *name);
-void mglGetActiveSubroutineName(GLMContext ctx, GLuint program, GLenum shadertype, GLuint index, GLsizei bufSize, GLsizei *length, GLchar *name);
+GLint mglGetSubroutineUniformLocation(GLMContext ctx, GLuint program, GLenum shadertype, const GLchar *name);
+GLuint mglGetSubroutineIndex(GLMContext ctx, GLuint program, GLenum shadertype, const GLchar *name);
+void mglGetActiveSubroutineUniformiv(GLMContext ctx, GLuint program, GLenum shadertype, GLuint index, GLenum pname,
+                                     GLint *values);
+void mglGetActiveSubroutineUniformName(GLMContext ctx, GLuint program, GLenum shadertype, GLuint index, GLsizei bufSize,
+                                       GLsizei *length, GLchar *name);
+void mglGetActiveSubroutineName(GLMContext ctx, GLuint program, GLenum shadertype, GLuint index, GLsizei bufSize,
+                                GLsizei *length, GLchar *name);
 void mglUniformSubroutinesuiv(GLMContext ctx, GLenum shadertype, GLsizei count, const GLuint *indices);
 void mglGetUniformSubroutineuiv(GLMContext ctx, GLenum shadertype, GLint location, GLuint *params);
 void mglGetProgramStageiv(GLMContext ctx, GLuint program, GLenum shadertype, GLenum pname, GLint *values);
@@ -794,16 +851,19 @@ void mglBeginQueryIndexed(GLMContext ctx, GLenum target, GLuint index, GLuint id
 void mglEndQueryIndexed(GLMContext ctx, GLenum target, GLuint index);
 void mglGetQueryIndexediv(GLMContext ctx, GLenum target, GLuint index, GLenum pname, GLint *params);
 void mglReleaseShaderCompiler(GLMContext ctx);
-void mglShaderBinary(GLMContext ctx, GLsizei count, const GLuint *shaders, GLenum binaryFormat, const void *binary, GLsizei length);
-void mglGetShaderPrecisionFormat(GLMContext ctx, GLenum shadertype, GLenum precisiontype, GLint *range, GLint *precision);
+void mglShaderBinary(GLMContext ctx, GLsizei count, const GLuint *shaders, GLenum binaryFormat, const void *binary,
+                     GLsizei length);
+void mglGetShaderPrecisionFormat(GLMContext ctx, GLenum shadertype, GLenum precisiontype, GLint *range,
+                                 GLint *precision);
 void mglDepthRangef(GLMContext ctx, GLfloat n, GLfloat f);
 void mglClearDepthf(GLMContext ctx, GLfloat d);
-void mglGetProgramBinary(GLMContext ctx, GLuint program, GLsizei bufSize, GLsizei *length, GLenum *binaryFormat, void *binary);
+void mglGetProgramBinary(GLMContext ctx, GLuint program, GLsizei bufSize, GLsizei *length, GLenum *binaryFormat,
+                         void *binary);
 void mglProgramBinary(GLMContext ctx, GLuint program, GLenum binaryFormat, const void *binary, GLsizei length);
 void mglProgramParameteri(GLMContext ctx, GLuint program, GLenum pname, GLint value);
 void mglUseProgramStages(GLMContext ctx, GLuint pipeline, GLbitfield stages, GLuint program);
 void mglActiveShaderProgram(GLMContext ctx, GLuint pipeline, GLuint program);
-GLuint  mglCreateShaderProgramv(GLMContext ctx, GLenum type, GLsizei count, const GLchar *const*strings);
+GLuint mglCreateShaderProgramv(GLMContext ctx, GLenum type, GLsizei count, const GLchar *const *strings);
 void mglBindProgramPipeline(GLMContext ctx, GLuint pipeline);
 void mglDeleteProgramPipelines(GLMContext ctx, GLsizei n, const GLuint *pipelines);
 void mglGenProgramPipelines(GLMContext ctx, GLsizei n, GLuint *pipelines);
@@ -836,30 +896,50 @@ void mglProgramUniform3ui(GLMContext ctx, GLuint program, GLint location, GLuint
 void mglProgramUniform3uiv(GLMContext ctx, GLuint program, GLint location, GLsizei count, const GLuint *value);
 void mglProgramUniform4i(GLMContext ctx, GLuint program, GLint location, GLint v0, GLint v1, GLint v2, GLint v3);
 void mglProgramUniform4iv(GLMContext ctx, GLuint program, GLint location, GLsizei count, const GLint *value);
-void mglProgramUniform4f(GLMContext ctx, GLuint program, GLint location, GLfloat v0, GLfloat v1, GLfloat v2, GLfloat v3);
+void mglProgramUniform4f(GLMContext ctx, GLuint program, GLint location, GLfloat v0, GLfloat v1, GLfloat v2,
+                         GLfloat v3);
 void mglProgramUniform4fv(GLMContext ctx, GLuint program, GLint location, GLsizei count, const GLfloat *value);
-void mglProgramUniform4d(GLMContext ctx, GLuint program, GLint location, GLdouble v0, GLdouble v1, GLdouble v2, GLdouble v3);
+void mglProgramUniform4d(GLMContext ctx, GLuint program, GLint location, GLdouble v0, GLdouble v1, GLdouble v2,
+                         GLdouble v3);
 void mglProgramUniform4dv(GLMContext ctx, GLuint program, GLint location, GLsizei count, const GLdouble *value);
 void mglProgramUniform4ui(GLMContext ctx, GLuint program, GLint location, GLuint v0, GLuint v1, GLuint v2, GLuint v3);
 void mglProgramUniform4uiv(GLMContext ctx, GLuint program, GLint location, GLsizei count, const GLuint *value);
-void mglProgramUniformMatrix2fv(GLMContext ctx, GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat *value);
-void mglProgramUniformMatrix3fv(GLMContext ctx, GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat *value);
-void mglProgramUniformMatrix4fv(GLMContext ctx, GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat *value);
-void mglProgramUniformMatrix2dv(GLMContext ctx, GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble *value);
-void mglProgramUniformMatrix3dv(GLMContext ctx, GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble *value);
-void mglProgramUniformMatrix4dv(GLMContext ctx, GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble *value);
-void mglProgramUniformMatrix2x3fv(GLMContext ctx, GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat *value);
-void mglProgramUniformMatrix3x2fv(GLMContext ctx, GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat *value);
-void mglProgramUniformMatrix2x4fv(GLMContext ctx, GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat *value);
-void mglProgramUniformMatrix4x2fv(GLMContext ctx, GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat *value);
-void mglProgramUniformMatrix3x4fv(GLMContext ctx, GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat *value);
-void mglProgramUniformMatrix4x3fv(GLMContext ctx, GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat *value);
-void mglProgramUniformMatrix2x3dv(GLMContext ctx, GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble *value);
-void mglProgramUniformMatrix3x2dv(GLMContext ctx, GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble *value);
-void mglProgramUniformMatrix2x4dv(GLMContext ctx, GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble *value);
-void mglProgramUniformMatrix4x2dv(GLMContext ctx, GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble *value);
-void mglProgramUniformMatrix3x4dv(GLMContext ctx, GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble *value);
-void mglProgramUniformMatrix4x3dv(GLMContext ctx, GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble *value);
+void mglProgramUniformMatrix2fv(GLMContext ctx, GLuint program, GLint location, GLsizei count, GLboolean transpose,
+                                const GLfloat *value);
+void mglProgramUniformMatrix3fv(GLMContext ctx, GLuint program, GLint location, GLsizei count, GLboolean transpose,
+                                const GLfloat *value);
+void mglProgramUniformMatrix4fv(GLMContext ctx, GLuint program, GLint location, GLsizei count, GLboolean transpose,
+                                const GLfloat *value);
+void mglProgramUniformMatrix2dv(GLMContext ctx, GLuint program, GLint location, GLsizei count, GLboolean transpose,
+                                const GLdouble *value);
+void mglProgramUniformMatrix3dv(GLMContext ctx, GLuint program, GLint location, GLsizei count, GLboolean transpose,
+                                const GLdouble *value);
+void mglProgramUniformMatrix4dv(GLMContext ctx, GLuint program, GLint location, GLsizei count, GLboolean transpose,
+                                const GLdouble *value);
+void mglProgramUniformMatrix2x3fv(GLMContext ctx, GLuint program, GLint location, GLsizei count, GLboolean transpose,
+                                  const GLfloat *value);
+void mglProgramUniformMatrix3x2fv(GLMContext ctx, GLuint program, GLint location, GLsizei count, GLboolean transpose,
+                                  const GLfloat *value);
+void mglProgramUniformMatrix2x4fv(GLMContext ctx, GLuint program, GLint location, GLsizei count, GLboolean transpose,
+                                  const GLfloat *value);
+void mglProgramUniformMatrix4x2fv(GLMContext ctx, GLuint program, GLint location, GLsizei count, GLboolean transpose,
+                                  const GLfloat *value);
+void mglProgramUniformMatrix3x4fv(GLMContext ctx, GLuint program, GLint location, GLsizei count, GLboolean transpose,
+                                  const GLfloat *value);
+void mglProgramUniformMatrix4x3fv(GLMContext ctx, GLuint program, GLint location, GLsizei count, GLboolean transpose,
+                                  const GLfloat *value);
+void mglProgramUniformMatrix2x3dv(GLMContext ctx, GLuint program, GLint location, GLsizei count, GLboolean transpose,
+                                  const GLdouble *value);
+void mglProgramUniformMatrix3x2dv(GLMContext ctx, GLuint program, GLint location, GLsizei count, GLboolean transpose,
+                                  const GLdouble *value);
+void mglProgramUniformMatrix2x4dv(GLMContext ctx, GLuint program, GLint location, GLsizei count, GLboolean transpose,
+                                  const GLdouble *value);
+void mglProgramUniformMatrix4x2dv(GLMContext ctx, GLuint program, GLint location, GLsizei count, GLboolean transpose,
+                                  const GLdouble *value);
+void mglProgramUniformMatrix3x4dv(GLMContext ctx, GLuint program, GLint location, GLsizei count, GLboolean transpose,
+                                  const GLdouble *value);
+void mglProgramUniformMatrix4x3dv(GLMContext ctx, GLuint program, GLint location, GLsizei count, GLboolean transpose,
+                                  const GLdouble *value);
 void mglValidateProgramPipeline(GLMContext ctx, GLuint pipeline);
 void mglGetProgramPipelineInfoLog(GLMContext ctx, GLuint pipeline, GLsizei bufSize, GLsizei *length, GLchar *infoLog);
 void mglVertexAttribL1d(GLMContext ctx, GLuint index, GLdouble x);
@@ -870,7 +950,8 @@ void mglVertexAttribL1dv(GLMContext ctx, GLuint index, const GLdouble *v);
 void mglVertexAttribL2dv(GLMContext ctx, GLuint index, const GLdouble *v);
 void mglVertexAttribL3dv(GLMContext ctx, GLuint index, const GLdouble *v);
 void mglVertexAttribL4dv(GLMContext ctx, GLuint index, const GLdouble *v);
-void mglVertexAttribLPointer(GLMContext ctx, GLuint index, GLint size, GLenum type, GLsizei stride, const void *pointer);
+void mglVertexAttribLPointer(GLMContext ctx, GLuint index, GLint size, GLenum type, GLsizei stride,
+                             const void *pointer);
 void mglGetVertexAttribLdv(GLMContext ctx, GLuint index, GLenum pname, GLdouble *params);
 void mglViewportArrayv(GLMContext ctx, GLuint first, GLsizei count, const GLfloat *v);
 void mglViewportIndexedf(GLMContext ctx, GLuint index, GLfloat x, GLfloat y, GLfloat w, GLfloat h);
@@ -882,55 +963,82 @@ void mglDepthRangeArrayv(GLMContext ctx, GLuint first, GLsizei count, const GLdo
 void mglDepthRangeIndexed(GLMContext ctx, GLuint index, GLdouble n, GLdouble f);
 void mglGetFloati_v(GLMContext ctx, GLenum target, GLuint index, GLfloat *data);
 void mglGetDoublei_v(GLMContext ctx, GLenum target, GLuint index, GLdouble *data);
-void mglDrawArraysInstancedBaseInstance(GLMContext ctx, GLenum mode, GLint first, GLsizei count, GLsizei instancecount, GLuint baseinstance);
-void mglDrawElementsInstancedBaseInstance(GLMContext ctx, GLenum mode, GLsizei count, GLenum type, const void *indices, GLsizei instancecount, GLuint baseinstance);
-void mglDrawElementsInstancedBaseVertexBaseInstance(GLMContext ctx, GLenum mode, GLsizei count, GLenum type, const void *indices, GLsizei instancecount, GLint basevertex, GLuint baseinstance);
-void mglGetInternalformativ(GLMContext ctx, GLenum target, GLenum internalformat, GLenum pname, GLsizei count, GLint *params);
+void mglDrawArraysInstancedBaseInstance(GLMContext ctx, GLenum mode, GLint first, GLsizei count, GLsizei instancecount,
+                                        GLuint baseinstance);
+void mglDrawElementsInstancedBaseInstance(GLMContext ctx, GLenum mode, GLsizei count, GLenum type, const void *indices,
+                                          GLsizei instancecount, GLuint baseinstance);
+void mglDrawElementsInstancedBaseVertexBaseInstance(GLMContext ctx, GLenum mode, GLsizei count, GLenum type,
+                                                    const void *indices, GLsizei instancecount, GLint basevertex,
+                                                    GLuint baseinstance);
+void mglGetInternalformativ(GLMContext ctx, GLenum target, GLenum internalformat, GLenum pname, GLsizei count,
+                            GLint *params);
 void mglGetActiveAtomicCounterBufferiv(GLMContext ctx, GLuint program, GLuint bufferIndex, GLenum pname, GLint *params);
-void mglBindImageTexture(GLMContext ctx, GLuint unit, GLuint texture, GLint level, GLboolean layered, GLint layer, GLenum access, GLenum format);
+void mglBindImageTexture(GLMContext ctx, GLuint unit, GLuint texture, GLint level, GLboolean layered, GLint layer,
+                         GLenum access, GLenum format);
 void mglMemoryBarrier(GLMContext ctx, GLbitfield barriers);
 void mglTexStorage1D(GLMContext ctx, GLenum target, GLsizei levels, GLenum internalformat, GLsizei width);
-void mglTexStorage2D(GLMContext ctx, GLenum target, GLsizei levels, GLenum internalformat, GLsizei width, GLsizei height);
-void mglTexStorage3D(GLMContext ctx, GLenum target, GLsizei levels, GLenum internalformat, GLsizei width, GLsizei height, GLsizei depth);
+void mglTexStorage2D(GLMContext ctx, GLenum target, GLsizei levels, GLenum internalformat, GLsizei width,
+                     GLsizei height);
+void mglTexStorage3D(GLMContext ctx, GLenum target, GLsizei levels, GLenum internalformat, GLsizei width,
+                     GLsizei height, GLsizei depth);
 void mglDrawTransformFeedbackInstanced(GLMContext ctx, GLenum mode, GLuint id, GLsizei instancecount);
-void mglDrawTransformFeedbackStreamInstanced(GLMContext ctx, GLenum mode, GLuint id, GLuint stream, GLsizei instancecount);
-void mglClearBufferData(GLMContext ctx, GLenum target, GLenum internalformat, GLenum format, GLenum type, const void *data);
-void mglClearBufferSubData(GLMContext ctx, GLenum target, GLenum internalformat, GLintptr offset, GLsizeiptr size, GLenum format, GLenum type, const void *data);
+void mglDrawTransformFeedbackStreamInstanced(GLMContext ctx, GLenum mode, GLuint id, GLuint stream,
+                                             GLsizei instancecount);
+void mglClearBufferData(GLMContext ctx, GLenum target, GLenum internalformat, GLenum format, GLenum type,
+                        const void *data);
+void mglClearBufferSubData(GLMContext ctx, GLenum target, GLenum internalformat, GLintptr offset, GLsizeiptr size,
+                           GLenum format, GLenum type, const void *data);
 void mglDispatchCompute(GLMContext ctx, GLuint num_groups_x, GLuint num_groups_y, GLuint num_groups_z);
 void mglDispatchComputeIndirect(GLMContext ctx, GLintptr indirect);
-void mglCopyImageSubData(GLMContext ctx, GLuint srcName, GLenum srcTarget, GLint srcLevel, GLint srcX, GLint srcY, GLint srcZ, GLuint dstName, GLenum dstTarget, GLint dstLevel, GLint dstX, GLint dstY, GLint dstZ, GLsizei srcWidth, GLsizei srcHeight, GLsizei srcDepth);
+void mglCopyImageSubData(GLMContext ctx, GLuint srcName, GLenum srcTarget, GLint srcLevel, GLint srcX, GLint srcY,
+                         GLint srcZ, GLuint dstName, GLenum dstTarget, GLint dstLevel, GLint dstX, GLint dstY,
+                         GLint dstZ, GLsizei srcWidth, GLsizei srcHeight, GLsizei srcDepth);
 void mglFramebufferParameteri(GLMContext ctx, GLenum target, GLenum pname, GLint param);
 void mglGetFramebufferParameteriv(GLMContext ctx, GLenum target, GLenum pname, GLint *params);
-void mglGetInternalformati64v(GLMContext ctx, GLenum target, GLenum internalformat, GLenum pname, GLsizei count, GLint64 *params);
-void mglInvalidateTexSubImage(GLMContext ctx, GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth);
+void mglGetInternalformati64v(GLMContext ctx, GLenum target, GLenum internalformat, GLenum pname, GLsizei count,
+                              GLint64 *params);
+void mglInvalidateTexSubImage(GLMContext ctx, GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint zoffset,
+                              GLsizei width, GLsizei height, GLsizei depth);
 void mglInvalidateTexImage(GLMContext ctx, GLuint texture, GLint level);
 void mglInvalidateBufferSubData(GLMContext ctx, GLuint buffer, GLintptr offset, GLsizeiptr length);
 void mglInvalidateBufferData(GLMContext ctx, GLuint buffer);
 void mglInvalidateFramebuffer(GLMContext ctx, GLenum target, GLsizei numAttachments, const GLenum *attachments);
-void mglInvalidateSubFramebuffer(GLMContext ctx, GLenum target, GLsizei numAttachments, const GLenum *attachments, GLint x, GLint y, GLsizei width, GLsizei height);
+void mglInvalidateSubFramebuffer(GLMContext ctx, GLenum target, GLsizei numAttachments, const GLenum *attachments,
+                                 GLint x, GLint y, GLsizei width, GLsizei height);
 void mglMultiDrawArraysIndirect(GLMContext ctx, GLenum mode, const void *indirect, GLsizei drawcount, GLsizei stride);
-void mglMultiDrawElementsIndirect(GLMContext ctx, GLenum mode, GLenum type, const void *indirect, GLsizei drawcount, GLsizei stride);
+void mglMultiDrawElementsIndirect(GLMContext ctx, GLenum mode, GLenum type, const void *indirect, GLsizei drawcount,
+                                  GLsizei stride);
 void mglGetProgramInterfaceiv(GLMContext ctx, GLuint program, GLenum programInterface, GLenum pname, GLint *params);
-GLuint  mglGetProgramResourceIndex(GLMContext ctx, GLuint program, GLenum programInterface, const GLchar *name);
-void mglGetProgramResourceName(GLMContext ctx, GLuint program, GLenum programInterface, GLuint index, GLsizei bufSize, GLsizei *length, GLchar *name);
-void mglGetProgramResourceiv(GLMContext ctx, GLuint program, GLenum programInterface, GLuint index, GLsizei propCount, const GLenum *props, GLsizei count, GLsizei *length, GLint *params);
-GLint  mglGetProgramResourceLocation(GLMContext ctx, GLuint program, GLenum programInterface, const GLchar *name);
-GLint  mglGetProgramResourceLocationIndex(GLMContext ctx, GLuint program, GLenum programInterface, const GLchar *name);
+GLuint mglGetProgramResourceIndex(GLMContext ctx, GLuint program, GLenum programInterface, const GLchar *name);
+void mglGetProgramResourceName(GLMContext ctx, GLuint program, GLenum programInterface, GLuint index, GLsizei bufSize,
+                               GLsizei *length, GLchar *name);
+void mglGetProgramResourceiv(GLMContext ctx, GLuint program, GLenum programInterface, GLuint index, GLsizei propCount,
+                             const GLenum *props, GLsizei count, GLsizei *length, GLint *params);
+GLint mglGetProgramResourceLocation(GLMContext ctx, GLuint program, GLenum programInterface, const GLchar *name);
+GLint mglGetProgramResourceLocationIndex(GLMContext ctx, GLuint program, GLenum programInterface, const GLchar *name);
 void mglShaderStorageBlockBinding(GLMContext ctx, GLuint program, GLuint storageBlockIndex, GLuint storageBlockBinding);
-void mglTexBufferRange(GLMContext ctx, GLenum target, GLenum internalformat, GLuint buffer, GLintptr offset, GLsizeiptr size);
-void mglTexStorage2DMultisample(GLMContext ctx, GLenum target, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height, GLboolean fixedsamplelocations);
-void mglTexStorage3DMultisample(GLMContext ctx, GLenum target, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height, GLsizei depth, GLboolean fixedsamplelocations);
-void mglTextureView(GLMContext ctx, GLuint texture, GLenum target, GLuint origtexture, GLenum internalformat, GLuint minlevel, GLuint numlevels, GLuint minlayer, GLuint numlayers);
+void mglTexBufferRange(GLMContext ctx, GLenum target, GLenum internalformat, GLuint buffer, GLintptr offset,
+                       GLsizeiptr size);
+void mglTexStorage2DMultisample(GLMContext ctx, GLenum target, GLsizei samples, GLenum internalformat, GLsizei width,
+                                GLsizei height, GLboolean fixedsamplelocations);
+void mglTexStorage3DMultisample(GLMContext ctx, GLenum target, GLsizei samples, GLenum internalformat, GLsizei width,
+                                GLsizei height, GLsizei depth, GLboolean fixedsamplelocations);
+void mglTextureView(GLMContext ctx, GLuint texture, GLenum target, GLuint origtexture, GLenum internalformat,
+                    GLuint minlevel, GLuint numlevels, GLuint minlayer, GLuint numlayers);
 void mglBindVertexBuffer(GLMContext ctx, GLuint bindingindex, GLuint buffer, GLintptr offset, GLsizei stride);
-void mglVertexAttribFormat(GLMContext ctx, GLuint attribindex, GLint size, GLenum type, GLboolean normalized, GLuint relativeoffset);
+void mglVertexAttribFormat(GLMContext ctx, GLuint attribindex, GLint size, GLenum type, GLboolean normalized,
+                           GLuint relativeoffset);
 void mglVertexAttribIFormat(GLMContext ctx, GLuint attribindex, GLint size, GLenum type, GLuint relativeoffset);
 void mglVertexAttribLFormat(GLMContext ctx, GLuint attribindex, GLint size, GLenum type, GLuint relativeoffset);
 void mglVertexAttribBinding(GLMContext ctx, GLuint attribindex, GLuint bindingindex);
 void mglVertexBindingDivisor(GLMContext ctx, GLuint bindingindex, GLuint divisor);
-void mglDebugMessageControl(GLMContext ctx, GLenum source, GLenum type, GLenum severity, GLsizei count, const GLuint *ids, GLboolean enabled);
-void mglDebugMessageInsert(GLMContext ctx, GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar *buf);
+void mglDebugMessageControl(GLMContext ctx, GLenum source, GLenum type, GLenum severity, GLsizei count,
+                            const GLuint *ids, GLboolean enabled);
+void mglDebugMessageInsert(GLMContext ctx, GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length,
+                           const GLchar *buf);
 void mglDebugMessageCallback(GLMContext ctx, GLDEBUGPROC callback, const void *userParam);
-GLuint  mglGetDebugMessageLog(GLMContext ctx, GLuint count, GLsizei bufSize, GLenum *sources, GLenum *types, GLuint *ids, GLenum *severities, GLsizei *lengths, GLchar *messageLog);
+GLuint mglGetDebugMessageLog(GLMContext ctx, GLuint count, GLsizei bufSize, GLenum *sources, GLenum *types, GLuint *ids,
+                             GLenum *severities, GLsizei *lengths, GLchar *messageLog);
 void mglPushDebugGroup(GLMContext ctx, GLenum source, GLuint id, GLsizei length, const GLchar *message);
 void mglPopDebugGroup(GLMContext ctx);
 void mglObjectLabel(GLMContext ctx, GLenum identifier, GLuint name, GLsizei length, const GLchar *label);
@@ -940,17 +1048,21 @@ void mglGetObjectPtrLabel(GLMContext ctx, const void *ptr, GLsizei bufSize, GLsi
 void mglGetPointerv(GLMContext ctx, GLenum pname, void **params);
 void mglBufferStorage(GLMContext ctx, GLenum target, GLsizeiptr size, const void *data, GLbitfield flags);
 void mglClearTexImage(GLMContext ctx, GLuint texture, GLint level, GLenum format, GLenum type, const void *data);
-void mglClearTexSubImage(GLMContext ctx, GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLenum type, const void *data);
+void mglClearTexSubImage(GLMContext ctx, GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint zoffset,
+                         GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLenum type, const void *data);
 void mglBindBuffersBase(GLMContext ctx, GLenum target, GLuint first, GLsizei count, const GLuint *buffers);
-void mglBindBuffersRange(GLMContext ctx, GLenum target, GLuint first, GLsizei count, const GLuint *buffers, const GLintptr *offsets, const GLsizeiptr *sizes);
+void mglBindBuffersRange(GLMContext ctx, GLenum target, GLuint first, GLsizei count, const GLuint *buffers,
+                         const GLintptr *offsets, const GLsizeiptr *sizes);
 void mglBindTextures(GLMContext ctx, GLuint first, GLsizei count, const GLuint *textures);
 void mglBindSamplers(GLMContext ctx, GLuint first, GLsizei count, const GLuint *samplers);
 void mglBindImageTextures(GLMContext ctx, GLuint first, GLsizei count, const GLuint *textures);
-void mglBindVertexBuffers(GLMContext ctx, GLuint first, GLsizei count, const GLuint *buffers, const GLintptr *offsets, const GLsizei *strides);
+void mglBindVertexBuffers(GLMContext ctx, GLuint first, GLsizei count, const GLuint *buffers, const GLintptr *offsets,
+                          const GLsizei *strides);
 void mglClipControl(GLMContext ctx, GLenum origin, GLenum depth);
 void mglCreateTransformFeedbacks(GLMContext ctx, GLsizei n, GLuint *ids);
 void mglTransformFeedbackBufferBase(GLMContext ctx, GLuint xfb, GLuint index, GLuint buffer);
-void mglTransformFeedbackBufferRange(GLMContext ctx, GLuint xfb, GLuint index, GLuint buffer, GLintptr offset, GLsizeiptr size);
+void mglTransformFeedbackBufferRange(GLMContext ctx, GLuint xfb, GLuint index, GLuint buffer, GLintptr offset,
+                                     GLsizeiptr size);
 void mglGetTransformFeedbackiv(GLMContext ctx, GLuint xfb, GLenum pname, GLint *param);
 void mglGetTransformFeedbacki_v(GLMContext ctx, GLuint xfb, GLenum pname, GLuint index, GLint *param);
 void mglGetTransformFeedbacki64_v(GLMContext ctx, GLuint xfb, GLenum pname, GLuint index, GLint64 *param);
@@ -958,9 +1070,12 @@ void mglCreateBuffers(GLMContext ctx, GLsizei n, GLuint *buffers);
 void mglNamedBufferStorage(GLMContext ctx, GLuint buffer, GLsizeiptr size, const void *data, GLbitfield flags);
 void mglNamedBufferData(GLMContext ctx, GLuint buffer, GLsizeiptr size, const void *data, GLenum usage);
 void mglNamedBufferSubData(GLMContext ctx, GLuint buffer, GLintptr offset, GLsizeiptr size, const void *data);
-void mglCopyNamedBufferSubData(GLMContext ctx, GLuint readBuffer, GLuint writeBuffer, GLintptr readOffset, GLintptr writeOffset, GLsizeiptr size);
-void mglClearNamedBufferData(GLMContext ctx, GLuint buffer, GLenum internalformat, GLenum format, GLenum type, const void *data);
-void mglClearNamedBufferSubData(GLMContext ctx, GLuint buffer, GLenum internalformat, GLintptr offset, GLsizeiptr size, GLenum format, GLenum type, const void *data);
+void mglCopyNamedBufferSubData(GLMContext ctx, GLuint readBuffer, GLuint writeBuffer, GLintptr readOffset,
+                               GLintptr writeOffset, GLsizeiptr size);
+void mglClearNamedBufferData(GLMContext ctx, GLuint buffer, GLenum internalformat, GLenum format, GLenum type,
+                             const void *data);
+void mglClearNamedBufferSubData(GLMContext ctx, GLuint buffer, GLenum internalformat, GLintptr offset, GLsizeiptr size,
+                                GLenum format, GLenum type, const void *data);
 void *mglMapNamedBuffer(GLMContext ctx, GLuint buffer, GLenum access);
 void *mglMapNamedBufferRange(GLMContext ctx, GLuint buffer, GLintptr offset, GLsizeiptr length, GLbitfield access);
 GLboolean mglUnmapNamedBuffer(GLMContext ctx, GLuint buffer);
@@ -970,44 +1085,72 @@ void mglGetNamedBufferParameteri64v(GLMContext ctx, GLuint buffer, GLenum pname,
 void mglGetNamedBufferPointerv(GLMContext ctx, GLuint buffer, GLenum pname, void **params);
 void mglGetNamedBufferSubData(GLMContext ctx, GLuint buffer, GLintptr offset, GLsizeiptr size, void *data);
 void mglCreateFramebuffers(GLMContext ctx, GLsizei n, GLuint *framebuffers);
-void mglNamedFramebufferRenderbuffer(GLMContext ctx, GLuint framebuffer, GLenum attachment, GLenum renderbuffertarget, GLuint renderbuffer);
+void mglNamedFramebufferRenderbuffer(GLMContext ctx, GLuint framebuffer, GLenum attachment, GLenum renderbuffertarget,
+                                     GLuint renderbuffer);
 void mglNamedFramebufferParameteri(GLMContext ctx, GLuint framebuffer, GLenum pname, GLint param);
 void mglNamedFramebufferTexture(GLMContext ctx, GLuint framebuffer, GLenum attachment, GLuint texture, GLint level);
-void mglNamedFramebufferTextureLayer(GLMContext ctx, GLuint framebuffer, GLenum attachment, GLuint texture, GLint level, GLint layer);
+void mglNamedFramebufferTextureLayer(GLMContext ctx, GLuint framebuffer, GLenum attachment, GLuint texture, GLint level,
+                                     GLint layer);
 void mglNamedFramebufferDrawBuffer(GLMContext ctx, GLuint framebuffer, GLenum buf);
 void mglNamedFramebufferDrawBuffers(GLMContext ctx, GLuint framebuffer, GLsizei n, const GLenum *bufs);
 void mglNamedFramebufferReadBuffer(GLMContext ctx, GLuint framebuffer, GLenum src);
-void mglInvalidateNamedFramebufferData(GLMContext ctx, GLuint framebuffer, GLsizei numAttachments, const GLenum *attachments);
-void mglInvalidateNamedFramebufferSubData(GLMContext ctx, GLuint framebuffer, GLsizei numAttachments, const GLenum *attachments, GLint x, GLint y, GLsizei width, GLsizei height);
-void mglClearNamedFramebufferiv(GLMContext ctx, GLuint framebuffer, GLenum buffer, GLint drawbuffer, const GLint *value);
-void mglClearNamedFramebufferuiv(GLMContext ctx, GLuint framebuffer, GLenum buffer, GLint drawbuffer, const GLuint *value);
-void mglClearNamedFramebufferfv(GLMContext ctx, GLuint framebuffer, GLenum buffer, GLint drawbuffer, const GLfloat *value);
-void mglClearNamedFramebufferfi(GLMContext ctx, GLuint framebuffer, GLenum buffer, GLint drawbuffer, GLfloat depth, GLint stencil);
-void mglBlitNamedFramebuffer(GLMContext ctx, GLuint readFramebuffer, GLuint drawFramebuffer, GLint srcX0, GLint srcY0, GLint srcX1, GLint srcY1, GLint dstX0, GLint dstY0, GLint dstX1, GLint dstY1, GLbitfield mask, GLenum filter);
-GLenum  mglCheckNamedFramebufferStatus(GLMContext ctx, GLuint framebuffer, GLenum target);
+void mglInvalidateNamedFramebufferData(GLMContext ctx, GLuint framebuffer, GLsizei numAttachments,
+                                       const GLenum *attachments);
+void mglInvalidateNamedFramebufferSubData(GLMContext ctx, GLuint framebuffer, GLsizei numAttachments,
+                                          const GLenum *attachments, GLint x, GLint y, GLsizei width, GLsizei height);
+void mglClearNamedFramebufferiv(GLMContext ctx, GLuint framebuffer, GLenum buffer, GLint drawbuffer,
+                                const GLint *value);
+void mglClearNamedFramebufferuiv(GLMContext ctx, GLuint framebuffer, GLenum buffer, GLint drawbuffer,
+                                 const GLuint *value);
+void mglClearNamedFramebufferfv(GLMContext ctx, GLuint framebuffer, GLenum buffer, GLint drawbuffer,
+                                const GLfloat *value);
+void mglClearNamedFramebufferfi(GLMContext ctx, GLuint framebuffer, GLenum buffer, GLint drawbuffer, GLfloat depth,
+                                GLint stencil);
+void mglBlitNamedFramebuffer(GLMContext ctx, GLuint readFramebuffer, GLuint drawFramebuffer, GLint srcX0, GLint srcY0,
+                             GLint srcX1, GLint srcY1, GLint dstX0, GLint dstY0, GLint dstX1, GLint dstY1,
+                             GLbitfield mask, GLenum filter);
+GLenum mglCheckNamedFramebufferStatus(GLMContext ctx, GLuint framebuffer, GLenum target);
 void mglGetNamedFramebufferParameteriv(GLMContext ctx, GLuint framebuffer, GLenum pname, GLint *param);
-void mglGetNamedFramebufferAttachmentParameteriv(GLMContext ctx, GLuint framebuffer, GLenum attachment, GLenum pname, GLint *params);
+void mglGetNamedFramebufferAttachmentParameteriv(GLMContext ctx, GLuint framebuffer, GLenum attachment, GLenum pname,
+                                                 GLint *params);
 void mglCreateRenderbuffers(GLMContext ctx, GLsizei n, GLuint *renderbuffers);
-void mglNamedRenderbufferStorage(GLMContext ctx, GLuint renderbuffer, GLenum internalformat, GLsizei width, GLsizei height);
-void mglNamedRenderbufferStorageMultisample(GLMContext ctx, GLuint renderbuffer, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height);
+void mglNamedRenderbufferStorage(GLMContext ctx, GLuint renderbuffer, GLenum internalformat, GLsizei width,
+                                 GLsizei height);
+void mglNamedRenderbufferStorageMultisample(GLMContext ctx, GLuint renderbuffer, GLsizei samples, GLenum internalformat,
+                                            GLsizei width, GLsizei height);
 void mglGetNamedRenderbufferParameteriv(GLMContext ctx, GLuint renderbuffer, GLenum pname, GLint *params);
 void mglCreateTextures(GLMContext ctx, GLenum target, GLsizei n, GLuint *textures);
 void mglTextureBuffer(GLMContext ctx, GLuint texture, GLenum internalformat, GLuint buffer);
-void mglTextureBufferRange(GLMContext ctx, GLuint texture, GLenum internalformat, GLuint buffer, GLintptr offset, GLsizeiptr size);
+void mglTextureBufferRange(GLMContext ctx, GLuint texture, GLenum internalformat, GLuint buffer, GLintptr offset,
+                           GLsizeiptr size);
 void mglTextureStorage1D(GLMContext ctx, GLuint texture, GLsizei levels, GLenum internalformat, GLsizei width);
-void mglTextureStorage2D(GLMContext ctx, GLuint texture, GLsizei levels, GLenum internalformat, GLsizei width, GLsizei height);
-void mglTextureStorage3D(GLMContext ctx, GLuint texture, GLsizei levels, GLenum internalformat, GLsizei width, GLsizei height, GLsizei depth);
-void mglTextureStorage2DMultisample(GLMContext ctx, GLuint texture, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height, GLboolean fixedsamplelocations);
-void mglTextureStorage3DMultisample(GLMContext ctx, GLuint texture, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height, GLsizei depth, GLboolean fixedsamplelocations);
-void mglTextureSubImage1D(GLMContext ctx, GLuint texture, GLint level, GLint xoffset, GLsizei width, GLenum format, GLenum type, const void *pixels);
-void mglTextureSubImage2D(GLMContext ctx, GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, GLenum format, GLenum type, const void *pixels);
-void mglTextureSubImage3D(GLMContext ctx, GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLenum type, const void *pixels);
-void mglCompressedTextureSubImage1D(GLMContext ctx, GLuint texture, GLint level, GLint xoffset, GLsizei width, GLenum format, GLsizei imageSize, const void *data);
-void mglCompressedTextureSubImage2D(GLMContext ctx, GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, GLenum format, GLsizei imageSize, const void *data);
-void mglCompressedTextureSubImage3D(GLMContext ctx, GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLsizei imageSize, const void *data);
-void mglCopyTextureSubImage1D(GLMContext ctx, GLuint texture, GLint level, GLint xoffset, GLint x, GLint y, GLsizei width);
-void mglCopyTextureSubImage2D(GLMContext ctx, GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint x, GLint y, GLsizei width, GLsizei height);
-void mglCopyTextureSubImage3D(GLMContext ctx, GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLint x, GLint y, GLsizei width, GLsizei height);
+void mglTextureStorage2D(GLMContext ctx, GLuint texture, GLsizei levels, GLenum internalformat, GLsizei width,
+                         GLsizei height);
+void mglTextureStorage3D(GLMContext ctx, GLuint texture, GLsizei levels, GLenum internalformat, GLsizei width,
+                         GLsizei height, GLsizei depth);
+void mglTextureStorage2DMultisample(GLMContext ctx, GLuint texture, GLsizei samples, GLenum internalformat,
+                                    GLsizei width, GLsizei height, GLboolean fixedsamplelocations);
+void mglTextureStorage3DMultisample(GLMContext ctx, GLuint texture, GLsizei samples, GLenum internalformat,
+                                    GLsizei width, GLsizei height, GLsizei depth, GLboolean fixedsamplelocations);
+void mglTextureSubImage1D(GLMContext ctx, GLuint texture, GLint level, GLint xoffset, GLsizei width, GLenum format,
+                          GLenum type, const void *pixels);
+void mglTextureSubImage2D(GLMContext ctx, GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLsizei width,
+                          GLsizei height, GLenum format, GLenum type, const void *pixels);
+void mglTextureSubImage3D(GLMContext ctx, GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint zoffset,
+                          GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLenum type, const void *pixels);
+void mglCompressedTextureSubImage1D(GLMContext ctx, GLuint texture, GLint level, GLint xoffset, GLsizei width,
+                                    GLenum format, GLsizei imageSize, const void *data);
+void mglCompressedTextureSubImage2D(GLMContext ctx, GLuint texture, GLint level, GLint xoffset, GLint yoffset,
+                                    GLsizei width, GLsizei height, GLenum format, GLsizei imageSize, const void *data);
+void mglCompressedTextureSubImage3D(GLMContext ctx, GLuint texture, GLint level, GLint xoffset, GLint yoffset,
+                                    GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format,
+                                    GLsizei imageSize, const void *data);
+void mglCopyTextureSubImage1D(GLMContext ctx, GLuint texture, GLint level, GLint xoffset, GLint x, GLint y,
+                              GLsizei width);
+void mglCopyTextureSubImage2D(GLMContext ctx, GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint x,
+                              GLint y, GLsizei width, GLsizei height);
+void mglCopyTextureSubImage3D(GLMContext ctx, GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint zoffset,
+                              GLint x, GLint y, GLsizei width, GLsizei height);
 void mglTextureParameterf(GLMContext ctx, GLuint texture, GLenum pname, GLfloat param);
 void mglTextureParameterfv(GLMContext ctx, GLuint texture, GLenum pname, const GLfloat *param);
 void mglTextureParameteri(GLMContext ctx, GLuint texture, GLenum pname, GLint param);
@@ -1016,7 +1159,8 @@ void mglTextureParameterIuiv(GLMContext ctx, GLuint texture, GLenum pname, const
 void mglTextureParameteriv(GLMContext ctx, GLuint texture, GLenum pname, const GLint *param);
 void mglGenerateTextureMipmap(GLMContext ctx, GLuint texture);
 void mglBindTextureUnit(GLMContext ctx, GLuint unit, GLuint texture);
-void mglGetTextureImage(GLMContext ctx, GLuint texture, GLint level, GLenum format, GLenum type, GLsizei bufSize, void *pixels);
+void mglGetTextureImage(GLMContext ctx, GLuint texture, GLint level, GLenum format, GLenum type, GLsizei bufSize,
+                        void *pixels);
 void mglGetCompressedTextureImage(GLMContext ctx, GLuint texture, GLint level, GLsizei bufSize, void *pixels);
 void mglGetTextureLevelParameterfv(GLMContext ctx, GLuint texture, GLint level, GLenum pname, GLfloat *params);
 void mglGetTextureLevelParameteriv(GLMContext ctx, GLuint texture, GLint level, GLenum pname, GLint *params);
@@ -1028,12 +1172,17 @@ void mglCreateVertexArrays(GLMContext ctx, GLsizei n, GLuint *arrays);
 void mglDisableVertexArrayAttrib(GLMContext ctx, GLuint vaobj, GLuint index);
 void mglEnableVertexArrayAttrib(GLMContext ctx, GLuint vaobj, GLuint index);
 void mglVertexArrayElementBuffer(GLMContext ctx, GLuint vaobj, GLuint buffer);
-void mglVertexArrayVertexBuffer(GLMContext ctx, GLuint vaobj, GLuint bindingindex, GLuint buffer, GLintptr offset, GLsizei stride);
-void mglVertexArrayVertexBuffers(GLMContext ctx, GLuint vaobj, GLuint first, GLsizei count, const GLuint *buffers, const GLintptr *offsets, const GLsizei *strides);
+void mglVertexArrayVertexBuffer(GLMContext ctx, GLuint vaobj, GLuint bindingindex, GLuint buffer, GLintptr offset,
+                                GLsizei stride);
+void mglVertexArrayVertexBuffers(GLMContext ctx, GLuint vaobj, GLuint first, GLsizei count, const GLuint *buffers,
+                                 const GLintptr *offsets, const GLsizei *strides);
 void mglVertexArrayAttribBinding(GLMContext ctx, GLuint vaobj, GLuint attribindex, GLuint bindingindex);
-void mglVertexArrayAttribFormat(GLMContext ctx, GLuint vaobj, GLuint attribindex, GLint size, GLenum type, GLboolean normalized, GLuint relativeoffset);
-void mglVertexArrayAttribIFormat(GLMContext ctx, GLuint vaobj, GLuint attribindex, GLint size, GLenum type, GLuint relativeoffset);
-void mglVertexArrayAttribLFormat(GLMContext ctx, GLuint vaobj, GLuint attribindex, GLint size, GLenum type, GLuint relativeoffset);
+void mglVertexArrayAttribFormat(GLMContext ctx, GLuint vaobj, GLuint attribindex, GLint size, GLenum type,
+                                GLboolean normalized, GLuint relativeoffset);
+void mglVertexArrayAttribIFormat(GLMContext ctx, GLuint vaobj, GLuint attribindex, GLint size, GLenum type,
+                                 GLuint relativeoffset);
+void mglVertexArrayAttribLFormat(GLMContext ctx, GLuint vaobj, GLuint attribindex, GLint size, GLenum type,
+                                 GLuint relativeoffset);
 void mglVertexArrayBindingDivisor(GLMContext ctx, GLuint vaobj, GLuint bindingindex, GLuint divisor);
 void mglGetVertexArrayiv(GLMContext ctx, GLuint vaobj, GLenum pname, GLint *param);
 void mglGetVertexArrayIndexediv(GLMContext ctx, GLuint vaobj, GLuint index, GLenum pname, GLint *param);
@@ -1046,16 +1195,22 @@ void mglGetQueryBufferObjectiv(GLMContext ctx, GLuint id, GLuint buffer, GLenum 
 void mglGetQueryBufferObjectui64v(GLMContext ctx, GLuint id, GLuint buffer, GLenum pname, GLintptr offset);
 void mglGetQueryBufferObjectuiv(GLMContext ctx, GLuint id, GLuint buffer, GLenum pname, GLintptr offset);
 void mglMemoryBarrierByRegion(GLMContext ctx, GLbitfield barriers);
-void mglGetTextureSubImage(GLMContext ctx, GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLenum type, GLsizei bufSize, void *pixels);
-void mglGetCompressedTextureSubImage(GLMContext ctx, GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLsizei bufSize, void *pixels);
-GLenum  mglGetGraphicsResetStatus(GLMContext ctx);
+void mglGetTextureSubImage(GLMContext ctx, GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint zoffset,
+                           GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLenum type, GLsizei bufSize,
+                           void *pixels);
+void mglGetCompressedTextureSubImage(GLMContext ctx, GLuint texture, GLint level, GLint xoffset, GLint yoffset,
+                                     GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLsizei bufSize,
+                                     void *pixels);
+GLenum mglGetGraphicsResetStatus(GLMContext ctx);
 void mglGetnCompressedTexImage(GLMContext ctx, GLenum target, GLint lod, GLsizei bufSize, void *pixels);
-void mglGetnTexImage(GLMContext ctx, GLenum target, GLint level, GLenum format, GLenum type, GLsizei bufSize, void *pixels);
+void mglGetnTexImage(GLMContext ctx, GLenum target, GLint level, GLenum format, GLenum type, GLsizei bufSize,
+                     void *pixels);
 void mglGetnUniformdv(GLMContext ctx, GLuint program, GLint location, GLsizei bufSize, GLdouble *params);
 void mglGetnUniformfv(GLMContext ctx, GLuint program, GLint location, GLsizei bufSize, GLfloat *params);
 void mglGetnUniformiv(GLMContext ctx, GLuint program, GLint location, GLsizei bufSize, GLint *params);
 void mglGetnUniformuiv(GLMContext ctx, GLuint program, GLint location, GLsizei bufSize, GLuint *params);
-void mglReadnPixels(GLMContext ctx, GLint x, GLint y, GLsizei width, GLsizei height, GLenum format, GLenum type, GLsizei bufSize, void *data);
+void mglReadnPixels(GLMContext ctx, GLint x, GLint y, GLsizei width, GLsizei height, GLenum format, GLenum type,
+                    GLsizei bufSize, void *data);
 void mglGetnMapdv(GLMContext ctx, GLenum target, GLenum query, GLsizei bufSize, GLdouble *v);
 void mglGetnMapfv(GLMContext ctx, GLenum target, GLenum query, GLsizei bufSize, GLfloat *v);
 void mglGetnMapiv(GLMContext ctx, GLenum target, GLenum query, GLsizei bufSize, GLint *v);
@@ -1065,13 +1220,19 @@ void mglGetnPixelMapusv(GLMContext ctx, GLenum map, GLsizei bufSize, GLushort *v
 void mglGetnPolygonStipple(GLMContext ctx, GLsizei bufSize, GLubyte *pattern);
 void mglGetnColorTable(GLMContext ctx, GLenum target, GLenum format, GLenum type, GLsizei bufSize, void *table);
 void mglGetnConvolutionFilter(GLMContext ctx, GLenum target, GLenum format, GLenum type, GLsizei bufSize, void *image);
-void mglGetnSeparableFilter(GLMContext ctx, GLenum target, GLenum format, GLenum type, GLsizei rowBufSize, void *row, GLsizei columnBufSize, void *column, void *span);
-void mglGetnHistogram(GLMContext ctx, GLenum target, GLboolean reset, GLenum format, GLenum type, GLsizei bufSize, void *values);
-void mglGetnMinmax(GLMContext ctx, GLenum target, GLboolean reset, GLenum format, GLenum type, GLsizei bufSize, void *values);
+void mglGetnSeparableFilter(GLMContext ctx, GLenum target, GLenum format, GLenum type, GLsizei rowBufSize, void *row,
+                            GLsizei columnBufSize, void *column, void *span);
+void mglGetnHistogram(GLMContext ctx, GLenum target, GLboolean reset, GLenum format, GLenum type, GLsizei bufSize,
+                      void *values);
+void mglGetnMinmax(GLMContext ctx, GLenum target, GLboolean reset, GLenum format, GLenum type, GLsizei bufSize,
+                   void *values);
 void mglTextureBarrier(GLMContext ctx);
-void mglSpecializeShader(GLMContext ctx, GLuint shader, const GLchar *pEntryPoint, GLuint numSpecializationConstants, const GLuint *pConstantIndex, const GLuint *pConstantValue);
-void mglMultiDrawArraysIndirectCount(GLMContext ctx, GLenum mode, const void *indirect, GLintptr drawcount, GLsizei maxdrawcount, GLsizei stride);
-void mglMultiDrawElementsIndirectCount(GLMContext ctx, GLenum mode, GLenum type, const void *indirect, GLintptr drawcount, GLsizei maxdrawcount, GLsizei stride);
+void mglSpecializeShader(GLMContext ctx, GLuint shader, const GLchar *pEntryPoint, GLuint numSpecializationConstants,
+                         const GLuint *pConstantIndex, const GLuint *pConstantValue);
+void mglMultiDrawArraysIndirectCount(GLMContext ctx, GLenum mode, const void *indirect, GLintptr drawcount,
+                                     GLsizei maxdrawcount, GLsizei stride);
+void mglMultiDrawElementsIndirectCount(GLMContext ctx, GLenum mode, GLenum type, const void *indirect,
+                                       GLintptr drawcount, GLsizei maxdrawcount, GLsizei stride);
 void mglPolygonOffsetClamp(GLMContext ctx, GLfloat factor, GLfloat units, GLfloat clamp);
 
 #endif /* mgl_h */

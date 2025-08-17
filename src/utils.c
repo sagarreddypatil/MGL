@@ -28,7 +28,7 @@ GLuint ilog2(GLuint val)
 {
     if (val == 0)
         return 0;
-    
+
     return (GLuint)floor(log2(val));
 }
 
@@ -49,4 +49,3 @@ GLboolean checkMaxLevels(GLuint levels, GLuint width, GLuint height, GLuint dept
 {
     return levels <= maxLevels(width, height, depth);
 }
-

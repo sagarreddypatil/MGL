@@ -77,7 +77,8 @@ void mglListBase(GLMContext ctx, GLuint base)
     assert(0);
 }
 
-void mglBitmap(GLMContext ctx, GLsizei width, GLsizei height, GLfloat xorig, GLfloat yorig, GLfloat xmove, GLfloat ymove, const GLubyte *bitmap)
+void mglBitmap(GLMContext ctx, GLsizei width, GLsizei height, GLfloat xorig, GLfloat yorig, GLfloat xmove,
+               GLfloat ymove, const GLubyte *bitmap)
 {
     // Unimplemented function
     assert(0);
@@ -1127,7 +1128,7 @@ void mglSelectBuffer(GLMContext ctx, GLsizei size, GLuint *buffer)
     assert(0);
 }
 
-GLint  mglRenderMode(GLMContext ctx, GLenum mode)
+GLint mglRenderMode(GLMContext ctx, GLenum mode)
 {
     GLint ret = -1;
 
@@ -1277,7 +1278,8 @@ GLboolean mglIsList(GLMContext ctx, GLuint list)
     return ret;
 }
 
-void mglFrustum(GLMContext ctx, GLdouble left, GLdouble right, GLdouble bottom, GLdouble top, GLdouble zNear, GLdouble zFar)
+void mglFrustum(GLMContext ctx, GLdouble left, GLdouble right, GLdouble bottom, GLdouble top, GLdouble zNear,
+                GLdouble zFar)
 {
     // Unimplemented function
     assert(0);
@@ -1319,7 +1321,8 @@ void mglMultMatrixd(GLMContext ctx, const GLdouble *m)
     assert(0);
 }
 
-void mglOrtho(GLMContext ctx, GLdouble left, GLdouble right, GLdouble bottom, GLdouble top, GLdouble zNear, GLdouble zFar)
+void mglOrtho(GLMContext ctx, GLdouble left, GLdouble right, GLdouble bottom, GLdouble top, GLdouble zNear,
+              GLdouble zFar)
 {
     // Unimplemented function
     assert(0);
@@ -1372,7 +1375,6 @@ void mglTranslatef(GLMContext ctx, GLfloat x, GLfloat y, GLfloat z)
     // Unimplemented function
     assert(0);
 }
-
 
 void mglInitNames(GLMContext ctx)
 {
@@ -1440,7 +1442,8 @@ void mglPushAttrib(GLMContext ctx, GLbitfield mask)
     assert(0);
 }
 
-void mglMap1d(GLMContext ctx, GLenum target, GLdouble u1, GLdouble u2, GLint stride, GLint order, const GLdouble *points)
+void mglMap1d(GLMContext ctx, GLenum target, GLdouble u1, GLdouble u2, GLint stride, GLint order,
+              const GLdouble *points)
 {
     // Unimplemented function
     assert(0);
@@ -1452,13 +1455,15 @@ void mglMap1f(GLMContext ctx, GLenum target, GLfloat u1, GLfloat u2, GLint strid
     assert(0);
 }
 
-void mglMap2d(GLMContext ctx, GLenum target, GLdouble u1, GLdouble u2, GLint ustride, GLint uorder, GLdouble v1, GLdouble v2, GLint vstride, GLint vorder, const GLdouble *points)
+void mglMap2d(GLMContext ctx, GLenum target, GLdouble u1, GLdouble u2, GLint ustride, GLint uorder, GLdouble v1,
+              GLdouble v2, GLint vstride, GLint vorder, const GLdouble *points)
 {
     // Unimplemented function
     assert(0);
 }
 
-void mglMap2f(GLMContext ctx, GLenum target, GLfloat u1, GLfloat u2, GLint ustride, GLint uorder, GLfloat v1, GLfloat v2, GLint vstride, GLint vorder, const GLfloat *points)
+void mglMap2f(GLMContext ctx, GLenum target, GLfloat u1, GLfloat u2, GLint ustride, GLint uorder, GLfloat v1,
+              GLfloat v2, GLint vstride, GLint vorder, const GLfloat *points)
 {
     // Unimplemented function
     assert(0);
@@ -1602,19 +1607,22 @@ void mglGetnConvolutionFilter(GLMContext ctx, GLenum target, GLenum format, GLen
     assert(0);
 }
 
-void mglGetnSeparableFilter(GLMContext ctx, GLenum target, GLenum format, GLenum type, GLsizei rowBufSize, void *row, GLsizei columnBufSize, void *column, void *span)
+void mglGetnSeparableFilter(GLMContext ctx, GLenum target, GLenum format, GLenum type, GLsizei rowBufSize, void *row,
+                            GLsizei columnBufSize, void *column, void *span)
 {
     // Unimplemented function
     assert(0);
 }
 
-void mglGetnHistogram(GLMContext ctx, GLenum target, GLboolean reset, GLenum format, GLenum type, GLsizei bufSize, void *values)
+void mglGetnHistogram(GLMContext ctx, GLenum target, GLboolean reset, GLenum format, GLenum type, GLsizei bufSize,
+                      void *values)
 {
     // Unimplemented function
     assert(0);
 }
 
-void mglGetnMinmax(GLMContext ctx, GLenum target, GLboolean reset, GLenum format, GLenum type, GLsizei bufSize, void *values)
+void mglGetnMinmax(GLMContext ctx, GLenum target, GLboolean reset, GLenum format, GLenum type, GLsizei bufSize,
+                   void *values)
 {
     // Unimplemented function
     assert(0);
@@ -2252,5 +2260,3 @@ void mglPrioritizeTextures(GLMContext ctx, GLsizei n, const GLuint *textures, co
     // Unimplemented function
     assert(0);
 }
-
-

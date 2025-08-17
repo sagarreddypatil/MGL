@@ -25,12 +25,11 @@
 #include "pixel_utils.h"
 #include "utils.h"
 
-#define RENDBUF_STATE(_val_)    ctx->state.renderbuffer->_val_
+#define RENDBUF_STATE(_val_) ctx->state.renderbuffer->_val_
 
 extern GLuint textureIndexFromTarget(GLMContext ctx, GLenum target);
 extern Texture *newTexObj(GLMContext ctx, GLenum target);
 extern Texture *findTexture(GLMContext ctx, GLuint texture);
-
 
 #pragma mark renderbuffer logic
 
@@ -87,18 +86,20 @@ Renderbuffer *findRenderbuffer(GLMContext ctx, GLuint renderbuffer)
 
 Framebuffer *currentFBOForType(GLMContext ctx, GLenum target)
 {
-    switch(target)
+    switch (target)
     {
-        case GL_FRAMEBUFFER:
-        case GL_DRAW_FRAMEBUFFER:
-            return ctx->state.framebuffer;
-            break;
+    case GL_FRAMEBUFFER:
+    case GL_DRAW_FRAMEBUFFER:
+        return ctx->state.framebuffer;
+        break;
 
-        case GL_READ_FRAMEBUFFER:
-            return ctx->state.readbuffer;
-            break;
+    case GL_READ_FRAMEBUFFER:
+        return ctx->state.readbuffer;
+        break;
 
-        default: assert(0); break;
+    default:
+        assert(0);
+        break;
     }
 }
 
@@ -164,7 +165,7 @@ void mglGenFramebuffers(GLMContext ctx, GLsizei n, GLuint *framebuffers)
 {
     assert(framebuffers);
 
-    while(n--)
+    while (n--)
     {
         *framebuffers++ = getNewName(&STATE(framebuffer_table));
     }
@@ -174,7 +175,7 @@ void mglBindFramebuffer(GLMContext ctx, GLenum target, GLuint framebuffer)
 {
     Framebuffer *ptr;
 
-    if(framebuffer)
+    if (framebuffer)
     {
         ptr = getFramebuffer(ctx, framebuffer);
     }
@@ -183,21 +184,22 @@ void mglBindFramebuffer(GLMContext ctx, GLenum target, GLuint framebuffer)
         ptr = NULL;
     }
 
-    switch(target) {
-        case GL_DRAW_FRAMEBUFFER:
-            ctx->state.framebuffer = ptr;
-            break;
+    switch (target)
+    {
+    case GL_DRAW_FRAMEBUFFER:
+        ctx->state.framebuffer = ptr;
+        break;
 
-        case GL_READ_FRAMEBUFFER:
-            ctx->state.readbuffer = ptr;
-            break;
+    case GL_READ_FRAMEBUFFER:
+        ctx->state.readbuffer = ptr;
+        break;
 
-        case GL_FRAMEBUFFER:
-            ctx->state.framebuffer = ptr;
-            ctx->state.readbuffer = ptr;
-            break;
+    case GL_FRAMEBUFFER:
+        ctx->state.framebuffer = ptr;
+        ctx->state.readbuffer = ptr;
+        break;
     }
-    
+
     STATE(dirty_bits) |= DIRTY_FBO;
 }
 
@@ -207,7 +209,7 @@ void mglDeleteFramebuffers(GLMContext ctx, GLsizei n, const GLuint *framebuffers
     assert(0);
 }
 
-GLenum  mglCheckFramebufferStatus(GLMContext ctx, GLenum target)
+GLenum mglCheckFramebufferStatus(GLMContext ctx, GLenum target)
 {
     Framebuffer *fbo;
     Texture *tex;
@@ -229,7 +231,7 @@ GLenum  mglCheckFramebufferStatus(GLMContext ctx, GLenum target)
     width = tex->faces[0].levels[level].width;
     height = tex->faces[0].levels[level].height;
 
-    for(int i=1; i<STATE(max_color_attachments);i++)
+    for (int i = 1; i < STATE(max_color_attachments); i++)
     {
         if (fbo->color_attachments[i].textarget == GL_RENDERBUFFER)
         {
@@ -263,7 +265,7 @@ void mglGenRenderbuffers(GLMContext ctx, GLsizei n, GLuint *renderbuffers)
 {
     assert(renderbuffers);
 
-    while(n--)
+    while (n--)
     {
         *renderbuffers++ = getNewName(&STATE(renderbuffer_table));
     }
@@ -271,7 +273,7 @@ void mglGenRenderbuffers(GLMContext ctx, GLsizei n, GLuint *renderbuffers)
 
 void mglBindRenderbuffer(GLMContext ctx, GLenum target, GLuint renderbuffer)
 {
-    Renderbuffer    *ptr;
+    Renderbuffer *ptr;
     GLuint index;
 
     // if (ctx->state.framebuffer == NULL)
@@ -314,7 +316,7 @@ void mglRenderbufferStorage(GLMContext ctx, GLenum target, GLenum internalformat
 
     assert(target == GL_RENDERBUFFER);
 
-    if(ctx->state.renderbuffer == NULL)
+    if (ctx->state.renderbuffer == NULL)
     {
         assert(0);
         // no renderbuffer bound
@@ -323,12 +325,14 @@ void mglRenderbufferStorage(GLMContext ctx, GLenum target, GLenum internalformat
     tex = newTexObj(ctx, target);
     assert(tex);
 
-    //bool createTextureLevel(GLMContext ctx, Texture *tex, GLuint face, GLint level, GLboolean is_array, GLint internalformat, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLenum type, void *pixels, GLboolean proxy)
+    // bool createTextureLevel(GLMContext ctx, Texture *tex, GLuint face, GLint level, GLboolean is_array, GLint
+    // internalformat, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLenum type, void *pixels, GLboolean
+    // proxy)
     createTextureLevel(ctx, tex, 0, 0, false, internalformat, width, height, 1, 0, 0, NULL, false);
 
     tex->access = GL_READ_WRITE;
     tex->is_render_target = true;
-    
+
     ctx->state.renderbuffer->tex = tex;
 }
 
@@ -341,62 +345,73 @@ void mglGetRenderbufferParameteriv(GLMContext ctx, GLenum target, GLenum pname, 
     // cant get here without a storage call
     assert(RENDBUF_STATE(tex));
 
-    switch(pname)
+    switch (pname)
     {
-        case GL_RENDERBUFFER_WIDTH:
-            *params = RENDBUF_STATE(tex->width); break;
+    case GL_RENDERBUFFER_WIDTH:
+        *params = RENDBUF_STATE(tex->width);
+        break;
 
-        case GL_RENDERBUFFER_HEIGHT:
-            *params = RENDBUF_STATE(tex->height); break;
+    case GL_RENDERBUFFER_HEIGHT:
+        *params = RENDBUF_STATE(tex->height);
+        break;
 
-        case GL_RENDERBUFFER_INTERNAL_FORMAT:
-            *params = RENDBUF_STATE(tex->internalformat); break;
+    case GL_RENDERBUFFER_INTERNAL_FORMAT:
+        *params = RENDBUF_STATE(tex->internalformat);
+        break;
 
-        // for now renderbuffers inherit the pixel format from the context..
-        case GL_RENDERBUFFER_RED_SIZE:
-            *params = bicountForFormatType(ctx->pixel_format.format, ctx->pixel_format.type, GL_RED); break;
+    // for now renderbuffers inherit the pixel format from the context..
+    case GL_RENDERBUFFER_RED_SIZE:
+        *params = bicountForFormatType(ctx->pixel_format.format, ctx->pixel_format.type, GL_RED);
+        break;
 
-        case GL_RENDERBUFFER_GREEN_SIZE:
-            *params = bicountForFormatType(ctx->pixel_format.format, ctx->pixel_format.type, GL_GREEN); break;
+    case GL_RENDERBUFFER_GREEN_SIZE:
+        *params = bicountForFormatType(ctx->pixel_format.format, ctx->pixel_format.type, GL_GREEN);
+        break;
 
-        case GL_RENDERBUFFER_BLUE_SIZE:
-            *params = bicountForFormatType(ctx->pixel_format.format, ctx->pixel_format.type, GL_BLUE); break;
+    case GL_RENDERBUFFER_BLUE_SIZE:
+        *params = bicountForFormatType(ctx->pixel_format.format, ctx->pixel_format.type, GL_BLUE);
+        break;
 
-        case GL_RENDERBUFFER_ALPHA_SIZE:
-            *params = bicountForFormatType(ctx->pixel_format.format, ctx->pixel_format.type, GL_ALPHA); break;
+    case GL_RENDERBUFFER_ALPHA_SIZE:
+        *params = bicountForFormatType(ctx->pixel_format.format, ctx->pixel_format.type, GL_ALPHA);
+        break;
 
-        case GL_RENDERBUFFER_DEPTH_SIZE:
-            assert(0); break;
+    case GL_RENDERBUFFER_DEPTH_SIZE:
+        assert(0);
+        break;
 
-        case GL_RENDERBUFFER_STENCIL_SIZE:
-            assert(0); break;
+    case GL_RENDERBUFFER_STENCIL_SIZE:
+        assert(0);
+        break;
 
-        case GL_RENDERBUFFER_SAMPLES:
-            assert(0); break;
+    case GL_RENDERBUFFER_SAMPLES:
+        assert(0);
+        break;
 
-        default: assert(0); break;
+    default:
+        assert(0);
+        break;
     }
-
 }
 
 #pragma mark Framebuffer Texture Bind calls
 FBOAttachment *getFBOAttachment(GLMContext ctx, Framebuffer *fbo, GLenum attachment)
 {
-    switch(attachment)
+    switch (attachment)
     {
-        case GL_DEPTH_ATTACHMENT:
-        case GL_DEPTH_STENCIL_ATTACHMENT:
-            return &fbo->depth;
-            break;
+    case GL_DEPTH_ATTACHMENT:
+    case GL_DEPTH_STENCIL_ATTACHMENT:
+        return &fbo->depth;
+        break;
 
-        case GL_STENCIL_ATTACHMENT:
-            return &fbo->stencil;
-            break;
+    case GL_STENCIL_ATTACHMENT:
+        return &fbo->stencil;
+        break;
 
-        default:
-            attachment = attachment - GL_COLOR_ATTACHMENT0;
-            return &fbo->color_attachments[attachment];
-            break;
+    default:
+        attachment = attachment - GL_COLOR_ATTACHMENT0;
+        return &fbo->color_attachments[attachment];
+        break;
     }
 }
 
@@ -408,11 +423,11 @@ bool isColorAttachment(GLMContext ctx, GLuint attachment)
 
 bool isCubeMapTarget(GLMContext ctx, GLuint textarget)
 {
-    return ((textarget >= GL_TEXTURE_CUBE_MAP_POSITIVE_X) &&
-            (textarget <= GL_TEXTURE_CUBE_MAP_NEGATIVE_Z));
+    return ((textarget >= GL_TEXTURE_CUBE_MAP_POSITIVE_X) && (textarget <= GL_TEXTURE_CUBE_MAP_NEGATIVE_Z));
 }
 
-void framebufferTexture(GLMContext ctx, GLenum target, GLenum attachment_type, GLenum attachment, GLenum textarget, GLuint texture, GLint level, GLint layer)
+void framebufferTexture(GLMContext ctx, GLenum target, GLenum attachment_type, GLenum attachment, GLenum textarget,
+                        GLuint texture, GLint level, GLint layer)
 {
     Framebuffer *fbo;
     Texture *tex;
@@ -420,31 +435,31 @@ void framebufferTexture(GLMContext ctx, GLenum target, GLenum attachment_type, G
 
     fbo = currentFBOForType(ctx, target);
 
-    switch(attachment)
+    switch (attachment)
     {
-        case GL_DEPTH_ATTACHMENT:
-        case GL_STENCIL_ATTACHMENT:
-        case GL_DEPTH_STENCIL_ATTACHMENT:
-            break;
+    case GL_DEPTH_ATTACHMENT:
+    case GL_STENCIL_ATTACHMENT:
+    case GL_DEPTH_STENCIL_ATTACHMENT:
+        break;
 
-        default:
-            if (isColorAttachment(ctx, attachment))
+    default:
+        if (isColorAttachment(ctx, attachment))
+        {
+            GLuint index;
+
+            index = attachment - GL_COLOR_ATTACHMENT0;
+            if (texture)
             {
-                GLuint index;
-
-                index = attachment - GL_COLOR_ATTACHMENT0;
-                if (texture)
-                {
-                    fbo->color_attachment_bitfield |= (0x1 << index);
-                }
-                else
-                {
-                    fbo->color_attachment_bitfield &= ~(0x1 << index);
-                }
-                break;
+                fbo->color_attachment_bitfield |= (0x1 << index);
             }
+            else
+            {
+                fbo->color_attachment_bitfield &= ~(0x1 << index);
+            }
+            break;
+        }
 
-            assert(attachment < STATE(max_color_attachments));
+        assert(attachment < STATE(max_color_attachments));
     }
 
     if (texture)
@@ -452,31 +467,31 @@ void framebufferTexture(GLMContext ctx, GLenum target, GLenum attachment_type, G
         tex = findTexture(ctx, texture);
         (assert(tex));
 
-        switch(textarget)
+        switch (textarget)
         {
-            case GL_TEXTURE_BUFFER:
-            case GL_TEXTURE_1D:
-            case GL_TEXTURE_2D:
-            case GL_TEXTURE_3D:
-            case GL_TEXTURE_RECTANGLE:
-            case GL_TEXTURE_1D_ARRAY:
-            case GL_TEXTURE_2D_ARRAY:
-            case GL_TEXTURE_2D_MULTISAMPLE:
-            case GL_TEXTURE_2D_MULTISAMPLE_ARRAY:
-                break;
+        case GL_TEXTURE_BUFFER:
+        case GL_TEXTURE_1D:
+        case GL_TEXTURE_2D:
+        case GL_TEXTURE_3D:
+        case GL_TEXTURE_RECTANGLE:
+        case GL_TEXTURE_1D_ARRAY:
+        case GL_TEXTURE_2D_ARRAY:
+        case GL_TEXTURE_2D_MULTISAMPLE:
+        case GL_TEXTURE_2D_MULTISAMPLE_ARRAY:
+            break;
 
-            default:
-                if (tex->target == GL_TEXTURE_CUBE_MAP)
+        default:
+            if (tex->target == GL_TEXTURE_CUBE_MAP)
+            {
+                if (isCubeMapTarget(ctx, textarget))
                 {
-                    if (isCubeMapTarget(ctx, textarget))
-                    {
-                        break;
-                    }
+                    break;
                 }
+            }
 
-                assert(0);
+            assert(0);
 
-                break;
+            break;
         }
 
         if (level >= tex->mipmap_levels)
@@ -486,49 +501,54 @@ void framebufferTexture(GLMContext ctx, GLenum target, GLenum attachment_type, G
 
         if (level > 0)
         {
-            switch(textarget)
+            switch (textarget)
             {
-                // If textarget is GL_TEXTURE_RECTANGLE, GL_TEXTURE_2D_MULTISAMPLE, or GL_TEXTURE_2D_MULTISAMPLE_ARRAY, then level must be zero.
-                case GL_TEXTURE_RECTANGLE:
-                case GL_TEXTURE_2D_MULTISAMPLE:
-                case GL_TEXTURE_2D_MULTISAMPLE_ARRAY:
+            // If textarget is GL_TEXTURE_RECTANGLE, GL_TEXTURE_2D_MULTISAMPLE, or GL_TEXTURE_2D_MULTISAMPLE_ARRAY, then
+            // level must be zero.
+            case GL_TEXTURE_RECTANGLE:
+            case GL_TEXTURE_2D_MULTISAMPLE:
+            case GL_TEXTURE_2D_MULTISAMPLE_ARRAY:
+                assert(0);
+                return;
+
+            // if textarget is GL_TEXTURE_3D, then level must be greater than or equal to zero and less than or equal to
+            // $log_2$ of the value of GL_MAX_3D_TEXTURE_SIZE.
+            case GL_TEXTURE_3D:
+                if (level >= ilog2(STATE_VAR(max_texture_size)))
+                {
                     assert(0);
                     return;
+                }
+                break;
 
-                // if textarget is GL_TEXTURE_3D, then level must be greater than or equal to zero and less than or equal to $log_2$ of the value of GL_MAX_3D_TEXTURE_SIZE.
-                case GL_TEXTURE_3D:
-                    if (level >= ilog2(STATE_VAR(max_texture_size)))
+            default:
+                if (tex->target == GL_TEXTURE_CUBE_MAP)
+                {
+                    // if textarget is one of GL_TEXTURE_CUBE_MAP_POSITIVE_X, GL_TEXTURE_CUBE_MAP_POSITIVE_Y,
+                    // GL_TEXTURE_CUBE_MAP_POSITIVE_Z, GL_TEXTURE_CUBE_MAP_NEGATIVE_X, GL_TEXTURE_CUBE_MAP_NEGATIVE_Y,
+                    // or GL_TEXTURE_CUBE_MAP_NEGATIVE_Z, then level must be greater than or equal to zero and less than
+                    // or equal to $log_2$ of the value of GL_MAX_CUBE_MAP_TEXTURE_SIZE.
+
+                    if (isCubeMapTarget(ctx, textarget))
                     {
-                        assert(0);
-                        return;
-                    }
-                    break;
-
-                default:
-                    if (tex->target == GL_TEXTURE_CUBE_MAP)
-                    {
-                        // if textarget is one of GL_TEXTURE_CUBE_MAP_POSITIVE_X, GL_TEXTURE_CUBE_MAP_POSITIVE_Y, GL_TEXTURE_CUBE_MAP_POSITIVE_Z, GL_TEXTURE_CUBE_MAP_NEGATIVE_X, GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, or GL_TEXTURE_CUBE_MAP_NEGATIVE_Z, then level must be greater than or equal to zero and less than or equal to $log_2$ of the value of GL_MAX_CUBE_MAP_TEXTURE_SIZE.
-
-                        if (isCubeMapTarget(ctx, textarget))
+                        if (level >= 0 && level <= ilog2(STATE_VAR(max_texture_size)))
                         {
-                            if (level >=0 && level <= ilog2(STATE_VAR(max_texture_size)))
-                            {
-                                break;
-                            }
-
-                            assert(0);
-                            return;
+                            break;
                         }
-                    }
-                    else if (level >= ilog2(STATE_VAR(max_texture_size)))
-                    {
-                        // For all other values of textarget, level must be greater than or equal to zero and less than or equal to $log_2$ of the value of GL_MAX_TEXTURE_SIZE.
-
 
                         assert(0);
                         return;
                     }
-                    break;
+                }
+                else if (level >= ilog2(STATE_VAR(max_texture_size)))
+                {
+                    // For all other values of textarget, level must be greater than or equal to zero and less than or
+                    // equal to $log_2$ of the value of GL_MAX_TEXTURE_SIZE.
+
+                    assert(0);
+                    return;
+                }
+                break;
             }
         }
     }
@@ -570,7 +590,8 @@ void framebufferTexture(GLMContext ctx, GLenum target, GLenum attachment_type, G
  Specifies the attachment point of the framebuffer.
 
  textarget
- For glFramebufferTexture1D, glFramebufferTexture2D and glFramebufferTexture3D, specifies what type of texture is expected in the texture parameter, or for cube map textures, which face is to be attached.
+ For glFramebufferTexture1D, glFramebufferTexture2D and glFramebufferTexture3D, specifies what type of texture is
+ expected in the texture parameter, or for cube map textures, which face is to be attached.
 
  texture
  Specifies the name of an existing texture object to attach.
@@ -584,51 +605,54 @@ void mglFramebufferTexture(GLMContext ctx, GLenum target, GLenum attachment, GLu
     framebufferTexture(ctx, target, GL_NONE, attachment, GL_NONE, texture, level, 0);
 }
 
-
-void mglFramebufferTexture1D(GLMContext ctx, GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level)
+void mglFramebufferTexture1D(GLMContext ctx, GLenum target, GLenum attachment, GLenum textarget, GLuint texture,
+                             GLint level)
 {
     assert(textarget == GL_TEXTURE_1D);
 
     framebufferTexture(ctx, target, GL_TEXTURE_1D, attachment, textarget, texture, level, 0);
 }
 
-void mglFramebufferTexture2D(GLMContext ctx, GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level)
+void mglFramebufferTexture2D(GLMContext ctx, GLenum target, GLenum attachment, GLenum textarget, GLuint texture,
+                             GLint level)
 {
-    switch(textarget)
+    switch (textarget)
     {
-        case GL_TEXTURE_2D:
-        case GL_TEXTURE_RECTANGLE:
-        case GL_TEXTURE_2D_MULTISAMPLE:
+    case GL_TEXTURE_2D:
+    case GL_TEXTURE_RECTANGLE:
+    case GL_TEXTURE_2D_MULTISAMPLE:
+        break;
+
+    default:
+        if (isCubeMapTarget(ctx, textarget))
+        {
             break;
+        }
 
-        default:
-            if (isCubeMapTarget(ctx, textarget))
-            {
-                break;
-            }
+        assert(0);
 
-            assert(0);
-
-            return;
+        return;
     }
 
     framebufferTexture(ctx, target, GL_TEXTURE_2D, attachment, textarget, texture, level, 0);
 }
 
-void mglFramebufferTexture3D(GLMContext ctx, GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level, GLint zoffset)
+void mglFramebufferTexture3D(GLMContext ctx, GLenum target, GLenum attachment, GLenum textarget, GLuint texture,
+                             GLint level, GLint zoffset)
 {
     assert(textarget == GL_TEXTURE_3D);
 
     framebufferTexture(ctx, target, GL_TEXTURE_3D, attachment, textarget, texture, level, zoffset);
 }
 
-void mglFramebufferTextureLayer(GLMContext ctx, GLenum target, GLenum attachment, GLuint texture, GLint level, GLint layer)
+void mglFramebufferTextureLayer(GLMContext ctx, GLenum target, GLenum attachment, GLuint texture, GLint level,
+                                GLint layer)
 {
     framebufferTexture(ctx, target, GL_TEXTURE_3D, attachment, GL_TEXTURE_3D, texture, level, layer);
 }
 
-
-void mglFramebufferRenderbuffer(GLMContext ctx, GLenum target, GLenum attachment, GLenum renderbuffertarget, GLuint renderbuffer)
+void mglFramebufferRenderbuffer(GLMContext ctx, GLenum target, GLenum attachment, GLenum renderbuffertarget,
+                                GLuint renderbuffer)
 {
     Framebuffer *fbo;
     Renderbuffer *rbo;
@@ -636,31 +660,31 @@ void mglFramebufferRenderbuffer(GLMContext ctx, GLenum target, GLenum attachment
 
     fbo = currentFBOForType(ctx, target);
 
-    switch(attachment)
+    switch (attachment)
     {
-        case GL_DEPTH_ATTACHMENT:
-        case GL_DEPTH_STENCIL_ATTACHMENT:
-        case GL_STENCIL_ATTACHMENT:
-            break;
+    case GL_DEPTH_ATTACHMENT:
+    case GL_DEPTH_STENCIL_ATTACHMENT:
+    case GL_STENCIL_ATTACHMENT:
+        break;
 
-        default:
-            if (isColorAttachment(ctx, attachment))
+    default:
+        if (isColorAttachment(ctx, attachment))
+        {
+            GLuint index;
+
+            index = attachment - GL_COLOR_ATTACHMENT0;
+            if (renderbuffer)
             {
-                GLuint index;
-
-                index = attachment - GL_COLOR_ATTACHMENT0;
-                if (renderbuffer)
-                {
-                    fbo->color_attachment_bitfield |= (0x1 << index);
-                }
-                else
-                {
-                    fbo->color_attachment_bitfield &= ~(0x1 << index);
-                }
-                break;
+                fbo->color_attachment_bitfield |= (0x1 << index);
             }
+            else
+            {
+                fbo->color_attachment_bitfield &= ~(0x1 << index);
+            }
+            break;
+        }
 
-            assert(attachment < STATE(max_color_attachments));
+        assert(attachment < STATE(max_color_attachments));
     }
 
     if (renderbuffer)
@@ -691,27 +715,28 @@ void mglFramebufferRenderbuffer(GLMContext ctx, GLenum target, GLenum attachment
 
 #pragma mark =====
 
-void getFramebufferAttachmentParameteriv(GLMContext ctx, GLuint framebuffer, GLenum target, GLenum attachment, GLenum pname, GLint *params)
+void getFramebufferAttachmentParameteriv(GLMContext ctx, GLuint framebuffer, GLenum target, GLenum attachment,
+                                         GLenum pname, GLint *params)
 {
     Framebuffer *fbo;
     FBOAttachment *fbo_attachment_ptr;
 
-    switch(target)
+    switch (target)
     {
-        case GL_DRAW_FRAMEBUFFER:
-        case GL_FRAMEBUFFER:
-            fbo = ctx->state.framebuffer;
-            break;
+    case GL_DRAW_FRAMEBUFFER:
+    case GL_FRAMEBUFFER:
+        fbo = ctx->state.framebuffer;
+        break;
 
-        case GL_READ_FRAMEBUFFER:
-            fbo = ctx->state.readbuffer;
-            break;
+    case GL_READ_FRAMEBUFFER:
+        fbo = ctx->state.readbuffer;
+        break;
 
-        default:
-            // target will be zero for mglGetNamedFramebufferAttachmentParameteriv
-            fbo = findFrameBuffer(ctx, framebuffer);
-            assert(0);
-            break;
+    default:
+        // target will be zero for mglGetNamedFramebufferAttachmentParameteriv
+        fbo = findFrameBuffer(ctx, framebuffer);
+        assert(0);
+        break;
     }
 
     if (fbo)
@@ -728,15 +753,13 @@ void getFramebufferAttachmentParameteriv(GLMContext ctx, GLuint framebuffer, GLe
             depth_attachment_ptr = getFBOAttachment(ctx, fbo, GL_DEPTH_ATTACHMENT);
             stencil_attachment_ptr = getFBOAttachment(ctx, fbo, GL_STENCIL_ATTACHMENT);
 
-            if ((depth_attachment_ptr != NULL) &&
-                (stencil_attachment_ptr != NULL) &&
+            if ((depth_attachment_ptr != NULL) && (stencil_attachment_ptr != NULL) &&
                 (depth_attachment_ptr == stencil_attachment_ptr))
             {
                 *params = GL_NONE;
 
                 return;
             }
-
         }
 
         fbo_attachment_ptr = getFBOAttachment(ctx, fbo, attachment);
@@ -759,77 +782,80 @@ void getFramebufferAttachmentParameteriv(GLMContext ctx, GLuint framebuffer, GLe
             tex = fbo_attachment_ptr->buf.tex;
         }
 
-        switch(pname)
+        switch (pname)
         {
-            case GL_FRAMEBUFFER_ATTACHMENT_RED_SIZE:
-                *params = bitcountForInternalFormat(tex->internalformat, GL_RED);
-                return;
+        case GL_FRAMEBUFFER_ATTACHMENT_RED_SIZE:
+            *params = bitcountForInternalFormat(tex->internalformat, GL_RED);
+            return;
 
-            case GL_FRAMEBUFFER_ATTACHMENT_GREEN_SIZE:
-                *params = bitcountForInternalFormat(tex->internalformat, GL_GREEN);
-                return;
+        case GL_FRAMEBUFFER_ATTACHMENT_GREEN_SIZE:
+            *params = bitcountForInternalFormat(tex->internalformat, GL_GREEN);
+            return;
 
-            case GL_FRAMEBUFFER_ATTACHMENT_BLUE_SIZE:
-                *params = bitcountForInternalFormat(tex->internalformat, GL_BLUE);
-                return;
+        case GL_FRAMEBUFFER_ATTACHMENT_BLUE_SIZE:
+            *params = bitcountForInternalFormat(tex->internalformat, GL_BLUE);
+            return;
 
-            case GL_FRAMEBUFFER_ATTACHMENT_ALPHA_SIZE:
-                *params = bitcountForInternalFormat(tex->internalformat, GL_ALPHA);
-                return;
+        case GL_FRAMEBUFFER_ATTACHMENT_ALPHA_SIZE:
+            *params = bitcountForInternalFormat(tex->internalformat, GL_ALPHA);
+            return;
 
-            case GL_FRAMEBUFFER_ATTACHMENT_DEPTH_SIZE:
-            case GL_FRAMEBUFFER_ATTACHMENT_STENCIL_SIZE:
-                *params = bitcountForInternalFormat(tex->internalformat, GL_NONE);
-                return;
+        case GL_FRAMEBUFFER_ATTACHMENT_DEPTH_SIZE:
+        case GL_FRAMEBUFFER_ATTACHMENT_STENCIL_SIZE:
+            *params = bitcountForInternalFormat(tex->internalformat, GL_NONE);
+            return;
 
-            case GL_FRAMEBUFFER_ATTACHMENT_COMPONENT_TYPE:
-            case GL_FRAMEBUFFER_ATTACHMENT_COLOR_ENCODING:
-            case GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE:
-                assert(0);
-                // need to fill these in
+        case GL_FRAMEBUFFER_ATTACHMENT_COMPONENT_TYPE:
+        case GL_FRAMEBUFFER_ATTACHMENT_COLOR_ENCODING:
+        case GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE:
+            assert(0);
+            // need to fill these in
 
-            default:
-                return;
+        default:
+            return;
         }
     }
     else
     {
         // default framebuffer
-        switch(attachment)
+        switch (attachment)
         {
-            case GL_FRONT_LEFT:
-            case GL_FRONT_RIGHT:
-            case GL_BACK_LEFT:
-            case GL_BACK_RIGHT:
-            case GL_DEPTH:
-            case GL_STENCIL:
-                assert(0);
-                break;
+        case GL_FRONT_LEFT:
+        case GL_FRONT_RIGHT:
+        case GL_BACK_LEFT:
+        case GL_BACK_RIGHT:
+        case GL_DEPTH:
+        case GL_STENCIL:
+            assert(0);
+            break;
 
-            default:
-                assert(0);
-                return;
+        default:
+            assert(0);
+            return;
         }
     }
 }
 
-void mglGetFramebufferAttachmentParameteriv(GLMContext ctx, GLenum target, GLenum attachment, GLenum pname, GLint *params)
+void mglGetFramebufferAttachmentParameteriv(GLMContext ctx, GLenum target, GLenum attachment, GLenum pname,
+                                            GLint *params)
 {
     getFramebufferAttachmentParameteriv(ctx, 0, target, attachment, pname, params);
 }
 
-void mglGetNamedFramebufferAttachmentParameteriv(GLMContext ctx, GLuint framebuffer, GLenum attachment, GLenum pname, GLint *params)
+void mglGetNamedFramebufferAttachmentParameteriv(GLMContext ctx, GLuint framebuffer, GLenum attachment, GLenum pname,
+                                                 GLint *params)
 {
     getFramebufferAttachmentParameteriv(ctx, framebuffer, 0, attachment, pname, params);
 }
 
-
-void mglBlitFramebuffer(GLMContext ctx, GLint srcX0, GLint srcY0, GLint srcX1, GLint srcY1, GLint dstX0, GLint dstY0, GLint dstX1, GLint dstY1, GLbitfield mask, GLenum filter)
+void mglBlitFramebuffer(GLMContext ctx, GLint srcX0, GLint srcY0, GLint srcX1, GLint srcY1, GLint dstX0, GLint dstY0,
+                        GLint dstX1, GLint dstY1, GLbitfield mask, GLenum filter)
 {
     ctx->mtl_funcs.mtlBlitFramebuffer(ctx, srcX0, srcY0, srcX1, srcY1, dstX0, dstY0, dstX1, dstY1, mask, filter);
 }
 
-void mglRenderbufferStorageMultisample(GLMContext ctx, GLenum target, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height)
+void mglRenderbufferStorageMultisample(GLMContext ctx, GLenum target, GLsizei samples, GLenum internalformat,
+                                       GLsizei width, GLsizei height)
 {
     // Unimplemented function
     assert(0);
@@ -853,7 +879,8 @@ void mglInvalidateFramebuffer(GLMContext ctx, GLenum target, GLsizei numAttachme
     assert(0);
 }
 
-void mglInvalidateSubFramebuffer(GLMContext ctx, GLenum target, GLsizei numAttachments, const GLenum *attachments, GLint x, GLint y, GLsizei width, GLsizei height)
+void mglInvalidateSubFramebuffer(GLMContext ctx, GLenum target, GLsizei numAttachments, const GLenum *attachments,
+                                 GLint x, GLint y, GLsizei width, GLsizei height)
 {
     // Unimplemented function
     assert(0);
@@ -865,7 +892,8 @@ void mglCreateFramebuffers(GLMContext ctx, GLsizei n, GLuint *framebuffers)
     assert(0);
 }
 
-void mglNamedFramebufferRenderbuffer(GLMContext ctx, GLuint framebuffer, GLenum attachment, GLenum renderbuffertarget, GLuint renderbuffer)
+void mglNamedFramebufferRenderbuffer(GLMContext ctx, GLuint framebuffer, GLenum attachment, GLenum renderbuffertarget,
+                                     GLuint renderbuffer)
 {
     // Unimplemented function
     assert(0);
@@ -883,7 +911,8 @@ void mglNamedFramebufferTexture(GLMContext ctx, GLuint framebuffer, GLenum attac
     assert(0);
 }
 
-void mglNamedFramebufferTextureLayer(GLMContext ctx, GLuint framebuffer, GLenum attachment, GLuint texture, GLint level, GLint layer)
+void mglNamedFramebufferTextureLayer(GLMContext ctx, GLuint framebuffer, GLenum attachment, GLuint texture, GLint level,
+                                     GLint layer)
 {
     // Unimplemented function
     assert(0);
@@ -907,13 +936,15 @@ void mglNamedFramebufferReadBuffer(GLMContext ctx, GLuint framebuffer, GLenum sr
     assert(0);
 }
 
-void mglInvalidateNamedFramebufferData(GLMContext ctx, GLuint framebuffer, GLsizei numAttachments, const GLenum *attachments)
+void mglInvalidateNamedFramebufferData(GLMContext ctx, GLuint framebuffer, GLsizei numAttachments,
+                                       const GLenum *attachments)
 {
     // Unimplemented function
     assert(0);
 }
 
-void mglInvalidateNamedFramebufferSubData(GLMContext ctx, GLuint framebuffer, GLsizei numAttachments, const GLenum *attachments, GLint x, GLint y, GLsizei width, GLsizei height)
+void mglInvalidateNamedFramebufferSubData(GLMContext ctx, GLuint framebuffer, GLsizei numAttachments,
+                                          const GLenum *attachments, GLint x, GLint y, GLsizei width, GLsizei height)
 {
     // Unimplemented function
     assert(0);
@@ -925,31 +956,36 @@ void mglClearNamedFramebufferiv(GLMContext ctx, GLuint framebuffer, GLenum buffe
     assert(0);
 }
 
-void mglClearNamedFramebufferuiv(GLMContext ctx, GLuint framebuffer, GLenum buffer, GLint drawbuffer, const GLuint *value)
+void mglClearNamedFramebufferuiv(GLMContext ctx, GLuint framebuffer, GLenum buffer, GLint drawbuffer,
+                                 const GLuint *value)
 {
     // Unimplemented function
     assert(0);
 }
 
-void mglClearNamedFramebufferfv(GLMContext ctx, GLuint framebuffer, GLenum buffer, GLint drawbuffer, const GLfloat *value)
+void mglClearNamedFramebufferfv(GLMContext ctx, GLuint framebuffer, GLenum buffer, GLint drawbuffer,
+                                const GLfloat *value)
 {
     // Unimplemented function
     assert(0);
 }
 
-void mglClearNamedFramebufferfi(GLMContext ctx, GLuint framebuffer, GLenum buffer, GLint drawbuffer, GLfloat depth, GLint stencil)
+void mglClearNamedFramebufferfi(GLMContext ctx, GLuint framebuffer, GLenum buffer, GLint drawbuffer, GLfloat depth,
+                                GLint stencil)
 {
     // Unimplemented function
     assert(0);
 }
 
-void mglBlitNamedFramebuffer(GLMContext ctx, GLuint readFramebuffer, GLuint drawFramebuffer, GLint srcX0, GLint srcY0, GLint srcX1, GLint srcY1, GLint dstX0, GLint dstY0, GLint dstX1, GLint dstY1, GLbitfield mask, GLenum filter)
+void mglBlitNamedFramebuffer(GLMContext ctx, GLuint readFramebuffer, GLuint drawFramebuffer, GLint srcX0, GLint srcY0,
+                             GLint srcX1, GLint srcY1, GLint dstX0, GLint dstY0, GLint dstX1, GLint dstY1,
+                             GLbitfield mask, GLenum filter)
 {
     // Unimplemented function
     assert(0);
 }
 
-GLenum  mglCheckNamedFramebufferStatus(GLMContext ctx, GLuint framebuffer, GLenum target)
+GLenum mglCheckNamedFramebufferStatus(GLMContext ctx, GLuint framebuffer, GLenum target)
 {
     GLenum ret = (GLenum)0;
 
@@ -970,13 +1006,15 @@ void mglCreateRenderbuffers(GLMContext ctx, GLsizei n, GLuint *renderbuffers)
     assert(0);
 }
 
-void mglNamedRenderbufferStorage(GLMContext ctx, GLuint renderbuffer, GLenum internalformat, GLsizei width, GLsizei height)
+void mglNamedRenderbufferStorage(GLMContext ctx, GLuint renderbuffer, GLenum internalformat, GLsizei width,
+                                 GLsizei height)
 {
     // Unimplemented function
     assert(0);
 }
 
-void mglNamedRenderbufferStorageMultisample(GLMContext ctx, GLuint renderbuffer, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height)
+void mglNamedRenderbufferStorageMultisample(GLMContext ctx, GLuint renderbuffer, GLsizei samples, GLenum internalformat,
+                                            GLsizei width, GLsizei height)
 {
     // Unimplemented function
     assert(0);
@@ -987,4 +1025,3 @@ void mglGetNamedRenderbufferParameteriv(GLMContext ctx, GLuint renderbuffer, GLe
     // Unimplemented function
     assert(0);
 }
-

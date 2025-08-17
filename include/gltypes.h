@@ -26,5 +26,4 @@ typedef void *GLhandleARB;
 typedef long GLintptrARB;
 typedef long GLsizeiptrARB;
 
-
 #endif /* gltypes_h */

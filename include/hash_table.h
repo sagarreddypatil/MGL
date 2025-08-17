@@ -23,12 +23,14 @@
 
 #include "glcorearb.h"
 
-typedef struct {
+typedef struct
+{
     GLuint name;
     void *data;
 } HashObj;
 
-typedef struct {
+typedef struct
+{
     unsigned size;
     GLuint current_name;
     HashObj *keys;

@@ -18,7 +18,6 @@
  *
  */
 
-
 #ifndef error_h
 #define error_h
 
@@ -26,6 +25,6 @@
 
 void error_func(GLMContext ctx, const char *func, GLenum error);
 
-GLenum  mglGetError(GLMContext ctx);
+GLenum mglGetError(GLMContext ctx);
 
 #endif /* error_h */

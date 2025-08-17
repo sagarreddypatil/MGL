@@ -64,50 +64,52 @@ void mglClearDepth(GLMContext ctx, GLdouble depth)
 
 void mglClearBufferfv(GLMContext ctx, GLenum buffer, GLint drawbuffer, const GLfloat *value)
 {
-    Framebuffer * fbo = ctx->state.framebuffer;
-    FBOAttachment * fboa;
+    Framebuffer *fbo = ctx->state.framebuffer;
+    FBOAttachment *fboa;
 
-    switch (buffer) {
-        case GL_COLOR:
-            fboa = &fbo->color_attachments[drawbuffer];
-            fboa->clear_bitmask |= GL_COLOR_BUFFER_BIT;
-            fboa->clear_color[0] = value[0];
-            fboa->clear_color[1] = value[1];
-            fboa->clear_color[2] = value[2];
-            fboa->clear_color[3] = value[3];
-            break;
-        case GL_DEPTH:
-            fboa = &fbo->depth;
-            fboa->clear_bitmask |= GL_DEPTH_BUFFER_BIT;
-            fboa->clear_color[0] = value[0];
-            break;
-        case GL_STENCIL:
-            fboa = &fbo->stencil;
-            fboa->clear_bitmask |= GL_STENCIL_BUFFER_BIT;
-            fboa->clear_color[0] = value[0];
-            break;
-        default:
-            break;
+    switch (buffer)
+    {
+    case GL_COLOR:
+        fboa = &fbo->color_attachments[drawbuffer];
+        fboa->clear_bitmask |= GL_COLOR_BUFFER_BIT;
+        fboa->clear_color[0] = value[0];
+        fboa->clear_color[1] = value[1];
+        fboa->clear_color[2] = value[2];
+        fboa->clear_color[3] = value[3];
+        break;
+    case GL_DEPTH:
+        fboa = &fbo->depth;
+        fboa->clear_bitmask |= GL_DEPTH_BUFFER_BIT;
+        fboa->clear_color[0] = value[0];
+        break;
+    case GL_STENCIL:
+        fboa = &fbo->stencil;
+        fboa->clear_bitmask |= GL_STENCIL_BUFFER_BIT;
+        fboa->clear_color[0] = value[0];
+        break;
+    default:
+        break;
     }
 }
 
 void mglClearBufferfi(GLMContext ctx, GLenum buffer, GLint drawbuffer, GLfloat depth, GLint stencil)
 {
-    Framebuffer * fbo = ctx->state.framebuffer;
-    FBOAttachment * fboa;
+    Framebuffer *fbo = ctx->state.framebuffer;
+    FBOAttachment *fboa;
 
-    switch (buffer) {
-        case GL_DEPTH_STENCIL:
-            fboa = &fbo->depth;
-            fboa->clear_bitmask |= GL_DEPTH_BUFFER_BIT;
-            fboa->clear_color[0] = depth;
+    switch (buffer)
+    {
+    case GL_DEPTH_STENCIL:
+        fboa = &fbo->depth;
+        fboa->clear_bitmask |= GL_DEPTH_BUFFER_BIT;
+        fboa->clear_color[0] = depth;
 
-            fboa = &fbo->stencil;
-            fboa->clear_bitmask |= GL_STENCIL_BUFFER_BIT;
-            fboa->clear_color[0] = stencil;
-            break;
-        default:
-            break;
+        fboa = &fbo->stencil;
+        fboa->clear_bitmask |= GL_STENCIL_BUFFER_BIT;
+        fboa->clear_color[0] = stencil;
+        break;
+    default:
+        break;
     }
 }
 
@@ -123,37 +125,37 @@ void mglFlush(GLMContext ctx)
 
 void mglDrawBuffers(GLMContext ctx, GLsizei n, const GLenum *bufs)
 {
-    for (GLsizei i=0; i<n; ++i) {
+    for (GLsizei i = 0; i < n; ++i)
+    {
         mglDrawBuffer(ctx, bufs[i]);
     }
 }
 
 void mglDrawBuffer(GLMContext ctx, GLenum buf)
 {
-    switch(buf)
+    switch (buf)
     {
-        case GL_FRONT:
-            break;
+    case GL_FRONT:
+        break;
 
-        case GL_NONE:
-        case GL_FRONT_LEFT:
-        case GL_FRONT_RIGHT:
-        case GL_BACK_LEFT:
-        case GL_BACK_RIGHT:
-        case GL_LEFT:
-        case GL_RIGHT:
-        case GL_FRONT_AND_BACK:
-            // not interested in these yet
-            assert(0);
-            break;
+    case GL_NONE:
+    case GL_FRONT_LEFT:
+    case GL_FRONT_RIGHT:
+    case GL_BACK_LEFT:
+    case GL_BACK_RIGHT:
+    case GL_LEFT:
+    case GL_RIGHT:
+    case GL_FRONT_AND_BACK:
+        // not interested in these yet
+        assert(0);
+        break;
     }
 
-    if ((buf >= GL_COLOR_ATTACHMENT0) &&
-        (buf <= (GL_COLOR_ATTACHMENT0 + STATE(max_color_attachments))))
+    if ((buf >= GL_COLOR_ATTACHMENT0) && (buf <= (GL_COLOR_ATTACHMENT0 + STATE(max_color_attachments))))
     {
         // probably should validate current fbo..
-        Framebuffer * fbo = ctx->state.framebuffer;
-        fbo->color_attachments[buf-GL_COLOR_ATTACHMENT0].buf.rbo->is_draw_buffer = GL_TRUE;
+        Framebuffer *fbo = ctx->state.framebuffer;
+        fbo->color_attachments[buf - GL_COLOR_ATTACHMENT0].buf.rbo->is_draw_buffer = GL_TRUE;
     }
 
     STATE(draw_buffer) = buf;
@@ -162,26 +164,25 @@ void mglDrawBuffer(GLMContext ctx, GLenum buf)
 
 void mglReadBuffer(GLMContext ctx, GLenum buf)
 {
-    switch(buf)
+    switch (buf)
     {
-        case GL_FRONT:
-            break;
+    case GL_FRONT:
+        break;
 
-        case GL_NONE:
-        case GL_FRONT_LEFT:
-        case GL_FRONT_RIGHT:
-        case GL_BACK_LEFT:
-        case GL_BACK_RIGHT:
-        case GL_LEFT:
-        case GL_RIGHT:
-        case GL_FRONT_AND_BACK:
-            // not interested in these yet
-            assert(0);
-            break;
+    case GL_NONE:
+    case GL_FRONT_LEFT:
+    case GL_FRONT_RIGHT:
+    case GL_BACK_LEFT:
+    case GL_BACK_RIGHT:
+    case GL_LEFT:
+    case GL_RIGHT:
+    case GL_FRONT_AND_BACK:
+        // not interested in these yet
+        assert(0);
+        break;
     }
 
-    if ((buf >= GL_COLOR_ATTACHMENT0) &&
-        (buf <= (GL_COLOR_ATTACHMENT0 + STATE(max_color_attachments))))
+    if ((buf >= GL_COLOR_ATTACHMENT0) && (buf <= (GL_COLOR_ATTACHMENT0 + STATE(max_color_attachments))))
     {
         // probably should validate current fbo..
     }
@@ -194,95 +195,95 @@ void mglPixelStorei(GLMContext ctx, GLenum pname, GLint param)
 {
     ERROR_CHECK_RETURN(param >= 0, GL_INVALID_VALUE);
 
-    switch(pname)
+    switch (pname)
     {
-        case GL_PACK_SWAP_BYTES:
-            ctx->state.pack.swap_bytes = (param != 0 ? true : false);
+    case GL_PACK_SWAP_BYTES:
+        ctx->state.pack.swap_bytes = (param != 0 ? true : false);
+        break;
+
+    case GL_PACK_LSB_FIRST:
+        ctx->state.pack.lsb_first = (param != 0 ? true : false);
+        break;
+
+    case GL_PACK_ROW_LENGTH:
+        ctx->state.pack.row_length = param;
+        break;
+
+    case GL_PACK_IMAGE_HEIGHT:
+        ctx->state.pack.image_height = param;
+        break;
+
+    case GL_PACK_SKIP_ROWS:
+        ctx->state.pack.skip_rows = param;
+        break;
+
+    case GL_PACK_SKIP_PIXELS:
+        ctx->state.pack.skip_rows = param;
+        break;
+
+    case GL_PACK_SKIP_IMAGES:
+        ctx->state.pack.skip_images = param;
+        break;
+
+    case GL_PACK_ALIGNMENT:
+        switch (param)
+        {
+        case 1:
+        case 2:
+        case 4:
+        case 8:
+            ctx->state.pack.alignment = param;
             break;
 
-        case GL_PACK_LSB_FIRST:
-            ctx->state.pack.lsb_first = (param != 0 ? true : false);
+        default:
+            ERROR_RETURN(GL_INVALID_VALUE);
+            break;
+        }
+        break;
+
+    case GL_UNPACK_SWAP_BYTES:
+        ctx->state.unpack.swap_bytes = (param != 0 ? true : false);
+        break;
+
+    case GL_UNPACK_LSB_FIRST:
+        ctx->state.unpack.lsb_first = (param != 0 ? true : false);
+        break;
+
+    case GL_UNPACK_ROW_LENGTH:
+        ctx->state.unpack.row_length = param;
+        break;
+
+    case GL_UNPACK_IMAGE_HEIGHT:
+        ctx->state.unpack.image_height = param;
+        break;
+
+    case GL_UNPACK_SKIP_ROWS:
+        ctx->state.unpack.skip_rows = param;
+        break;
+
+    case GL_UNPACK_SKIP_PIXELS:
+        ctx->state.unpack.skip_rows = param;
+        break;
+
+    case GL_UNPACK_SKIP_IMAGES:
+        ctx->state.unpack.skip_images = param;
+        break;
+
+    case GL_UNPACK_ALIGNMENT:
+        switch (param)
+        {
+        case 1:
+        case 2:
+        case 4:
+        case 8:
+            ctx->state.unpack.alignment = param;
             break;
 
-        case GL_PACK_ROW_LENGTH:
-            ctx->state.pack.row_length = param;
+        default:
+            ERROR_RETURN(GL_INVALID_VALUE);
             break;
-
-        case GL_PACK_IMAGE_HEIGHT:
-            ctx->state.pack.image_height = param;
-            break;
-
-        case GL_PACK_SKIP_ROWS:
-            ctx->state.pack.skip_rows = param;
-            break;
-
-        case GL_PACK_SKIP_PIXELS:
-            ctx->state.pack.skip_rows = param;
-            break;
-
-        case GL_PACK_SKIP_IMAGES:
-            ctx->state.pack.skip_images = param;
-            break;
-
-        case GL_PACK_ALIGNMENT:
-            switch(param)
-            {
-                case 1:
-                case 2:
-                case 4:
-                case 8:
-                    ctx->state.pack.alignment = param;
-                    break;
-
-                default:
-                    ERROR_RETURN(GL_INVALID_VALUE);
-                    break;
-            }
-            break;
-
-        case GL_UNPACK_SWAP_BYTES:
-            ctx->state.unpack.swap_bytes = (param != 0 ? true : false);
-            break;
-
-        case GL_UNPACK_LSB_FIRST:
-            ctx->state.unpack.lsb_first = (param != 0 ? true : false);
-            break;
-
-        case GL_UNPACK_ROW_LENGTH:
-            ctx->state.unpack.row_length = param;
-            break;
-
-        case GL_UNPACK_IMAGE_HEIGHT:
-            ctx->state.unpack.image_height = param;
-            break;
-
-        case GL_UNPACK_SKIP_ROWS:
-            ctx->state.unpack.skip_rows = param;
-            break;
-
-        case GL_UNPACK_SKIP_PIXELS:
-            ctx->state.unpack.skip_rows = param;
-            break;
-
-        case GL_UNPACK_SKIP_IMAGES:
-            ctx->state.unpack.skip_images = param;
-            break;
-
-        case GL_UNPACK_ALIGNMENT:
-            switch(param)
-            {
-                case 1:
-                case 2:
-                case 4:
-                case 8:
-                    ctx->state.unpack.alignment = param;
-                    break;
-
-                default:
-                    ERROR_RETURN(GL_INVALID_VALUE);
-                    break;
-            }
-            break;
+        }
+        break;
     }
 }
 
@@ -291,7 +292,8 @@ void mglPixelStoref(GLMContext ctx, GLenum pname, GLfloat param)
     mglPixelStorei(ctx, pname, (GLint)param);
 }
 
-void mglReadPixels(GLMContext ctx, GLint x, GLint y, GLsizei width, GLsizei height, GLenum format, GLenum type, void *pixels)
+void mglReadPixels(GLMContext ctx, GLint x, GLint y, GLsizei width, GLsizei height, GLenum format, GLenum type,
+                   void *pixels)
 {
     GLuint pixel_size;
 
@@ -301,54 +303,54 @@ void mglReadPixels(GLMContext ctx, GLint x, GLint y, GLsizei width, GLsizei heig
     ERROR_CHECK_RETURN(width > 0, GL_INVALID_ENUM);
     ERROR_CHECK_RETURN(height > 0, GL_INVALID_ENUM);
 
-    switch(format)
+    switch (format)
     {
-        case GL_STENCIL_INDEX:
-            ERROR_CHECK_RETURN(ctx->stencil_format.mtl_pixel_format > 0, GL_INVALID_OPERATION);
-            break;
+    case GL_STENCIL_INDEX:
+        ERROR_CHECK_RETURN(ctx->stencil_format.mtl_pixel_format > 0, GL_INVALID_OPERATION);
+        break;
 
-        case GL_DEPTH_COMPONENT:
-            ERROR_CHECK_RETURN(ctx->depth_format.mtl_pixel_format > 0, GL_INVALID_OPERATION);
-            break;
+    case GL_DEPTH_COMPONENT:
+        ERROR_CHECK_RETURN(ctx->depth_format.mtl_pixel_format > 0, GL_INVALID_OPERATION);
+        break;
 
-        case GL_DEPTH_STENCIL:
-            ERROR_CHECK_RETURN((ctx->depth_format.mtl_pixel_format > 0) ||
-                               (ctx->stencil_format.mtl_pixel_format > 0), GL_INVALID_OPERATION);
-            switch(type)
-            {
-                case GL_UNSIGNED_INT_24_8:
-                case GL_FLOAT_32_UNSIGNED_INT_24_8_REV:
-                    break;
-
-                default:
-                    ERROR_RETURN(GL_INVALID_ENUM);
-                    break;
-            }
+    case GL_DEPTH_STENCIL:
+        ERROR_CHECK_RETURN((ctx->depth_format.mtl_pixel_format > 0) || (ctx->stencil_format.mtl_pixel_format > 0),
+                           GL_INVALID_OPERATION);
+        switch (type)
+        {
+        case GL_UNSIGNED_INT_24_8:
+        case GL_FLOAT_32_UNSIGNED_INT_24_8_REV:
             break;
 
         default:
+            ERROR_RETURN(GL_INVALID_ENUM);
             break;
+        }
+        break;
+
+    default:
+        break;
     }
 
-    switch(type)
+    switch (type)
     {
-        case GL_UNSIGNED_BYTE_3_3_2:
-        case GL_UNSIGNED_BYTE_2_3_3_REV:
-        case GL_UNSIGNED_SHORT_5_6_5:
-        case GL_UNSIGNED_SHORT_5_6_5_REV:
-            ERROR_CHECK_RETURN(format == GL_RGB || format == GL_BGR, GL_INVALID_OPERATION);
-            break;
+    case GL_UNSIGNED_BYTE_3_3_2:
+    case GL_UNSIGNED_BYTE_2_3_3_REV:
+    case GL_UNSIGNED_SHORT_5_6_5:
+    case GL_UNSIGNED_SHORT_5_6_5_REV:
+        ERROR_CHECK_RETURN(format == GL_RGB || format == GL_BGR, GL_INVALID_OPERATION);
+        break;
 
-        case GL_UNSIGNED_SHORT_4_4_4_4:
-        case GL_UNSIGNED_SHORT_4_4_4_4_REV:
-        case GL_UNSIGNED_SHORT_5_5_5_1:
-        case GL_UNSIGNED_SHORT_1_5_5_5_REV:
-        case GL_UNSIGNED_INT_8_8_8_8:
-        case GL_UNSIGNED_INT_8_8_8_8_REV:
-        case GL_UNSIGNED_INT_10_10_10_2:
-        case GL_UNSIGNED_INT_2_10_10_10_REV:
-            ERROR_CHECK_RETURN(format == GL_RGBA || format == GL_BGRA, GL_INVALID_OPERATION);
-            break;
+    case GL_UNSIGNED_SHORT_4_4_4_4:
+    case GL_UNSIGNED_SHORT_4_4_4_4_REV:
+    case GL_UNSIGNED_SHORT_5_5_5_1:
+    case GL_UNSIGNED_SHORT_1_5_5_5_REV:
+    case GL_UNSIGNED_INT_8_8_8_8:
+    case GL_UNSIGNED_INT_8_8_8_8_REV:
+    case GL_UNSIGNED_INT_10_10_10_2:
+    case GL_UNSIGNED_INT_2_10_10_10_REV:
+        ERROR_CHECK_RETURN(format == GL_RGBA || format == GL_BGRA, GL_INVALID_OPERATION);
+        break;
     }
 
     if (STATE(buffers[_PIXEL_PACK_BUFFER]))
@@ -365,7 +367,9 @@ void mglReadPixels(GLMContext ctx, GLint x, GLint y, GLsizei width, GLsizei heig
 
         ERROR_CHECK_RETURN(ptr->size >= size_req, GL_INVALID_OPERATION);
 
-        // GL_INVALID_OPERATION is generated if a non-zero buffer object name is bound to the GL_PIXEL_PACK_BUFFER target and data is not evenly divisible into the number of bytes needed to store in memory a datum indicated by type.
+        // GL_INVALID_OPERATION is generated if a non-zero buffer object name is bound to the GL_PIXEL_PACK_BUFFER
+        // target and data is not evenly divisible into the number of bytes needed to store in memory a datum indicated
+        // by type.
 
         uint64_t alignment_test;
         uint32_t alignment;
@@ -375,7 +379,7 @@ void mglReadPixels(GLMContext ctx, GLint x, GLint y, GLsizei width, GLsizei heig
 
         alignment = 0;
         // count number of lower zero bits for alignment
-        while((alignment_test & 0x1) == 0)
+        while ((alignment_test & 0x1) == 0)
         {
             alignment++;
             alignment_test >>= 1;
@@ -400,10 +404,7 @@ void mglReadPixels(GLMContext ctx, GLint x, GLint y, GLsizei width, GLsizei heig
 
     buffer_size = pitch * (height - y);
 
-    err = vm_allocate((vm_map_t) mach_task_self(),
-                      (vm_address_t*) &buffer_data,
-                      buffer_size,
-                      VM_FLAGS_ANYWHERE);
+    err = vm_allocate((vm_map_t)mach_task_self(), (vm_address_t *)&buffer_data, buffer_size, VM_FLAGS_ANYWHERE);
     if (err)
     {
         ERROR_RETURN(GL_OUT_OF_MEMORY);
@@ -412,7 +413,6 @@ void mglReadPixels(GLMContext ctx, GLint x, GLint y, GLsizei width, GLsizei heig
     ctx->mtl_funcs.mtlReadDrawable(ctx, (void *)buffer_data, pitch, (GLuint)buffer_size, x, y, width, height);
 
     memcpy(pixels, (void *)buffer_data, buffer_size);
-    
+
     vm_deallocate(mach_host_self(), buffer_data, buffer_size);
 }
-

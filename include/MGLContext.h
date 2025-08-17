@@ -14,7 +14,8 @@
 typedef struct GLMContextRec_t *GLMContext;
 #endif
 
-enum {
+enum
+{
     MGL_PIXEL_FORMAT,
     MGL_PIXEL_TYPE,
     MGL_DEPTH_FORMAT,
@@ -25,24 +26,24 @@ enum {
 };
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
-GLMContext createGLMContext(GLenum format, GLenum type,
-                            GLenum depth_format, GLenum depth_type,
-                            GLenum stencil_format, GLenum stencil_type);
+    GLMContext createGLMContext(GLenum format, GLenum type, GLenum depth_format, GLenum depth_type,
+                                GLenum stencil_format, GLenum stencil_type);
 
-GLuint sizeForFormatType(GLenum format, GLenum type);
-GLuint bicountForFormatType(GLenum format, GLenum type, GLenum component);
+    GLuint sizeForFormatType(GLenum format, GLenum type);
+    GLuint bicountForFormatType(GLenum format, GLenum type, GLenum component);
 
-GLMContext MGLgetCurrentContext(void);
-void MGLsetCurrentContext(GLMContext ctx);
+    GLMContext MGLgetCurrentContext(void);
+    void MGLsetCurrentContext(GLMContext ctx);
 
-// MGLswapBuffers can take NULL for the ctx, in this case it will use the current ctx
-void MGLswapBuffers(GLMContext ctx=NULL);
+    // MGLswapBuffers can take NULL for the ctx, in this case it will use the current ctx
+    void MGLswapBuffers(GLMContext ctx = NULL);
 
-// MGLget can take NULL for the ctx, in this case it will use the current ctx
-void MGLget(GLMContext ctx, GLenum param, GLuint *data);
+    // MGLget can take NULL for the ctx, in this case it will use the current ctx
+    void MGLget(GLMContext ctx, GLenum param, GLuint *data);
 
 #ifdef __cplusplus
 };

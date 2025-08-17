@@ -14,7 +14,7 @@
 
 extern GLMContext _ctx;
 
-#define GET_CONTEXT()   _ctx
+#define GET_CONTEXT() _ctx
 
 void glCullFace(GLenum mode)
 {
@@ -93,14 +93,16 @@ void glTexParameteriv(GLenum target, GLenum pname, const GLint *params)
     ctx->dispatch.tex_parameteriv(ctx, target, pname, params);
 }
 
-void glTexImage1D(GLenum target, GLint level, GLint internalformat, GLsizei width, GLint border, GLenum format, GLenum type, const void *pixels)
+void glTexImage1D(GLenum target, GLint level, GLint internalformat, GLsizei width, GLint border, GLenum format,
+                  GLenum type, const void *pixels)
 {
     GLMContext ctx = GET_CONTEXT();
 
     ctx->dispatch.tex_image1D(ctx, target, level, internalformat, width, border, format, type, pixels);
 }
 
-void glTexImage2D(GLenum target, GLint level, GLint internalformat, GLsizei width, GLsizei height, GLint border, GLenum format, GLenum type, const void *pixels)
+void glTexImage2D(GLenum target, GLint level, GLint internalformat, GLsizei width, GLsizei height, GLint border,
+                  GLenum format, GLenum type, const void *pixels)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -268,7 +270,7 @@ void glGetDoublev(GLenum pname, GLdouble *data)
     ctx->dispatch.get_doublev(ctx, pname, data);
 }
 
-GLenum  glGetError()
+GLenum glGetError()
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -289,7 +291,7 @@ void glGetIntegerv(GLenum pname, GLint *data)
     ctx->dispatch.get_integerv(ctx, pname, data);
 }
 
-GLubyte const  *glGetString(GLenum name)
+GLubyte const *glGetString(GLenum name)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -331,7 +333,7 @@ void glGetTexLevelParameteriv(GLenum target, GLint level, GLenum pname, GLint *p
     ctx->dispatch.get_tex_level_parameteriv(ctx, target, level, pname, params);
 }
 
-GLboolean  glIsEnabled(GLenum cap)
+GLboolean glIsEnabled(GLenum cap)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -387,7 +389,7 @@ void glDeleteLists(GLuint list, GLsizei range)
     ctx->dispatch.delete_lists(ctx, list, range);
 }
 
-GLuint  glGenLists(GLsizei range)
+GLuint glGenLists(GLsizei range)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -408,7 +410,8 @@ void glBegin(GLenum mode)
     ctx->dispatch.begin(ctx, mode);
 }
 
-void glBitmap(GLsizei width, GLsizei height, GLfloat xorig, GLfloat yorig, GLfloat xmove, GLfloat ymove, const GLubyte *bitmap)
+void glBitmap(GLsizei width, GLsizei height, GLfloat xorig, GLfloat yorig, GLfloat xmove, GLfloat ymove,
+              const GLubyte *bitmap)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -1633,7 +1636,7 @@ void glSelectBuffer(GLsizei size, GLuint *buffer)
     ctx->dispatch.select_buffer(ctx, size, buffer);
 }
 
-GLint  glRenderMode(GLenum mode)
+GLint glRenderMode(GLenum mode)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -1731,14 +1734,16 @@ void glMap1f(GLenum target, GLfloat u1, GLfloat u2, GLint stride, GLint order, c
     ctx->dispatch.map1f(ctx, target, u1, u2, stride, order, points);
 }
 
-void glMap2d(GLenum target, GLdouble u1, GLdouble u2, GLint ustride, GLint uorder, GLdouble v1, GLdouble v2, GLint vstride, GLint vorder, const GLdouble *points)
+void glMap2d(GLenum target, GLdouble u1, GLdouble u2, GLint ustride, GLint uorder, GLdouble v1, GLdouble v2,
+             GLint vstride, GLint vorder, const GLdouble *points)
 {
     GLMContext ctx = GET_CONTEXT();
 
     ctx->dispatch.map2d(ctx, target, u1, u2, ustride, uorder, v1, v2, vstride, vorder, points);
 }
 
-void glMap2f(GLenum target, GLfloat u1, GLfloat u2, GLint ustride, GLint uorder, GLfloat v1, GLfloat v2, GLint vstride, GLint vorder, const GLfloat *points)
+void glMap2f(GLenum target, GLfloat u1, GLfloat u2, GLint ustride, GLint uorder, GLfloat v1, GLfloat v2, GLint vstride,
+             GLint vorder, const GLfloat *points)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -2039,7 +2044,7 @@ void glGetTexGeniv(GLenum coord, GLenum pname, GLint *params)
     ctx->dispatch.get_tex_geniv(ctx, coord, pname, params);
 }
 
-GLboolean  glIsList(GLuint list)
+GLboolean glIsList(GLuint list)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -2193,7 +2198,8 @@ void glCopyTexImage1D(GLenum target, GLint level, GLenum internalformat, GLint x
     ctx->dispatch.copy_tex_image1D(ctx, target, level, internalformat, x, y, width, border);
 }
 
-void glCopyTexImage2D(GLenum target, GLint level, GLenum internalformat, GLint x, GLint y, GLsizei width, GLsizei height, GLint border)
+void glCopyTexImage2D(GLenum target, GLint level, GLenum internalformat, GLint x, GLint y, GLsizei width,
+                      GLsizei height, GLint border)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -2207,21 +2213,24 @@ void glCopyTexSubImage1D(GLenum target, GLint level, GLint xoffset, GLint x, GLi
     ctx->dispatch.copy_tex_sub_image1D(ctx, target, level, xoffset, x, y, width);
 }
 
-void glCopyTexSubImage2D(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint x, GLint y, GLsizei width, GLsizei height)
+void glCopyTexSubImage2D(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint x, GLint y, GLsizei width,
+                         GLsizei height)
 {
     GLMContext ctx = GET_CONTEXT();
 
     ctx->dispatch.copy_tex_sub_image2D(ctx, target, level, xoffset, yoffset, x, y, width, height);
 }
 
-void glTexSubImage1D(GLenum target, GLint level, GLint xoffset, GLsizei width, GLenum format, GLenum type, const void *pixels)
+void glTexSubImage1D(GLenum target, GLint level, GLint xoffset, GLsizei width, GLenum format, GLenum type,
+                     const void *pixels)
 {
     GLMContext ctx = GET_CONTEXT();
 
     ctx->dispatch.tex_sub_image1D(ctx, target, level, xoffset, width, format, type, pixels);
 }
 
-void glTexSubImage2D(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, GLenum format, GLenum type, const void *pixels)
+void glTexSubImage2D(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height,
+                     GLenum format, GLenum type, const void *pixels)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -2249,7 +2258,7 @@ void glGenTextures(GLsizei n, GLuint *textures)
     ctx->dispatch.gen_textures(ctx, n, textures);
 }
 
-GLboolean  glIsTexture(GLuint texture)
+GLboolean glIsTexture(GLuint texture)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -2326,7 +2335,7 @@ void glVertexPointer(GLint size, GLenum type, GLsizei stride, const void *pointe
     ctx->dispatch.vertex_pointer(ctx, size, type, stride, pointer);
 }
 
-GLboolean  glAreTexturesResident(GLsizei n, const GLuint *textures, GLboolean *residences)
+GLboolean glAreTexturesResident(GLsizei n, const GLuint *textures, GLboolean *residences)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -2375,21 +2384,25 @@ void glDrawRangeElements(GLenum mode, GLuint start, GLuint end, GLsizei count, G
     ctx->dispatch.draw_range_elements(ctx, mode, start, end, count, type, indices);
 }
 
-void glTexImage3D(GLenum target, GLint level, GLint internalformat, GLsizei width, GLsizei height, GLsizei depth, GLint border, GLenum format, GLenum type, const void *pixels)
+void glTexImage3D(GLenum target, GLint level, GLint internalformat, GLsizei width, GLsizei height, GLsizei depth,
+                  GLint border, GLenum format, GLenum type, const void *pixels)
 {
     GLMContext ctx = GET_CONTEXT();
 
     ctx->dispatch.tex_image3D(ctx, target, level, internalformat, width, height, depth, border, format, type, pixels);
 }
 
-void glTexSubImage3D(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLenum type, const void *pixels)
+void glTexSubImage3D(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width,
+                     GLsizei height, GLsizei depth, GLenum format, GLenum type, const void *pixels)
 {
     GLMContext ctx = GET_CONTEXT();
 
-    ctx->dispatch.tex_sub_image3D(ctx, target, level, xoffset, yoffset, zoffset, width, height, depth, format, type, pixels);
+    ctx->dispatch.tex_sub_image3D(ctx, target, level, xoffset, yoffset, zoffset, width, height, depth, format, type,
+                                  pixels);
 }
 
-void glCopyTexSubImage3D(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLint x, GLint y, GLsizei width, GLsizei height)
+void glCopyTexSubImage3D(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLint x, GLint y,
+                         GLsizei width, GLsizei height)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -2410,42 +2423,51 @@ void glSampleCoverage(GLfloat value, GLboolean invert)
     ctx->dispatch.sample_coverage(ctx, value, invert);
 }
 
-void glCompressedTexImage3D(GLenum target, GLint level, GLenum internalformat, GLsizei width, GLsizei height, GLsizei depth, GLint border, GLsizei imageSize, const void *data)
+void glCompressedTexImage3D(GLenum target, GLint level, GLenum internalformat, GLsizei width, GLsizei height,
+                            GLsizei depth, GLint border, GLsizei imageSize, const void *data)
 {
     GLMContext ctx = GET_CONTEXT();
 
-    ctx->dispatch.compressed_tex_image3D(ctx, target, level, internalformat, width, height, depth, border, imageSize, data);
+    ctx->dispatch.compressed_tex_image3D(ctx, target, level, internalformat, width, height, depth, border, imageSize,
+                                         data);
 }
 
-void glCompressedTexImage2D(GLenum target, GLint level, GLenum internalformat, GLsizei width, GLsizei height, GLint border, GLsizei imageSize, const void *data)
+void glCompressedTexImage2D(GLenum target, GLint level, GLenum internalformat, GLsizei width, GLsizei height,
+                            GLint border, GLsizei imageSize, const void *data)
 {
     GLMContext ctx = GET_CONTEXT();
 
     ctx->dispatch.compressed_tex_image2D(ctx, target, level, internalformat, width, height, border, imageSize, data);
 }
 
-void glCompressedTexImage1D(GLenum target, GLint level, GLenum internalformat, GLsizei width, GLint border, GLsizei imageSize, const void *data)
+void glCompressedTexImage1D(GLenum target, GLint level, GLenum internalformat, GLsizei width, GLint border,
+                            GLsizei imageSize, const void *data)
 {
     GLMContext ctx = GET_CONTEXT();
 
     ctx->dispatch.compressed_tex_image1D(ctx, target, level, internalformat, width, border, imageSize, data);
 }
 
-void glCompressedTexSubImage3D(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLsizei imageSize, const void *data)
+void glCompressedTexSubImage3D(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width,
+                               GLsizei height, GLsizei depth, GLenum format, GLsizei imageSize, const void *data)
 {
     GLMContext ctx = GET_CONTEXT();
 
-    ctx->dispatch.compressed_tex_sub_image3D(ctx, target, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, data);
+    ctx->dispatch.compressed_tex_sub_image3D(ctx, target, level, xoffset, yoffset, zoffset, width, height, depth,
+                                             format, imageSize, data);
 }
 
-void glCompressedTexSubImage2D(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, GLenum format, GLsizei imageSize, const void *data)
+void glCompressedTexSubImage2D(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height,
+                               GLenum format, GLsizei imageSize, const void *data)
 {
     GLMContext ctx = GET_CONTEXT();
 
-    ctx->dispatch.compressed_tex_sub_image2D(ctx, target, level, xoffset, yoffset, width, height, format, imageSize, data);
+    ctx->dispatch.compressed_tex_sub_image2D(ctx, target, level, xoffset, yoffset, width, height, format, imageSize,
+                                             data);
 }
 
-void glCompressedTexSubImage1D(GLenum target, GLint level, GLint xoffset, GLsizei width, GLenum format, GLsizei imageSize, const void *data)
+void glCompressedTexSubImage1D(GLenum target, GLint level, GLint xoffset, GLsizei width, GLenum format,
+                               GLsizei imageSize, const void *data)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -2732,7 +2754,7 @@ void glMultiDrawArrays(GLenum mode, const GLint *first, const GLsizei *count, GL
     ctx->dispatch.multi_draw_arrays(ctx, mode, first, count, drawcount);
 }
 
-void glMultiDrawElements(GLenum mode, const GLsizei *count, GLenum type, const void *const*indices, GLsizei drawcount)
+void glMultiDrawElements(GLenum mode, const GLsizei *count, GLenum type, const void *const *indices, GLsizei drawcount)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -3061,7 +3083,7 @@ void glDeleteQueries(GLsizei n, const GLuint *ids)
     ctx->dispatch.delete_queries(ctx, n, ids);
 }
 
-GLboolean  glIsQuery(GLuint id)
+GLboolean glIsQuery(GLuint id)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -3124,7 +3146,7 @@ void glGenBuffers(GLsizei n, GLuint *buffers)
     ctx->dispatch.gen_buffers(ctx, n, buffers);
 }
 
-GLboolean  glIsBuffer(GLuint buffer)
+GLboolean glIsBuffer(GLuint buffer)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -3236,14 +3258,14 @@ void glCompileShader(GLuint shader)
     ctx->dispatch.compile_shader(ctx, shader);
 }
 
-GLuint  glCreateProgram()
+GLuint glCreateProgram()
 {
     GLMContext ctx = GET_CONTEXT();
 
     return ctx->dispatch.create_program(ctx);
 }
 
-GLuint  glCreateShader(GLenum type)
+GLuint glCreateShader(GLenum type)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -3285,14 +3307,16 @@ void glEnableVertexAttribArray(GLuint index)
     ctx->dispatch.enable_vertex_attrib_array(ctx, index);
 }
 
-void glGetActiveAttrib(GLuint program, GLuint index, GLsizei bufSize, GLsizei *length, GLint *size, GLenum *type, GLchar *name)
+void glGetActiveAttrib(GLuint program, GLuint index, GLsizei bufSize, GLsizei *length, GLint *size, GLenum *type,
+                       GLchar *name)
 {
     GLMContext ctx = GET_CONTEXT();
 
     ctx->dispatch.get_active_attrib(ctx, program, index, bufSize, length, size, type, name);
 }
 
-void glGetActiveUniform(GLuint program, GLuint index, GLsizei bufSize, GLsizei *length, GLint *size, GLenum *type, GLchar *name)
+void glGetActiveUniform(GLuint program, GLuint index, GLsizei bufSize, GLsizei *length, GLint *size, GLenum *type,
+                        GLchar *name)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -3306,7 +3330,7 @@ void glGetAttachedShaders(GLuint program, GLsizei maxCount, GLsizei *count, GLui
     ctx->dispatch.get_attached_shaders(ctx, program, maxCount, count, shaders);
 }
 
-GLint  glGetAttribLocation(GLuint program, const GLchar *name)
+GLint glGetAttribLocation(GLuint program, const GLchar *name)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -3348,7 +3372,7 @@ void glGetShaderSource(GLuint shader, GLsizei bufSize, GLsizei *length, GLchar *
     ctx->dispatch.get_shader_source(ctx, shader, bufSize, length, source);
 }
 
-GLint  glGetUniformLocation(GLuint program, const GLchar *name)
+GLint glGetUniformLocation(GLuint program, const GLchar *name)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -3397,14 +3421,14 @@ void glGetVertexAttribPointerv(GLuint index, GLenum pname, void **pointer)
     ctx->dispatch.get_vertex_attrib_pointerv(ctx, index, pname, pointer);
 }
 
-GLboolean  glIsProgram(GLuint program)
+GLboolean glIsProgram(GLuint program)
 {
     GLMContext ctx = GET_CONTEXT();
 
     return ctx->dispatch.is_program(ctx, program);
 }
 
-GLboolean  glIsShader(GLuint shader)
+GLboolean glIsShader(GLuint shader)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -3418,7 +3442,7 @@ void glLinkProgram(GLuint program)
     ctx->dispatch.link_program(ctx, program);
 }
 
-void glShaderSource(GLuint shader, GLsizei count, const GLchar *const*string, const GLint *length)
+void glShaderSource(GLuint shader, GLsizei count, const GLchar *const *string, const GLint *length)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -3824,7 +3848,8 @@ void glVertexAttrib4usv(GLuint index, const GLushort *v)
     ctx->dispatch.vertex_attrib4usv(ctx, index, v);
 }
 
-void glVertexAttribPointer(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const void *pointer)
+void glVertexAttribPointer(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride,
+                           const void *pointer)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -3908,7 +3933,7 @@ void glDisablei(GLenum target, GLuint index)
     ctx->dispatch.disablei(ctx, target, index);
 }
 
-GLboolean  glIsEnabledi(GLenum target, GLuint index)
+GLboolean glIsEnabledi(GLenum target, GLuint index)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -3943,14 +3968,15 @@ void glBindBufferBase(GLenum target, GLuint index, GLuint buffer)
     ctx->dispatch.bind_buffer_base(ctx, target, index, buffer);
 }
 
-void glTransformFeedbackVaryings(GLuint program, GLsizei count, const GLchar *const*varyings, GLenum bufferMode)
+void glTransformFeedbackVaryings(GLuint program, GLsizei count, const GLchar *const *varyings, GLenum bufferMode)
 {
     GLMContext ctx = GET_CONTEXT();
 
     ctx->dispatch.transform_feedback_varyings(ctx, program, count, varyings, bufferMode);
 }
 
-void glGetTransformFeedbackVarying(GLuint program, GLuint index, GLsizei bufSize, GLsizei *length, GLsizei *size, GLenum *type, GLchar *name)
+void glGetTransformFeedbackVarying(GLuint program, GLuint index, GLsizei bufSize, GLsizei *length, GLsizei *size,
+                                   GLenum *type, GLchar *name)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -4153,7 +4179,7 @@ void glBindFragDataLocation(GLuint program, GLuint color, const GLchar *name)
     ctx->dispatch.bind_frag_data_location(ctx, program, color, name);
 }
 
-GLint  glGetFragDataLocation(GLuint program, const GLchar *name)
+GLint glGetFragDataLocation(GLuint program, const GLchar *name)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -4272,14 +4298,14 @@ void glClearBufferfi(GLenum buffer, GLint drawbuffer, GLfloat depth, GLint stenc
     ctx->dispatch.clear_bufferfi(ctx, buffer, drawbuffer, depth, stencil);
 }
 
-GLubyte const  *glGetStringi(GLenum name, GLuint index)
+GLubyte const *glGetStringi(GLenum name, GLuint index)
 {
     GLMContext ctx = GET_CONTEXT();
 
     return ctx->dispatch.get_stringi(ctx, name, index);
 }
 
-GLboolean  glIsRenderbuffer(GLuint renderbuffer)
+GLboolean glIsRenderbuffer(GLuint renderbuffer)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -4321,7 +4347,7 @@ void glGetRenderbufferParameteriv(GLenum target, GLenum pname, GLint *params)
     ctx->dispatch.get_renderbuffer_parameteriv(ctx, target, pname, params);
 }
 
-GLboolean  glIsFramebuffer(GLuint framebuffer)
+GLboolean glIsFramebuffer(GLuint framebuffer)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -4349,7 +4375,7 @@ void glGenFramebuffers(GLsizei n, GLuint *framebuffers)
     ctx->dispatch.gen_framebuffers(ctx, n, framebuffers);
 }
 
-GLenum  glCheckFramebufferStatus(GLenum target)
+GLenum glCheckFramebufferStatus(GLenum target)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -4370,7 +4396,8 @@ void glFramebufferTexture2D(GLenum target, GLenum attachment, GLenum textarget, 
     ctx->dispatch.framebuffer_texture2D(ctx, target, attachment, textarget, texture, level);
 }
 
-void glFramebufferTexture3D(GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level, GLint zoffset)
+void glFramebufferTexture3D(GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level,
+                            GLint zoffset)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -4398,14 +4425,16 @@ void glGenerateMipmap(GLenum target)
     ctx->dispatch.generate_mipmap(ctx, target);
 }
 
-void glBlitFramebuffer(GLint srcX0, GLint srcY0, GLint srcX1, GLint srcY1, GLint dstX0, GLint dstY0, GLint dstX1, GLint dstY1, GLbitfield mask, GLenum filter)
+void glBlitFramebuffer(GLint srcX0, GLint srcY0, GLint srcX1, GLint srcY1, GLint dstX0, GLint dstY0, GLint dstX1,
+                       GLint dstY1, GLbitfield mask, GLenum filter)
 {
     GLMContext ctx = GET_CONTEXT();
 
     ctx->dispatch.blit_framebuffer(ctx, srcX0, srcY0, srcX1, srcY1, dstX0, dstY0, dstX1, dstY1, mask, filter);
 }
 
-void glRenderbufferStorageMultisample(GLenum target, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height)
+void glRenderbufferStorageMultisample(GLenum target, GLsizei samples, GLenum internalformat, GLsizei width,
+                                      GLsizei height)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -4454,7 +4483,7 @@ void glGenVertexArrays(GLsizei n, GLuint *arrays)
     ctx->dispatch.gen_vertex_arrays(ctx, n, arrays);
 }
 
-GLboolean  glIsVertexArray(GLuint array)
+GLboolean glIsVertexArray(GLuint array)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -4489,21 +4518,24 @@ void glPrimitiveRestartIndex(GLuint index)
     ctx->dispatch.primitive_restart_index(ctx, index);
 }
 
-void glCopyBufferSubData(GLenum readTarget, GLenum writeTarget, GLintptr readOffset, GLintptr writeOffset, GLsizeiptr size)
+void glCopyBufferSubData(GLenum readTarget, GLenum writeTarget, GLintptr readOffset, GLintptr writeOffset,
+                         GLsizeiptr size)
 {
     GLMContext ctx = GET_CONTEXT();
 
     ctx->dispatch.copy_buffer_sub_data(ctx, readTarget, writeTarget, readOffset, writeOffset, size);
 }
 
-void glGetUniformIndices(GLuint program, GLsizei uniformCount, const GLchar *const*uniformNames, GLuint *uniformIndices)
+void glGetUniformIndices(GLuint program, GLsizei uniformCount, const GLchar *const *uniformNames,
+                         GLuint *uniformIndices)
 {
     GLMContext ctx = GET_CONTEXT();
 
     ctx->dispatch.get_uniform_indices(ctx, program, uniformCount, uniformNames, uniformIndices);
 }
 
-void glGetActiveUniformsiv(GLuint program, GLsizei uniformCount, const GLuint *uniformIndices, GLenum pname, GLint *params)
+void glGetActiveUniformsiv(GLuint program, GLsizei uniformCount, const GLuint *uniformIndices, GLenum pname,
+                           GLint *params)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -4517,7 +4549,7 @@ void glGetActiveUniformName(GLuint program, GLuint uniformIndex, GLsizei bufSize
     ctx->dispatch.get_active_uniform_name(ctx, program, uniformIndex, bufSize, length, uniformName);
 }
 
-GLuint  glGetUniformBlockIndex(GLuint program, const GLchar *uniformBlockName)
+GLuint glGetUniformBlockIndex(GLuint program, const GLchar *uniformBlockName)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -4531,7 +4563,8 @@ void glGetActiveUniformBlockiv(GLuint program, GLuint uniformBlockIndex, GLenum 
     ctx->dispatch.get_active_uniform_blockiv(ctx, program, uniformBlockIndex, pname, params);
 }
 
-void glGetActiveUniformBlockName(GLuint program, GLuint uniformBlockIndex, GLsizei bufSize, GLsizei *length, GLchar *uniformBlockName)
+void glGetActiveUniformBlockName(GLuint program, GLuint uniformBlockIndex, GLsizei bufSize, GLsizei *length,
+                                 GLchar *uniformBlockName)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -4552,21 +4585,24 @@ void glDrawElementsBaseVertex(GLenum mode, GLsizei count, GLenum type, const voi
     ctx->dispatch.draw_elements_base_vertex(ctx, mode, count, type, indices, basevertex);
 }
 
-void glDrawRangeElementsBaseVertex(GLenum mode, GLuint start, GLuint end, GLsizei count, GLenum type, const void *indices, GLint basevertex)
+void glDrawRangeElementsBaseVertex(GLenum mode, GLuint start, GLuint end, GLsizei count, GLenum type,
+                                   const void *indices, GLint basevertex)
 {
     GLMContext ctx = GET_CONTEXT();
 
     ctx->dispatch.draw_range_elements_base_vertex(ctx, mode, start, end, count, type, indices, basevertex);
 }
 
-void glDrawElementsInstancedBaseVertex(GLenum mode, GLsizei count, GLenum type, const void *indices, GLsizei instancecount, GLint basevertex)
+void glDrawElementsInstancedBaseVertex(GLenum mode, GLsizei count, GLenum type, const void *indices,
+                                       GLsizei instancecount, GLint basevertex)
 {
     GLMContext ctx = GET_CONTEXT();
 
     ctx->dispatch.draw_elements_instanced_base_vertex(ctx, mode, count, type, indices, instancecount, basevertex);
 }
 
-void glMultiDrawElementsBaseVertex(GLenum mode, const GLsizei *count, GLenum type, const void *const*indices, GLsizei drawcount, const GLint *basevertex)
+void glMultiDrawElementsBaseVertex(GLenum mode, const GLsizei *count, GLenum type, const void *const *indices,
+                                   GLsizei drawcount, const GLint *basevertex)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -4580,14 +4616,14 @@ void glProvokingVertex(GLenum mode)
     ctx->dispatch.provoking_vertex(ctx, mode);
 }
 
-GLsync  glFenceSync(GLenum condition, GLbitfield flags)
+GLsync glFenceSync(GLenum condition, GLbitfield flags)
 {
     GLMContext ctx = GET_CONTEXT();
 
     return ctx->dispatch.fence_sync(ctx, condition, flags);
 }
 
-GLboolean  glIsSync(GLsync sync)
+GLboolean glIsSync(GLsync sync)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -4601,7 +4637,7 @@ void glDeleteSync(GLsync sync)
     ctx->dispatch.delete_sync(ctx, sync);
 }
 
-GLenum  glClientWaitSync(GLsync sync, GLbitfield flags, GLuint64 timeout)
+GLenum glClientWaitSync(GLsync sync, GLbitfield flags, GLuint64 timeout)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -4650,18 +4686,21 @@ void glFramebufferTexture(GLenum target, GLenum attachment, GLuint texture, GLin
     ctx->dispatch.framebuffer_texture(ctx, target, attachment, texture, level);
 }
 
-void glTexImage2DMultisample(GLenum target, GLsizei samples, GLint internalformat, GLsizei width, GLsizei height, GLboolean fixedsamplelocations)
+void glTexImage2DMultisample(GLenum target, GLsizei samples, GLint internalformat, GLsizei width, GLsizei height,
+                             GLboolean fixedsamplelocations)
 {
     GLMContext ctx = GET_CONTEXT();
 
     ctx->dispatch.tex_image2_d_multisample(ctx, target, samples, internalformat, width, height, fixedsamplelocations);
 }
 
-void glTexImage3DMultisample(GLenum target, GLsizei samples, GLint internalformat, GLsizei width, GLsizei height, GLsizei depth, GLboolean fixedsamplelocations)
+void glTexImage3DMultisample(GLenum target, GLsizei samples, GLint internalformat, GLsizei width, GLsizei height,
+                             GLsizei depth, GLboolean fixedsamplelocations)
 {
     GLMContext ctx = GET_CONTEXT();
 
-    ctx->dispatch.tex_image3_d_multisample(ctx, target, samples, internalformat, width, height, depth, fixedsamplelocations);
+    ctx->dispatch.tex_image3_d_multisample(ctx, target, samples, internalformat, width, height, depth,
+                                           fixedsamplelocations);
 }
 
 void glGetMultisamplefv(GLenum pname, GLuint index, GLfloat *val)
@@ -4685,7 +4724,7 @@ void glBindFragDataLocationIndexed(GLuint program, GLuint colorNumber, GLuint in
     ctx->dispatch.bind_frag_data_location_indexed(ctx, program, colorNumber, index, name);
 }
 
-GLint  glGetFragDataIndex(GLuint program, const GLchar *name)
+GLint glGetFragDataIndex(GLuint program, const GLchar *name)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -4706,7 +4745,7 @@ void glDeleteSamplers(GLsizei count, const GLuint *samplers)
     ctx->dispatch.delete_samplers(ctx, count, samplers);
 }
 
-GLboolean  glIsSampler(GLuint sampler)
+GLboolean glIsSampler(GLuint sampler)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -5259,14 +5298,14 @@ void glGetUniformdv(GLuint program, GLint location, GLdouble *params)
     ctx->dispatch.get_uniformdv(ctx, program, location, params);
 }
 
-GLint  glGetSubroutineUniformLocation(GLuint program, GLenum shadertype, const GLchar *name)
+GLint glGetSubroutineUniformLocation(GLuint program, GLenum shadertype, const GLchar *name)
 {
     GLMContext ctx = GET_CONTEXT();
 
     return ctx->dispatch.get_subroutine_uniform_location(ctx, program, shadertype, name);
 }
 
-GLuint  glGetSubroutineIndex(GLuint program, GLenum shadertype, const GLchar *name)
+GLuint glGetSubroutineIndex(GLuint program, GLenum shadertype, const GLchar *name)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -5280,14 +5319,16 @@ void glGetActiveSubroutineUniformiv(GLuint program, GLenum shadertype, GLuint in
     ctx->dispatch.get_active_subroutine_uniformiv(ctx, program, shadertype, index, pname, values);
 }
 
-void glGetActiveSubroutineUniformName(GLuint program, GLenum shadertype, GLuint index, GLsizei bufSize, GLsizei *length, GLchar *name)
+void glGetActiveSubroutineUniformName(GLuint program, GLenum shadertype, GLuint index, GLsizei bufSize, GLsizei *length,
+                                      GLchar *name)
 {
     GLMContext ctx = GET_CONTEXT();
 
     ctx->dispatch.get_active_subroutine_uniform_name(ctx, program, shadertype, index, bufSize, length, name);
 }
 
-void glGetActiveSubroutineName(GLuint program, GLenum shadertype, GLuint index, GLsizei bufSize, GLsizei *length, GLchar *name)
+void glGetActiveSubroutineName(GLuint program, GLenum shadertype, GLuint index, GLsizei bufSize, GLsizei *length,
+                               GLchar *name)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -5350,7 +5391,7 @@ void glGenTransformFeedbacks(GLsizei n, GLuint *ids)
     ctx->dispatch.gen_transform_feedbacks(ctx, n, ids);
 }
 
-GLboolean  glIsTransformFeedback(GLuint id)
+GLboolean glIsTransformFeedback(GLuint id)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -5476,7 +5517,7 @@ void glActiveShaderProgram(GLuint pipeline, GLuint program)
     ctx->dispatch.active_shader_program(ctx, pipeline, program);
 }
 
-GLuint  glCreateShaderProgramv(GLenum type, GLsizei count, const GLchar *const*strings)
+GLuint glCreateShaderProgramv(GLenum type, GLsizei count, const GLchar *const *strings)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -5504,7 +5545,7 @@ void glGenProgramPipelines(GLsizei n, GLuint *pipelines)
     ctx->dispatch.gen_program_pipelines(ctx, n, pipelines);
 }
 
-GLboolean  glIsProgramPipeline(GLuint pipeline)
+GLboolean glIsProgramPipeline(GLuint pipeline)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -5763,105 +5804,120 @@ void glProgramUniformMatrix4fv(GLuint program, GLint location, GLsizei count, GL
     ctx->dispatch.program_uniform_matrix4fv(ctx, program, location, count, transpose, value);
 }
 
-void glProgramUniformMatrix2dv(GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble *value)
+void glProgramUniformMatrix2dv(GLuint program, GLint location, GLsizei count, GLboolean transpose,
+                               const GLdouble *value)
 {
     GLMContext ctx = GET_CONTEXT();
 
     ctx->dispatch.program_uniform_matrix2dv(ctx, program, location, count, transpose, value);
 }
 
-void glProgramUniformMatrix3dv(GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble *value)
+void glProgramUniformMatrix3dv(GLuint program, GLint location, GLsizei count, GLboolean transpose,
+                               const GLdouble *value)
 {
     GLMContext ctx = GET_CONTEXT();
 
     ctx->dispatch.program_uniform_matrix3dv(ctx, program, location, count, transpose, value);
 }
 
-void glProgramUniformMatrix4dv(GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble *value)
+void glProgramUniformMatrix4dv(GLuint program, GLint location, GLsizei count, GLboolean transpose,
+                               const GLdouble *value)
 {
     GLMContext ctx = GET_CONTEXT();
 
     ctx->dispatch.program_uniform_matrix4dv(ctx, program, location, count, transpose, value);
 }
 
-void glProgramUniformMatrix2x3fv(GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)
+void glProgramUniformMatrix2x3fv(GLuint program, GLint location, GLsizei count, GLboolean transpose,
+                                 const GLfloat *value)
 {
     GLMContext ctx = GET_CONTEXT();
 
     ctx->dispatch.program_uniform_matrix2x3fv(ctx, program, location, count, transpose, value);
 }
 
-void glProgramUniformMatrix3x2fv(GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)
+void glProgramUniformMatrix3x2fv(GLuint program, GLint location, GLsizei count, GLboolean transpose,
+                                 const GLfloat *value)
 {
     GLMContext ctx = GET_CONTEXT();
 
     ctx->dispatch.program_uniform_matrix3x2fv(ctx, program, location, count, transpose, value);
 }
 
-void glProgramUniformMatrix2x4fv(GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)
+void glProgramUniformMatrix2x4fv(GLuint program, GLint location, GLsizei count, GLboolean transpose,
+                                 const GLfloat *value)
 {
     GLMContext ctx = GET_CONTEXT();
 
     ctx->dispatch.program_uniform_matrix2x4fv(ctx, program, location, count, transpose, value);
 }
 
-void glProgramUniformMatrix4x2fv(GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)
+void glProgramUniformMatrix4x2fv(GLuint program, GLint location, GLsizei count, GLboolean transpose,
+                                 const GLfloat *value)
 {
     GLMContext ctx = GET_CONTEXT();
 
     ctx->dispatch.program_uniform_matrix4x2fv(ctx, program, location, count, transpose, value);
 }
 
-void glProgramUniformMatrix3x4fv(GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)
+void glProgramUniformMatrix3x4fv(GLuint program, GLint location, GLsizei count, GLboolean transpose,
+                                 const GLfloat *value)
 {
     GLMContext ctx = GET_CONTEXT();
 
     ctx->dispatch.program_uniform_matrix3x4fv(ctx, program, location, count, transpose, value);
 }
 
-void glProgramUniformMatrix4x3fv(GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)
+void glProgramUniformMatrix4x3fv(GLuint program, GLint location, GLsizei count, GLboolean transpose,
+                                 const GLfloat *value)
 {
     GLMContext ctx = GET_CONTEXT();
 
     ctx->dispatch.program_uniform_matrix4x3fv(ctx, program, location, count, transpose, value);
 }
 
-void glProgramUniformMatrix2x3dv(GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble *value)
+void glProgramUniformMatrix2x3dv(GLuint program, GLint location, GLsizei count, GLboolean transpose,
+                                 const GLdouble *value)
 {
     GLMContext ctx = GET_CONTEXT();
 
     ctx->dispatch.program_uniform_matrix2x3dv(ctx, program, location, count, transpose, value);
 }
 
-void glProgramUniformMatrix3x2dv(GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble *value)
+void glProgramUniformMatrix3x2dv(GLuint program, GLint location, GLsizei count, GLboolean transpose,
+                                 const GLdouble *value)
 {
     GLMContext ctx = GET_CONTEXT();
 
     ctx->dispatch.program_uniform_matrix3x2dv(ctx, program, location, count, transpose, value);
 }
 
-void glProgramUniformMatrix2x4dv(GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble *value)
+void glProgramUniformMatrix2x4dv(GLuint program, GLint location, GLsizei count, GLboolean transpose,
+                                 const GLdouble *value)
 {
     GLMContext ctx = GET_CONTEXT();
 
     ctx->dispatch.program_uniform_matrix2x4dv(ctx, program, location, count, transpose, value);
 }
 
-void glProgramUniformMatrix4x2dv(GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble *value)
+void glProgramUniformMatrix4x2dv(GLuint program, GLint location, GLsizei count, GLboolean transpose,
+                                 const GLdouble *value)
 {
     GLMContext ctx = GET_CONTEXT();
 
     ctx->dispatch.program_uniform_matrix4x2dv(ctx, program, location, count, transpose, value);
 }
 
-void glProgramUniformMatrix3x4dv(GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble *value)
+void glProgramUniformMatrix3x4dv(GLuint program, GLint location, GLsizei count, GLboolean transpose,
+                                 const GLdouble *value)
 {
     GLMContext ctx = GET_CONTEXT();
 
     ctx->dispatch.program_uniform_matrix3x4dv(ctx, program, location, count, transpose, value);
 }
 
-void glProgramUniformMatrix4x3dv(GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble *value)
+void glProgramUniformMatrix4x3dv(GLuint program, GLint location, GLsizei count, GLboolean transpose,
+                                 const GLdouble *value)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -6022,25 +6078,29 @@ void glGetDoublei_v(GLenum target, GLuint index, GLdouble *data)
     ctx->dispatch.get_doublei_v(ctx, target, index, data);
 }
 
-void glDrawArraysInstancedBaseInstance(GLenum mode, GLint first, GLsizei count, GLsizei instancecount, GLuint baseinstance)
+void glDrawArraysInstancedBaseInstance(GLenum mode, GLint first, GLsizei count, GLsizei instancecount,
+                                       GLuint baseinstance)
 {
     GLMContext ctx = GET_CONTEXT();
 
     ctx->dispatch.draw_arrays_instanced_base_instance(ctx, mode, first, count, instancecount, baseinstance);
 }
 
-void glDrawElementsInstancedBaseInstance(GLenum mode, GLsizei count, GLenum type, const void *indices, GLsizei instancecount, GLuint baseinstance)
+void glDrawElementsInstancedBaseInstance(GLenum mode, GLsizei count, GLenum type, const void *indices,
+                                         GLsizei instancecount, GLuint baseinstance)
 {
     GLMContext ctx = GET_CONTEXT();
 
     ctx->dispatch.draw_elements_instanced_base_instance(ctx, mode, count, type, indices, instancecount, baseinstance);
 }
 
-void glDrawElementsInstancedBaseVertexBaseInstance(GLenum mode, GLsizei count, GLenum type, const void *indices, GLsizei instancecount, GLint basevertex, GLuint baseinstance)
+void glDrawElementsInstancedBaseVertexBaseInstance(GLenum mode, GLsizei count, GLenum type, const void *indices,
+                                                   GLsizei instancecount, GLint basevertex, GLuint baseinstance)
 {
     GLMContext ctx = GET_CONTEXT();
 
-    ctx->dispatch.draw_elements_instanced_base_vertex_base_instance(ctx, mode, count, type, indices, instancecount, basevertex, baseinstance);
+    ctx->dispatch.draw_elements_instanced_base_vertex_base_instance(ctx, mode, count, type, indices, instancecount,
+                                                                    basevertex, baseinstance);
 }
 
 void glGetInternalformativ(GLenum target, GLenum internalformat, GLenum pname, GLsizei count, GLint *params)
@@ -6057,7 +6117,8 @@ void glGetActiveAtomicCounterBufferiv(GLuint program, GLuint bufferIndex, GLenum
     ctx->dispatch.get_active_atomic_counter_bufferiv(ctx, program, bufferIndex, pname, params);
 }
 
-void glBindImageTexture(GLuint unit, GLuint texture, GLint level, GLboolean layered, GLint layer, GLenum access, GLenum format)
+void glBindImageTexture(GLuint unit, GLuint texture, GLint level, GLboolean layered, GLint layer, GLenum access,
+                        GLenum format)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -6113,7 +6174,8 @@ void glClearBufferData(GLenum target, GLenum internalformat, GLenum format, GLen
     ctx->dispatch.clear_buffer_data(ctx, target, internalformat, format, type, data);
 }
 
-void glClearBufferSubData(GLenum target, GLenum internalformat, GLintptr offset, GLsizeiptr size, GLenum format, GLenum type, const void *data)
+void glClearBufferSubData(GLenum target, GLenum internalformat, GLintptr offset, GLsizeiptr size, GLenum format,
+                          GLenum type, const void *data)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -6134,11 +6196,14 @@ void glDispatchComputeIndirect(GLintptr indirect)
     ctx->dispatch.dispatch_compute_indirect(ctx, indirect);
 }
 
-void glCopyImageSubData(GLuint srcName, GLenum srcTarget, GLint srcLevel, GLint srcX, GLint srcY, GLint srcZ, GLuint dstName, GLenum dstTarget, GLint dstLevel, GLint dstX, GLint dstY, GLint dstZ, GLsizei srcWidth, GLsizei srcHeight, GLsizei srcDepth)
+void glCopyImageSubData(GLuint srcName, GLenum srcTarget, GLint srcLevel, GLint srcX, GLint srcY, GLint srcZ,
+                        GLuint dstName, GLenum dstTarget, GLint dstLevel, GLint dstX, GLint dstY, GLint dstZ,
+                        GLsizei srcWidth, GLsizei srcHeight, GLsizei srcDepth)
 {
     GLMContext ctx = GET_CONTEXT();
 
-    ctx->dispatch.copy_image_sub_data(ctx, srcName, srcTarget, srcLevel, srcX, srcY, srcZ, dstName, dstTarget, dstLevel, dstX, dstY, dstZ, srcWidth, srcHeight, srcDepth);
+    ctx->dispatch.copy_image_sub_data(ctx, srcName, srcTarget, srcLevel, srcX, srcY, srcZ, dstName, dstTarget, dstLevel,
+                                      dstX, dstY, dstZ, srcWidth, srcHeight, srcDepth);
 }
 
 void glFramebufferParameteri(GLenum target, GLenum pname, GLint param)
@@ -6162,7 +6227,8 @@ void glGetInternalformati64v(GLenum target, GLenum internalformat, GLenum pname,
     ctx->dispatch.get_internalformati64v(ctx, target, internalformat, pname, count, params);
 }
 
-void glInvalidateTexSubImage(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth)
+void glInvalidateTexSubImage(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width,
+                             GLsizei height, GLsizei depth)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -6197,7 +6263,8 @@ void glInvalidateFramebuffer(GLenum target, GLsizei numAttachments, const GLenum
     ctx->dispatch.invalidate_framebuffer(ctx, target, numAttachments, attachments);
 }
 
-void glInvalidateSubFramebuffer(GLenum target, GLsizei numAttachments, const GLenum *attachments, GLint x, GLint y, GLsizei width, GLsizei height)
+void glInvalidateSubFramebuffer(GLenum target, GLsizei numAttachments, const GLenum *attachments, GLint x, GLint y,
+                                GLsizei width, GLsizei height)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -6225,35 +6292,38 @@ void glGetProgramInterfaceiv(GLuint program, GLenum programInterface, GLenum pna
     ctx->dispatch.get_program_interfaceiv(ctx, program, programInterface, pname, params);
 }
 
-GLuint  glGetProgramResourceIndex(GLuint program, GLenum programInterface, const GLchar *name)
+GLuint glGetProgramResourceIndex(GLuint program, GLenum programInterface, const GLchar *name)
 {
     GLMContext ctx = GET_CONTEXT();
 
     return ctx->dispatch.get_program_resource_index(ctx, program, programInterface, name);
 }
 
-void glGetProgramResourceName(GLuint program, GLenum programInterface, GLuint index, GLsizei bufSize, GLsizei *length, GLchar *name)
+void glGetProgramResourceName(GLuint program, GLenum programInterface, GLuint index, GLsizei bufSize, GLsizei *length,
+                              GLchar *name)
 {
     GLMContext ctx = GET_CONTEXT();
 
     ctx->dispatch.get_program_resource_name(ctx, program, programInterface, index, bufSize, length, name);
 }
 
-void glGetProgramResourceiv(GLuint program, GLenum programInterface, GLuint index, GLsizei propCount, const GLenum *props, GLsizei count, GLsizei *length, GLint *params)
+void glGetProgramResourceiv(GLuint program, GLenum programInterface, GLuint index, GLsizei propCount,
+                            const GLenum *props, GLsizei count, GLsizei *length, GLint *params)
 {
     GLMContext ctx = GET_CONTEXT();
 
-    ctx->dispatch.get_program_resourceiv(ctx, program, programInterface, index, propCount, props, count, length, params);
+    ctx->dispatch.get_program_resourceiv(ctx, program, programInterface, index, propCount, props, count, length,
+                                         params);
 }
 
-GLint  glGetProgramResourceLocation(GLuint program, GLenum programInterface, const GLchar *name)
+GLint glGetProgramResourceLocation(GLuint program, GLenum programInterface, const GLchar *name)
 {
     GLMContext ctx = GET_CONTEXT();
 
     return ctx->dispatch.get_program_resource_location(ctx, program, programInterface, name);
 }
 
-GLint  glGetProgramResourceLocationIndex(GLuint program, GLenum programInterface, const GLchar *name)
+GLint glGetProgramResourceLocationIndex(GLuint program, GLenum programInterface, const GLchar *name)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -6274,25 +6344,30 @@ void glTexBufferRange(GLenum target, GLenum internalformat, GLuint buffer, GLint
     ctx->dispatch.tex_buffer_range(ctx, target, internalformat, buffer, offset, size);
 }
 
-void glTexStorage2DMultisample(GLenum target, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height, GLboolean fixedsamplelocations)
+void glTexStorage2DMultisample(GLenum target, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height,
+                               GLboolean fixedsamplelocations)
 {
     GLMContext ctx = GET_CONTEXT();
 
     ctx->dispatch.tex_storage2_d_multisample(ctx, target, samples, internalformat, width, height, fixedsamplelocations);
 }
 
-void glTexStorage3DMultisample(GLenum target, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height, GLsizei depth, GLboolean fixedsamplelocations)
+void glTexStorage3DMultisample(GLenum target, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height,
+                               GLsizei depth, GLboolean fixedsamplelocations)
 {
     GLMContext ctx = GET_CONTEXT();
 
-    ctx->dispatch.tex_storage3_d_multisample(ctx, target, samples, internalformat, width, height, depth, fixedsamplelocations);
+    ctx->dispatch.tex_storage3_d_multisample(ctx, target, samples, internalformat, width, height, depth,
+                                             fixedsamplelocations);
 }
 
-void glTextureView(GLuint texture, GLenum target, GLuint origtexture, GLenum internalformat, GLuint minlevel, GLuint numlevels, GLuint minlayer, GLuint numlayers)
+void glTextureView(GLuint texture, GLenum target, GLuint origtexture, GLenum internalformat, GLuint minlevel,
+                   GLuint numlevels, GLuint minlayer, GLuint numlayers)
 {
     GLMContext ctx = GET_CONTEXT();
 
-    ctx->dispatch.texture_view(ctx, texture, target, origtexture, internalformat, minlevel, numlevels, minlayer, numlayers);
+    ctx->dispatch.texture_view(ctx, texture, target, origtexture, internalformat, minlevel, numlevels, minlayer,
+                               numlayers);
 }
 
 void glBindVertexBuffer(GLuint bindingindex, GLuint buffer, GLintptr offset, GLsizei stride)
@@ -6337,7 +6412,8 @@ void glVertexBindingDivisor(GLuint bindingindex, GLuint divisor)
     ctx->dispatch.vertex_binding_divisor(ctx, bindingindex, divisor);
 }
 
-void glDebugMessageControl(GLenum source, GLenum type, GLenum severity, GLsizei count, const GLuint *ids, GLboolean enabled)
+void glDebugMessageControl(GLenum source, GLenum type, GLenum severity, GLsizei count, const GLuint *ids,
+                           GLboolean enabled)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -6358,11 +6434,13 @@ void glDebugMessageCallback(GLDEBUGPROC callback, const void *userParam)
     ctx->dispatch.debug_message_callback(ctx, callback, userParam);
 }
 
-GLuint  glGetDebugMessageLog(GLuint count, GLsizei bufSize, GLenum *sources, GLenum *types, GLuint *ids, GLenum *severities, GLsizei *lengths, GLchar *messageLog)
+GLuint glGetDebugMessageLog(GLuint count, GLsizei bufSize, GLenum *sources, GLenum *types, GLuint *ids,
+                            GLenum *severities, GLsizei *lengths, GLchar *messageLog)
 {
     GLMContext ctx = GET_CONTEXT();
 
-    return ctx->dispatch.get_debug_message_log(ctx, count, bufSize, sources, types, ids, severities, lengths, messageLog);
+    return ctx->dispatch.get_debug_message_log(ctx, count, bufSize, sources, types, ids, severities, lengths,
+                                               messageLog);
 }
 
 void glPushDebugGroup(GLenum source, GLuint id, GLsizei length, const GLchar *message)
@@ -6421,11 +6499,13 @@ void glClearTexImage(GLuint texture, GLint level, GLenum format, GLenum type, co
     ctx->dispatch.clear_tex_image(ctx, texture, level, format, type, data);
 }
 
-void glClearTexSubImage(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLenum type, const void *data)
+void glClearTexSubImage(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width,
+                        GLsizei height, GLsizei depth, GLenum format, GLenum type, const void *data)
 {
     GLMContext ctx = GET_CONTEXT();
 
-    ctx->dispatch.clear_tex_sub_image(ctx, texture, level, xoffset, yoffset, zoffset, width, height, depth, format, type, data);
+    ctx->dispatch.clear_tex_sub_image(ctx, texture, level, xoffset, yoffset, zoffset, width, height, depth, format,
+                                      type, data);
 }
 
 void glBindBuffersBase(GLenum target, GLuint first, GLsizei count, const GLuint *buffers)
@@ -6435,7 +6515,8 @@ void glBindBuffersBase(GLenum target, GLuint first, GLsizei count, const GLuint 
     ctx->dispatch.bind_buffers_base(ctx, target, first, count, buffers);
 }
 
-void glBindBuffersRange(GLenum target, GLuint first, GLsizei count, const GLuint *buffers, const GLintptr *offsets, const GLsizeiptr *sizes)
+void glBindBuffersRange(GLenum target, GLuint first, GLsizei count, const GLuint *buffers, const GLintptr *offsets,
+                        const GLsizeiptr *sizes)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -6463,7 +6544,8 @@ void glBindImageTextures(GLuint first, GLsizei count, const GLuint *textures)
     ctx->dispatch.bind_image_textures(ctx, first, count, textures);
 }
 
-void glBindVertexBuffers(GLuint first, GLsizei count, const GLuint *buffers, const GLintptr *offsets, const GLsizei *strides)
+void glBindVertexBuffers(GLuint first, GLsizei count, const GLuint *buffers, const GLintptr *offsets,
+                         const GLsizei *strides)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -6547,7 +6629,8 @@ void glNamedBufferSubData(GLuint buffer, GLintptr offset, GLsizeiptr size, const
     ctx->dispatch.named_buffer_sub_data(ctx, buffer, offset, size, data);
 }
 
-void glCopyNamedBufferSubData(GLuint readBuffer, GLuint writeBuffer, GLintptr readOffset, GLintptr writeOffset, GLsizeiptr size)
+void glCopyNamedBufferSubData(GLuint readBuffer, GLuint writeBuffer, GLintptr readOffset, GLintptr writeOffset,
+                              GLsizeiptr size)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -6561,7 +6644,8 @@ void glClearNamedBufferData(GLuint buffer, GLenum internalformat, GLenum format,
     ctx->dispatch.clear_named_buffer_data(ctx, buffer, internalformat, format, type, data);
 }
 
-void glClearNamedBufferSubData(GLuint buffer, GLenum internalformat, GLintptr offset, GLsizeiptr size, GLenum format, GLenum type, const void *data)
+void glClearNamedBufferSubData(GLuint buffer, GLenum internalformat, GLintptr offset, GLsizeiptr size, GLenum format,
+                               GLenum type, const void *data)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -6582,7 +6666,7 @@ void *glMapNamedBufferRange(GLuint buffer, GLintptr offset, GLsizeiptr length, G
     return ctx->dispatch.map_named_buffer_range(ctx, buffer, offset, length, access);
 }
 
-GLboolean  glUnmapNamedBuffer(GLuint buffer)
+GLboolean glUnmapNamedBuffer(GLuint buffer)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -6631,7 +6715,8 @@ void glCreateFramebuffers(GLsizei n, GLuint *framebuffers)
     ctx->dispatch.create_framebuffers(ctx, n, framebuffers);
 }
 
-void glNamedFramebufferRenderbuffer(GLuint framebuffer, GLenum attachment, GLenum renderbuffertarget, GLuint renderbuffer)
+void glNamedFramebufferRenderbuffer(GLuint framebuffer, GLenum attachment, GLenum renderbuffertarget,
+                                    GLuint renderbuffer)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -6687,11 +6772,13 @@ void glInvalidateNamedFramebufferData(GLuint framebuffer, GLsizei numAttachments
     ctx->dispatch.invalidate_named_framebuffer_data(ctx, framebuffer, numAttachments, attachments);
 }
 
-void glInvalidateNamedFramebufferSubData(GLuint framebuffer, GLsizei numAttachments, const GLenum *attachments, GLint x, GLint y, GLsizei width, GLsizei height)
+void glInvalidateNamedFramebufferSubData(GLuint framebuffer, GLsizei numAttachments, const GLenum *attachments, GLint x,
+                                         GLint y, GLsizei width, GLsizei height)
 {
     GLMContext ctx = GET_CONTEXT();
 
-    ctx->dispatch.invalidate_named_framebuffer_sub_data(ctx, framebuffer, numAttachments, attachments, x, y, width, height);
+    ctx->dispatch.invalidate_named_framebuffer_sub_data(ctx, framebuffer, numAttachments, attachments, x, y, width,
+                                                        height);
 }
 
 void glClearNamedFramebufferiv(GLuint framebuffer, GLenum buffer, GLint drawbuffer, const GLint *value)
@@ -6722,14 +6809,17 @@ void glClearNamedFramebufferfi(GLuint framebuffer, GLenum buffer, GLint drawbuff
     ctx->dispatch.clear_named_framebufferfi(ctx, framebuffer, buffer, drawbuffer, depth, stencil);
 }
 
-void glBlitNamedFramebuffer(GLuint readFramebuffer, GLuint drawFramebuffer, GLint srcX0, GLint srcY0, GLint srcX1, GLint srcY1, GLint dstX0, GLint dstY0, GLint dstX1, GLint dstY1, GLbitfield mask, GLenum filter)
+void glBlitNamedFramebuffer(GLuint readFramebuffer, GLuint drawFramebuffer, GLint srcX0, GLint srcY0, GLint srcX1,
+                            GLint srcY1, GLint dstX0, GLint dstY0, GLint dstX1, GLint dstY1, GLbitfield mask,
+                            GLenum filter)
 {
     GLMContext ctx = GET_CONTEXT();
 
-    ctx->dispatch.blit_named_framebuffer(ctx, readFramebuffer, drawFramebuffer, srcX0, srcY0, srcX1, srcY1, dstX0, dstY0, dstX1, dstY1, mask, filter);
+    ctx->dispatch.blit_named_framebuffer(ctx, readFramebuffer, drawFramebuffer, srcX0, srcY0, srcX1, srcY1, dstX0,
+                                         dstY0, dstX1, dstY1, mask, filter);
 }
 
-GLenum  glCheckNamedFramebufferStatus(GLuint framebuffer, GLenum target)
+GLenum glCheckNamedFramebufferStatus(GLuint framebuffer, GLenum target)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -6764,7 +6854,8 @@ void glNamedRenderbufferStorage(GLuint renderbuffer, GLenum internalformat, GLsi
     ctx->dispatch.named_renderbuffer_storage(ctx, renderbuffer, internalformat, width, height);
 }
 
-void glNamedRenderbufferStorageMultisample(GLuint renderbuffer, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height)
+void glNamedRenderbufferStorageMultisample(GLuint renderbuffer, GLsizei samples, GLenum internalformat, GLsizei width,
+                                           GLsizei height)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -6813,67 +6904,82 @@ void glTextureStorage2D(GLuint texture, GLsizei levels, GLenum internalformat, G
     ctx->dispatch.texture_storage2D(ctx, texture, levels, internalformat, width, height);
 }
 
-void glTextureStorage3D(GLuint texture, GLsizei levels, GLenum internalformat, GLsizei width, GLsizei height, GLsizei depth)
+void glTextureStorage3D(GLuint texture, GLsizei levels, GLenum internalformat, GLsizei width, GLsizei height,
+                        GLsizei depth)
 {
     GLMContext ctx = GET_CONTEXT();
 
     ctx->dispatch.texture_storage3D(ctx, texture, levels, internalformat, width, height, depth);
 }
 
-void glTextureStorage2DMultisample(GLuint texture, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height, GLboolean fixedsamplelocations)
+void glTextureStorage2DMultisample(GLuint texture, GLsizei samples, GLenum internalformat, GLsizei width,
+                                   GLsizei height, GLboolean fixedsamplelocations)
 {
     GLMContext ctx = GET_CONTEXT();
 
-    ctx->dispatch.texture_storage2_d_multisample(ctx, texture, samples, internalformat, width, height, fixedsamplelocations);
+    ctx->dispatch.texture_storage2_d_multisample(ctx, texture, samples, internalformat, width, height,
+                                                 fixedsamplelocations);
 }
 
-void glTextureStorage3DMultisample(GLuint texture, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height, GLsizei depth, GLboolean fixedsamplelocations)
+void glTextureStorage3DMultisample(GLuint texture, GLsizei samples, GLenum internalformat, GLsizei width,
+                                   GLsizei height, GLsizei depth, GLboolean fixedsamplelocations)
 {
     GLMContext ctx = GET_CONTEXT();
 
-    ctx->dispatch.texture_storage3_d_multisample(ctx, texture, samples, internalformat, width, height, depth, fixedsamplelocations);
+    ctx->dispatch.texture_storage3_d_multisample(ctx, texture, samples, internalformat, width, height, depth,
+                                                 fixedsamplelocations);
 }
 
-void glTextureSubImage1D(GLuint texture, GLint level, GLint xoffset, GLsizei width, GLenum format, GLenum type, const void *pixels)
+void glTextureSubImage1D(GLuint texture, GLint level, GLint xoffset, GLsizei width, GLenum format, GLenum type,
+                         const void *pixels)
 {
     GLMContext ctx = GET_CONTEXT();
 
     ctx->dispatch.texture_sub_image1D(ctx, texture, level, xoffset, width, format, type, pixels);
 }
 
-void glTextureSubImage2D(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, GLenum format, GLenum type, const void *pixels)
+void glTextureSubImage2D(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height,
+                         GLenum format, GLenum type, const void *pixels)
 {
     GLMContext ctx = GET_CONTEXT();
 
     ctx->dispatch.texture_sub_image2D(ctx, texture, level, xoffset, yoffset, width, height, format, type, pixels);
 }
 
-void glTextureSubImage3D(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLenum type, const void *pixels)
+void glTextureSubImage3D(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width,
+                         GLsizei height, GLsizei depth, GLenum format, GLenum type, const void *pixels)
 {
     GLMContext ctx = GET_CONTEXT();
 
-    ctx->dispatch.texture_sub_image3D(ctx, texture, level, xoffset, yoffset, zoffset, width, height, depth, format, type, pixels);
+    ctx->dispatch.texture_sub_image3D(ctx, texture, level, xoffset, yoffset, zoffset, width, height, depth, format,
+                                      type, pixels);
 }
 
-void glCompressedTextureSubImage1D(GLuint texture, GLint level, GLint xoffset, GLsizei width, GLenum format, GLsizei imageSize, const void *data)
+void glCompressedTextureSubImage1D(GLuint texture, GLint level, GLint xoffset, GLsizei width, GLenum format,
+                                   GLsizei imageSize, const void *data)
 {
     GLMContext ctx = GET_CONTEXT();
 
     ctx->dispatch.compressed_texture_sub_image1D(ctx, texture, level, xoffset, width, format, imageSize, data);
 }
 
-void glCompressedTextureSubImage2D(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, GLenum format, GLsizei imageSize, const void *data)
+void glCompressedTextureSubImage2D(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLsizei width,
+                                   GLsizei height, GLenum format, GLsizei imageSize, const void *data)
 {
     GLMContext ctx = GET_CONTEXT();
 
-    ctx->dispatch.compressed_texture_sub_image2D(ctx, texture, level, xoffset, yoffset, width, height, format, imageSize, data);
+    ctx->dispatch.compressed_texture_sub_image2D(ctx, texture, level, xoffset, yoffset, width, height, format,
+                                                 imageSize, data);
 }
 
-void glCompressedTextureSubImage3D(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLsizei imageSize, const void *data)
+void glCompressedTextureSubImage3D(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint zoffset,
+                                   GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLsizei imageSize,
+                                   const void *data)
 {
     GLMContext ctx = GET_CONTEXT();
 
-    ctx->dispatch.compressed_texture_sub_image3D(ctx, texture, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, data);
+    ctx->dispatch.compressed_texture_sub_image3D(ctx, texture, level, xoffset, yoffset, zoffset, width, height, depth,
+                                                 format, imageSize, data);
 }
 
 void glCopyTextureSubImage1D(GLuint texture, GLint level, GLint xoffset, GLint x, GLint y, GLsizei width)
@@ -6883,14 +6989,16 @@ void glCopyTextureSubImage1D(GLuint texture, GLint level, GLint xoffset, GLint x
     ctx->dispatch.copy_texture_sub_image1D(ctx, texture, level, xoffset, x, y, width);
 }
 
-void glCopyTextureSubImage2D(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint x, GLint y, GLsizei width, GLsizei height)
+void glCopyTextureSubImage2D(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint x, GLint y, GLsizei width,
+                             GLsizei height)
 {
     GLMContext ctx = GET_CONTEXT();
 
     ctx->dispatch.copy_texture_sub_image2D(ctx, texture, level, xoffset, yoffset, x, y, width, height);
 }
 
-void glCopyTextureSubImage3D(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLint x, GLint y, GLsizei width, GLsizei height)
+void glCopyTextureSubImage3D(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLint x, GLint y,
+                             GLsizei width, GLsizei height)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -7044,7 +7152,8 @@ void glVertexArrayVertexBuffer(GLuint vaobj, GLuint bindingindex, GLuint buffer,
     ctx->dispatch.vertex_array_vertex_buffer(ctx, vaobj, bindingindex, buffer, offset, stride);
 }
 
-void glVertexArrayVertexBuffers(GLuint vaobj, GLuint first, GLsizei count, const GLuint *buffers, const GLintptr *offsets, const GLsizei *strides)
+void glVertexArrayVertexBuffers(GLuint vaobj, GLuint first, GLsizei count, const GLuint *buffers,
+                                const GLintptr *offsets, const GLsizei *strides)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -7058,7 +7167,8 @@ void glVertexArrayAttribBinding(GLuint vaobj, GLuint attribindex, GLuint binding
     ctx->dispatch.vertex_array_attrib_binding(ctx, vaobj, attribindex, bindingindex);
 }
 
-void glVertexArrayAttribFormat(GLuint vaobj, GLuint attribindex, GLint size, GLenum type, GLboolean normalized, GLuint relativeoffset)
+void glVertexArrayAttribFormat(GLuint vaobj, GLuint attribindex, GLint size, GLenum type, GLboolean normalized,
+                               GLuint relativeoffset)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -7163,21 +7273,25 @@ void glMemoryBarrierByRegion(GLbitfield barriers)
     ctx->dispatch.memory_barrier_by_region(ctx, barriers);
 }
 
-void glGetTextureSubImage(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLenum type, GLsizei bufSize, void *pixels)
+void glGetTextureSubImage(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width,
+                          GLsizei height, GLsizei depth, GLenum format, GLenum type, GLsizei bufSize, void *pixels)
 {
     GLMContext ctx = GET_CONTEXT();
 
-    ctx->dispatch.get_texture_sub_image(ctx, texture, level, xoffset, yoffset, zoffset, width, height, depth, format, type, bufSize, pixels);
+    ctx->dispatch.get_texture_sub_image(ctx, texture, level, xoffset, yoffset, zoffset, width, height, depth, format,
+                                        type, bufSize, pixels);
 }
 
-void glGetCompressedTextureSubImage(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLsizei bufSize, void *pixels)
+void glGetCompressedTextureSubImage(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLint zoffset,
+                                    GLsizei width, GLsizei height, GLsizei depth, GLsizei bufSize, void *pixels)
 {
     GLMContext ctx = GET_CONTEXT();
 
-    ctx->dispatch.get_compressed_texture_sub_image(ctx, texture, level, xoffset, yoffset, zoffset, width, height, depth, bufSize, pixels);
+    ctx->dispatch.get_compressed_texture_sub_image(ctx, texture, level, xoffset, yoffset, zoffset, width, height, depth,
+                                                   bufSize, pixels);
 }
 
-GLenum  glGetGraphicsResetStatus()
+GLenum glGetGraphicsResetStatus()
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -7226,7 +7340,8 @@ void glGetnUniformuiv(GLuint program, GLint location, GLsizei bufSize, GLuint *p
     ctx->dispatch.getn_uniformuiv(ctx, program, location, bufSize, params);
 }
 
-void glReadnPixels(GLint x, GLint y, GLsizei width, GLsizei height, GLenum format, GLenum type, GLsizei bufSize, void *data)
+void glReadnPixels(GLint x, GLint y, GLsizei width, GLsizei height, GLenum format, GLenum type, GLsizei bufSize,
+                   void *data)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -7296,7 +7411,8 @@ void glGetnConvolutionFilter(GLenum target, GLenum format, GLenum type, GLsizei 
     ctx->dispatch.getn_convolution_filter(ctx, target, format, type, bufSize, image);
 }
 
-void glGetnSeparableFilter(GLenum target, GLenum format, GLenum type, GLsizei rowBufSize, void *row, GLsizei columnBufSize, void *column, void *span)
+void glGetnSeparableFilter(GLenum target, GLenum format, GLenum type, GLsizei rowBufSize, void *row,
+                           GLsizei columnBufSize, void *column, void *span)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -7324,21 +7440,25 @@ void glTextureBarrier()
     ctx->dispatch.texture_barrier(ctx);
 }
 
-void glSpecializeShader(GLuint shader, const GLchar *pEntryPoint, GLuint numSpecializationConstants, const GLuint *pConstantIndex, const GLuint *pConstantValue)
+void glSpecializeShader(GLuint shader, const GLchar *pEntryPoint, GLuint numSpecializationConstants,
+                        const GLuint *pConstantIndex, const GLuint *pConstantValue)
 {
     GLMContext ctx = GET_CONTEXT();
 
-    ctx->dispatch.specialize_shader(ctx, shader, pEntryPoint, numSpecializationConstants, pConstantIndex, pConstantValue);
+    ctx->dispatch.specialize_shader(ctx, shader, pEntryPoint, numSpecializationConstants, pConstantIndex,
+                                    pConstantValue);
 }
 
-void glMultiDrawArraysIndirectCount(GLenum mode, const void *indirect, GLintptr drawcount, GLsizei maxdrawcount, GLsizei stride)
+void glMultiDrawArraysIndirectCount(GLenum mode, const void *indirect, GLintptr drawcount, GLsizei maxdrawcount,
+                                    GLsizei stride)
 {
     GLMContext ctx = GET_CONTEXT();
 
     ctx->dispatch.multi_draw_arrays_indirect_count(ctx, mode, indirect, drawcount, maxdrawcount, stride);
 }
 
-void glMultiDrawElementsIndirectCount(GLenum mode, GLenum type, const void *indirect, GLintptr drawcount, GLsizei maxdrawcount, GLsizei stride)
+void glMultiDrawElementsIndirectCount(GLenum mode, GLenum type, const void *indirect, GLintptr drawcount,
+                                      GLsizei maxdrawcount, GLsizei stride)
 {
     GLMContext ctx = GET_CONTEXT();
 
@@ -7351,4 +7471,3 @@ void glPolygonOffsetClamp(GLfloat factor, GLfloat units, GLfloat clamp)
 
     ctx->dispatch.polygon_offset_clamp(ctx, factor, units, clamp);
 }
-

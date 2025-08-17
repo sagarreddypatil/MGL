@@ -8,7 +8,7 @@
 #ifndef buffers_h
 #define buffers_h
 
-#if defined (__i386__) || defined (__x86_64__)
+#if defined(__i386__) || defined(__x86_64__)
 #include <mach/i386/kern_return.h>
 #else
 #include <mach/arm/kern_return.h>

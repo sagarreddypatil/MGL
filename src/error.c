@@ -24,8 +24,7 @@
 
 #include "error.h"
 
-
-GLenum  mglGetError(GLMContext ctx)
+GLenum mglGetError(GLMContext ctx)
 {
     GLenum err;
 
@@ -35,7 +34,6 @@ GLenum  mglGetError(GLMContext ctx)
 
     return err;
 }
-
 
 void error_func(GLMContext ctx, const char *func, GLenum error)
 {

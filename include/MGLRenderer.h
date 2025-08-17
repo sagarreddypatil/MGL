@@ -32,11 +32,10 @@ typedef struct GLMContextRec_t *GLMContext;
 
 @interface MGLRenderer : NSObject
 {
-
 }
 
-- (id) initMGLRendererFromContext: (void *)glm_ctx andBindToWindow: (NSWindow *)window;
-- (id) createMGLRendererFromContext: (void *)glm_ctx andBindToWindow: (NSWindow *)window;
+- (id)initMGLRendererFromContext:(void *)glm_ctx andBindToWindow:(NSWindow *)window;
+- (id)createMGLRendererFromContext:(void *)glm_ctx andBindToWindow:(NSWindow *)window;
 
 @end
 
@@ -44,10 +43,11 @@ MTLPixelFormat mtlPixelFormatForGLFormatType(GLenum gl_format, GLenum gl_type);
 #else
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
-GLenum mtlPixelFormatForGLFormatType(GLenum gl_format, GLenum gl_type);
+    GLenum mtlPixelFormatForGLFormatType(GLenum gl_format, GLenum gl_type);
 
 #ifdef __cplusplus
 }
@@ -56,12 +56,12 @@ GLenum mtlPixelFormatForGLFormatType(GLenum gl_format, GLenum gl_type);
 #endif // #ifdef __OBJC__
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
-void* CppCreateMGLRendererFromContextAndBindToWindow (void *glm_ctx, void *window);
+    void *CppCreateMGLRendererFromContextAndBindToWindow(void *glm_ctx, void *window);
 #ifdef __cplusplus
 }
 #endif
-
 
 #endif /* MGLRenderer_h */

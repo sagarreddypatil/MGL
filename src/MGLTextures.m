@@ -541,4 +541,3 @@ MTLPixelFormat mtlPixelFormatForGLTex(Texture * tex)
 }
 
 #endif
-

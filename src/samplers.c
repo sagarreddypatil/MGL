@@ -29,7 +29,6 @@ bool setTexParmf(GLMContext ctx, TextureParameter *tex_params, GLenum pname, con
 bool setTexParamsf(GLMContext ctx, TextureParameter *tex_params, GLenum pname, const GLfloat *params);
 bool setParam(GLMContext ctx, TextureParameter *tex_params, GLenum pname, GLint iparam, GLfloat fparam);
 
-
 bool getParam(GLMContext ctx, TextureParameter *tex_params, GLenum pname, GLint *iparam, GLfloat *fparam);
 
 Sampler *newSampler(GLMContext ctx, GLuint sampler)
@@ -43,7 +42,7 @@ Sampler *newSampler(GLMContext ctx, GLuint sampler)
 
     ptr->name = sampler;
 
-    float black_color[] = {0,0,0,0};
+    float black_color[] = {0, 0, 0, 0};
 
     ptr->params.depth_stencil_mode = GL_DEPTH_COMPONENT;
     ptr->params.base_level = 0;
@@ -112,7 +111,7 @@ GLboolean mglIsSampler(GLMContext ctx, GLuint sampler)
 
 void mglGenSamplers(GLMContext ctx, GLsizei count, GLuint *samplers)
 {
-    while(count--)
+    while (count--)
     {
         *samplers++ = getNewName(&ctx->state.sampler_table);
     }
@@ -135,7 +134,7 @@ void mglBindSampler(GLMContext ctx, GLuint unit, GLuint sampler)
 
         ptr = findSampler(ctx, sampler);
 
-        if(ptr == NULL)
+        if (ptr == NULL)
         {
             ptr = getSampler(ctx, sampler);
             assert(ptr);
@@ -145,14 +144,14 @@ void mglBindSampler(GLMContext ctx, GLuint unit, GLuint sampler)
     {
         ptr = NULL;
     }
-    
+
     ctx->state.texture_samplers[unit] = ptr;
-    ctx->state.dirty_bits  |= DIRTY_SAMPLER;
+    ctx->state.dirty_bits |= DIRTY_SAMPLER;
 }
 
 void mglDeleteSamplers(GLMContext ctx, GLsizei count, const GLuint *samplers)
 {
-    while(count--)
+    while (count--)
     {
         GLuint sampler;
 
@@ -166,7 +165,7 @@ void mglDeleteSamplers(GLMContext ctx, GLsizei count, const GLuint *samplers)
             assert(ptr);
 
             // remove any references to this sampler
-            for(int i=0; i<TEXTURE_UNITS; i++)
+            for (int i = 0; i < TEXTURE_UNITS; i++)
             {
                 if (ctx->state.texture_samplers[i] == ptr)
                 {
@@ -190,7 +189,7 @@ void mglCreateSamplers(GLMContext ctx, GLsizei n, GLuint *samplers)
 {
     mglGenSamplers(ctx, n, samplers);
 
-    while(n--)
+    while (n--)
     {
         GLuint name;
 
@@ -202,7 +201,7 @@ void mglCreateSamplers(GLMContext ctx, GLsizei n, GLuint *samplers)
 
 void mglBindSamplers(GLMContext ctx, GLuint first, GLsizei count, const GLuint *samplers)
 {
-    while(count--)
+    while (count--)
     {
         mglBindSampler(ctx, first, *samplers++);
         first++;
@@ -373,7 +372,7 @@ void mglGetSamplerParameterfv(GLMContext ctx, GLuint sampler, GLenum pname, GLfl
     GLint iparam;
     iparam = 0;
 
-    if(getParam(ctx, &ptr->params, pname, &iparam, params))
+    if (getParam(ctx, &ptr->params, pname, &iparam, params))
     {
         if (iparam)
         {
@@ -393,7 +392,7 @@ void mglGetSamplerParameteriv(GLMContext ctx, GLuint sampler, GLenum pname, GLin
     GLfloat fparam;
     fparam = 0.0;
 
-    if(getParam(ctx, &ptr->params, pname, params, &fparam))
+    if (getParam(ctx, &ptr->params, pname, params, &fparam))
     {
         if (fparam)
         {

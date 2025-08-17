@@ -24,25 +24,24 @@
 #include "glcorearb.h"
 
 #ifndef MAX
-#define MAX(_A_, _B_)   (_A_ > _B_ ? _A_ : _B_)
+#define MAX(_A_, _B_) (_A_ > _B_ ? _A_ : _B_)
 #endif
 
 #ifndef MIN
-#define MIN(_A_, _B_)    (_A_ < _B_) ? _A_ : _B_
+#define MIN(_A_, _B_) (_A_ < _B_) ? _A_ : _B_
 #endif
-
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
-GLuint ilog2(GLuint val);
+    GLuint ilog2(GLuint val);
 
-GLfloat clamp(GLfloat a, GLfloat min, GLfloat max);
+    GLfloat clamp(GLfloat a, GLfloat min, GLfloat max);
 
-GLuint maxLevels(GLuint width, GLuint height, GLuint depth);
-GLboolean checkMaxLevels(GLuint levels, GLuint width, GLuint height, GLuint depth);
-
+    GLuint maxLevels(GLuint width, GLuint height, GLuint depth);
+    GLboolean checkMaxLevels(GLuint levels, GLuint width, GLuint height, GLuint depth);
 
 #ifdef __cplusplus
 }

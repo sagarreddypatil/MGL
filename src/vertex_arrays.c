@@ -26,36 +26,36 @@ Buffer *findBuffer(GLMContext ctx, GLuint buffer);
 
 GLsizei typeSize(GLenum type)
 {
-    switch(type)
+    switch (type)
     {
-        case GL_BYTE:
-        case GL_UNSIGNED_BYTE:
-            return sizeof(char);
+    case GL_BYTE:
+    case GL_UNSIGNED_BYTE:
+        return sizeof(char);
 
-        case GL_SHORT:
-        case GL_UNSIGNED_SHORT:
-            return sizeof(short);
+    case GL_SHORT:
+    case GL_UNSIGNED_SHORT:
+        return sizeof(short);
 
-        case GL_INT:
-        case GL_UNSIGNED_INT:
-            return sizeof(int);
+    case GL_INT:
+    case GL_UNSIGNED_INT:
+        return sizeof(int);
 
-        case GL_FLOAT:
-            return sizeof(float);
+    case GL_FLOAT:
+        return sizeof(float);
 
-        case GL_DOUBLE:
-            return sizeof(float);
+    case GL_DOUBLE:
+        return sizeof(float);
 
-        case GL_HALF_FLOAT:
-            return sizeof(float) >> 1;
+    case GL_HALF_FLOAT:
+        return sizeof(float) >> 1;
 
-        case GL_INT_2_10_10_10_REV:
-        case GL_UNSIGNED_INT_2_10_10_10_REV:
-        case GL_UNSIGNED_INT_10F_11F_11F_REV:
-            return sizeof(int);
+    case GL_INT_2_10_10_10_REV:
+    case GL_UNSIGNED_INT_2_10_10_10_REV:
+    case GL_UNSIGNED_INT_10F_11F_11F_REV:
+        return sizeof(int);
 
-        default:
-            return 0;
+    default:
+        return 0;
     }
 
     return 0;
@@ -65,7 +65,6 @@ GLsizei genStrideFromTypeSize(GLenum type, GLint size)
 {
     return typeSize(type) * size;
 }
-
 
 VertexArray *newVAO(GLMContext ctx, GLuint vao)
 {
@@ -78,7 +77,7 @@ VertexArray *newVAO(GLMContext ctx, GLuint vao)
 
     ptr->name = vao;
 
-    for(int i=0; i<MAX_ATTRIBS; i++)
+    for (int i = 0; i < MAX_ATTRIBS; i++)
     {
         ptr->attrib[i].size = 4;
         ptr->attrib[i].type = GL_FLOAT;
@@ -121,7 +120,7 @@ int isVAO(GLMContext ctx, GLuint vao)
 
 void mglGenVertexArrays(GLMContext ctx, GLsizei n, GLuint *arrays)
 {
-    while(n--)
+    while (n--)
     {
         *arrays++ = getNewName(&STATE(vao_table));
     }
@@ -137,7 +136,7 @@ void mglBindVertexArray(GLMContext ctx, GLuint array)
     }
     else
     {
-        //ERROR_CHECK_RETURN(isVAO(ctx, array), GL_INVALID_VALUE);
+        // ERROR_CHECK_RETURN(isVAO(ctx, array), GL_INVALID_VALUE);
 
         ptr = getVAO(ctx, array);
 
@@ -155,7 +154,7 @@ void mglDeleteVertexArrays(GLMContext ctx, GLsizei n, const GLuint *arrays)
 {
     GLuint vao;
 
-    while(n--)
+    while (n--)
     {
         vao = *arrays++;
 
@@ -181,7 +180,6 @@ void mglDeleteVertexArrays(GLMContext ctx, GLsizei n, const GLuint *arrays)
     }
 }
 
-
 GLboolean mglIsVertexArray(GLMContext ctx, GLuint array)
 {
     return isVAO(ctx, array);
@@ -197,59 +195,59 @@ void mglGetVertexAttribdv(GLMContext ctx, GLuint index, GLenum pname, GLdouble *
 
     buf = ctx->state.vao->attrib[index].buffer;
 
-    switch(pname)
+    switch (pname)
     {
-        case GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING:
-            if (buf)
-            {
-                *params = buf->name;
-            }
-            else
-            {
-                *params = 0;
-            }
-            break;
-
-        case GL_VERTEX_ATTRIB_ARRAY_ENABLED:
-            if (vao->enabled_attribs & (0x1 << index))
-            {
-                *params = GL_TRUE;
-            }
-            else
-            {
-                *params = GL_FALSE;
-            }
-            break;
-
-        case GL_VERTEX_ATTRIB_ARRAY_SIZE:
-            *params = vao->attrib[index].size;
-            break;
-
-        case GL_VERTEX_ATTRIB_ARRAY_STRIDE:
-            *params = vao->attrib[index].stride;
-            break;
-
-        case GL_VERTEX_ATTRIB_ARRAY_TYPE:
-            *params = vao->attrib[index].type;
-            break;
-
-        case GL_VERTEX_ATTRIB_ARRAY_NORMALIZED:
-            *params = vao->attrib[index].normalized;
-            break;
-
-        case GL_VERTEX_ATTRIB_ARRAY_INTEGER:
-        case GL_VERTEX_ATTRIB_ARRAY_DIVISOR:
-            ERROR_RETURN(GL_INVALID_ENUM); // unsupported for now
+    case GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING:
+        if (buf)
+        {
+            *params = buf->name;
+        }
+        else
+        {
             *params = 0;
-            break;
+        }
+        break;
 
-        case GL_CURRENT_VERTEX_ATTRIB:
-            ERROR_RETURN(GL_INVALID_ENUM); // unsupported for now, probably never
-            *params = 0;
-            break;
+    case GL_VERTEX_ATTRIB_ARRAY_ENABLED:
+        if (vao->enabled_attribs & (0x1 << index))
+        {
+            *params = GL_TRUE;
+        }
+        else
+        {
+            *params = GL_FALSE;
+        }
+        break;
 
-        default:
-            ERROR_RETURN(GL_INVALID_ENUM);
+    case GL_VERTEX_ATTRIB_ARRAY_SIZE:
+        *params = vao->attrib[index].size;
+        break;
+
+    case GL_VERTEX_ATTRIB_ARRAY_STRIDE:
+        *params = vao->attrib[index].stride;
+        break;
+
+    case GL_VERTEX_ATTRIB_ARRAY_TYPE:
+        *params = vao->attrib[index].type;
+        break;
+
+    case GL_VERTEX_ATTRIB_ARRAY_NORMALIZED:
+        *params = vao->attrib[index].normalized;
+        break;
+
+    case GL_VERTEX_ATTRIB_ARRAY_INTEGER:
+    case GL_VERTEX_ATTRIB_ARRAY_DIVISOR:
+        ERROR_RETURN(GL_INVALID_ENUM); // unsupported for now
+        *params = 0;
+        break;
+
+    case GL_CURRENT_VERTEX_ATTRIB:
+        ERROR_RETURN(GL_INVALID_ENUM); // unsupported for now, probably never
+        *params = 0;
+        break;
+
+    default:
+        ERROR_RETURN(GL_INVALID_ENUM);
     }
 }
 
@@ -271,7 +269,7 @@ void mglGetVertexAttribiv(GLMContext ctx, GLuint index, GLenum pname, GLint *par
 
     if (pname == GL_CURRENT_VERTEX_ATTRIB)
     {
-        for(int i=0; i<4; i++)
+        for (int i = 0; i < 4; i++)
             params[i] = (GLint)dparams[i];
     }
     else
@@ -298,7 +296,7 @@ void mglGetVertexAttribfv(GLMContext ctx, GLuint index, GLenum pname, GLfloat *p
 
     if (pname == GL_CURRENT_VERTEX_ATTRIB)
     {
-        for(int i=0; i<4; i++)
+        for (int i = 0; i < 4; i++)
             params[i] = (GLfloat)dparams[i];
     }
     else
@@ -307,7 +305,8 @@ void mglGetVertexAttribfv(GLMContext ctx, GLuint index, GLenum pname, GLfloat *p
     }
 }
 
-void setVertexAttrib(GLMContext ctx, GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const void *pointer)
+void setVertexAttrib(GLMContext ctx, GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride,
+                     const void *pointer)
 {
 
     if (stride == 0)
@@ -328,7 +327,8 @@ void setVertexAttrib(GLMContext ctx, GLuint index, GLint size, GLenum type, GLbo
     VAO_STATE(dirty_bits) |= DIRTY_VAO;
 }
 
-void mglVertexAttribPointer(GLMContext ctx, GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const void *pointer)
+void mglVertexAttribPointer(GLMContext ctx, GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride,
+                            const void *pointer)
 {
     ERROR_CHECK_RETURN(index < MAX_ATTRIBS, GL_INVALID_VALUE);
 
@@ -336,7 +336,8 @@ void mglVertexAttribPointer(GLMContext ctx, GLuint index, GLint size, GLenum typ
 
     ERROR_CHECK_RETURN(stride >= 0, GL_INVALID_VALUE);
 
-    // GL_INVALID_OPERATION is generated if zero is bound to the GL_ARRAY_BUFFER buffer object binding point and the pointer argument is not NULL.
+    // GL_INVALID_OPERATION is generated if zero is bound to the GL_ARRAY_BUFFER buffer object binding point and the
+    // pointer argument is not NULL.
 
     if (pointer != NULL)
     {
@@ -347,25 +348,25 @@ void mglVertexAttribPointer(GLMContext ctx, GLuint index, GLint size, GLenum typ
         ERROR_CHECK_RETURN(ptr, GL_INVALID_OPERATION);
     }
 
-    switch(type)
+    switch (type)
     {
-        case GL_BYTE:
-        case GL_UNSIGNED_BYTE:
-        case GL_SHORT:
-        case GL_UNSIGNED_SHORT:
-        case GL_INT:
-        case GL_UNSIGNED_INT:
-        case GL_HALF_FLOAT:
-        case GL_FLOAT:
-        case GL_DOUBLE:
-        case GL_FIXED:
-        case GL_INT_2_10_10_10_REV:
-        case GL_UNSIGNED_INT_2_10_10_10_REV:
-        case GL_UNSIGNED_INT_10F_11F_11F_REV:
-            break;
+    case GL_BYTE:
+    case GL_UNSIGNED_BYTE:
+    case GL_SHORT:
+    case GL_UNSIGNED_SHORT:
+    case GL_INT:
+    case GL_UNSIGNED_INT:
+    case GL_HALF_FLOAT:
+    case GL_FLOAT:
+    case GL_DOUBLE:
+    case GL_FIXED:
+    case GL_INT_2_10_10_10_REV:
+    case GL_UNSIGNED_INT_2_10_10_10_REV:
+    case GL_UNSIGNED_INT_10F_11F_11F_REV:
+        break;
 
-        default:
-            ERROR_RETURN(GL_INVALID_ENUM);
+    default:
+        ERROR_RETURN(GL_INVALID_ENUM);
     }
 
     setVertexAttrib(ctx, index, size, type, normalized, stride, pointer);
@@ -379,7 +380,8 @@ void mglVertexAttribIPointer(GLMContext ctx, GLuint index, GLint size, GLenum ty
 
     ERROR_CHECK_RETURN(stride >= 0, GL_INVALID_VALUE);
 
-    // GL_INVALID_OPERATION is generated if zero is bound to the GL_ARRAY_BUFFER buffer object binding point and the pointer argument is not NULL.
+    // GL_INVALID_OPERATION is generated if zero is bound to the GL_ARRAY_BUFFER buffer object binding point and the
+    // pointer argument is not NULL.
 
     if (pointer != NULL)
     {
@@ -390,30 +392,29 @@ void mglVertexAttribIPointer(GLMContext ctx, GLuint index, GLint size, GLenum ty
         ERROR_CHECK_RETURN(ptr, GL_INVALID_OPERATION);
     }
 
-    switch(type)
+    switch (type)
     {
-        case GL_BYTE:
-        case GL_UNSIGNED_BYTE:
-        case GL_SHORT:
-        case GL_UNSIGNED_SHORT:
-        case GL_INT:
-        case GL_UNSIGNED_INT:
-        case GL_HALF_FLOAT:
-        case GL_FLOAT:
-        case GL_DOUBLE:
-        case GL_FIXED:
-        case GL_INT_2_10_10_10_REV:
-        case GL_UNSIGNED_INT_2_10_10_10_REV:
-        case GL_UNSIGNED_INT_10F_11F_11F_REV:
-            break;
+    case GL_BYTE:
+    case GL_UNSIGNED_BYTE:
+    case GL_SHORT:
+    case GL_UNSIGNED_SHORT:
+    case GL_INT:
+    case GL_UNSIGNED_INT:
+    case GL_HALF_FLOAT:
+    case GL_FLOAT:
+    case GL_DOUBLE:
+    case GL_FIXED:
+    case GL_INT_2_10_10_10_REV:
+    case GL_UNSIGNED_INT_2_10_10_10_REV:
+    case GL_UNSIGNED_INT_10F_11F_11F_REV:
+        break;
 
-        default:
-            ERROR_RETURN(GL_INVALID_ENUM);
+    default:
+        ERROR_RETURN(GL_INVALID_ENUM);
     }
 
     setVertexAttrib(ctx, index, size, type, 0, stride, pointer);
 }
-
 
 void mglVertexAttribLPointer(GLMContext ctx, GLuint index, GLint size, GLenum type, GLsizei stride, const void *pointer)
 {
@@ -423,7 +424,8 @@ void mglVertexAttribLPointer(GLMContext ctx, GLuint index, GLint size, GLenum ty
 
     ERROR_CHECK_RETURN(stride >= 0, GL_INVALID_VALUE);
 
-    // GL_INVALID_OPERATION is generated if zero is bound to the GL_ARRAY_BUFFER buffer object binding point and the pointer argument is not NULL.
+    // GL_INVALID_OPERATION is generated if zero is bound to the GL_ARRAY_BUFFER buffer object binding point and the
+    // pointer argument is not NULL.
 
     if (pointer != NULL)
     {
@@ -434,13 +436,13 @@ void mglVertexAttribLPointer(GLMContext ctx, GLuint index, GLint size, GLenum ty
         ERROR_CHECK_RETURN(ptr, GL_INVALID_OPERATION);
     }
 
-    switch(type)
+    switch (type)
     {
-        case GL_DOUBLE:
-            break;
+    case GL_DOUBLE:
+        break;
 
-        default:
-            ERROR_RETURN(GL_INVALID_ENUM);
+    default:
+        ERROR_RETURN(GL_INVALID_ENUM);
     }
 
     setVertexAttrib(ctx, index, size, type, 0, stride, pointer);
@@ -452,15 +454,15 @@ void mglGetVertexAttribPointerv(GLMContext ctx, GLuint index, GLenum pname, void
 
     ERROR_CHECK_RETURN(VAO(), GL_INVALID_OPERATION);
 
-    switch(pname)
+    switch (pname)
     {
-        case GL_VERTEX_ATTRIB_ARRAY_POINTER:
-            *pointer = (void **)VAO_ATTRIB_STATE(index).relativeoffset;
-            break;
+    case GL_VERTEX_ATTRIB_ARRAY_POINTER:
+        *pointer = (void **)VAO_ATTRIB_STATE(index).relativeoffset;
+        break;
 
-        default:
-            ERROR_RETURN(GL_INVALID_ENUM);
-            break;
+    default:
+        ERROR_RETURN(GL_INVALID_ENUM);
+        break;
     }
 }
 
@@ -536,7 +538,7 @@ void mglCreateVertexArrays(GLMContext ctx, GLsizei n, GLuint *arrays)
 
     mglGenVertexArrays(ctx, n, arrays);
 
-    for(int i=0; i<n; i++)
+    for (int i = 0; i < n; i++)
     {
         VertexArray *ptr;
 
@@ -607,29 +609,30 @@ void mglVertexArrayAttribBinding(GLMContext ctx, GLuint vaobj, GLuint attribinde
     setVertexBindingIndex(ctx, ptr, attribindex, bindingindex);
 }
 
-void setAttribFormat(GLMContext ctx, VertexArray *vao, GLuint attribindex, GLint size, GLenum type, GLboolean normalized, GLuint relativeoffset)
+void setAttribFormat(GLMContext ctx, VertexArray *vao, GLuint attribindex, GLint size, GLenum type,
+                     GLboolean normalized, GLuint relativeoffset)
 {
     ERROR_CHECK_RETURN(attribindex < MAX_ATTRIBS, GL_INVALID_VALUE);
 
-    switch(type)
+    switch (type)
     {
-        case GL_INT_2_10_10_10_REV:
-        case GL_UNSIGNED_INT_2_10_10_10_REV:
-        case GL_UNSIGNED_INT_10F_11F_11F_REV:
-            ERROR_CHECK_RETURN(size == 1, GL_INVALID_VALUE);
-            break;
+    case GL_INT_2_10_10_10_REV:
+    case GL_UNSIGNED_INT_2_10_10_10_REV:
+    case GL_UNSIGNED_INT_10F_11F_11F_REV:
+        ERROR_CHECK_RETURN(size == 1, GL_INVALID_VALUE);
+        break;
 
-        case GL_BYTE:
-        case GL_SHORT:
-        case GL_INT:
-        case GL_FIXED:
-        case GL_FLOAT:
-        case GL_HALF_FLOAT:
-            ERROR_CHECK_RETURN((size >= 1 && size <=4), GL_INVALID_VALUE);
-            break;
+    case GL_BYTE:
+    case GL_SHORT:
+    case GL_INT:
+    case GL_FIXED:
+    case GL_FLOAT:
+    case GL_HALF_FLOAT:
+        ERROR_CHECK_RETURN((size >= 1 && size <= 4), GL_INVALID_VALUE);
+        break;
 
-        default:
-            ERROR_RETURN(GL_INVALID_ENUM);
+    default:
+        ERROR_RETURN(GL_INVALID_ENUM);
     }
 
     vao->attrib[attribindex].size = size;
@@ -640,7 +643,8 @@ void setAttribFormat(GLMContext ctx, VertexArray *vao, GLuint attribindex, GLint
     vao->dirty_bits |= DIRTY_VAO_ATTRIB;
 }
 
-void mglVertexAttribFormat(GLMContext ctx, GLuint attribindex, GLint size, GLenum type, GLboolean normalized, GLuint relativeoffset)
+void mglVertexAttribFormat(GLMContext ctx, GLuint attribindex, GLint size, GLenum type, GLboolean normalized,
+                           GLuint relativeoffset)
 {
     VertexArray *ptr;
 
@@ -651,7 +655,8 @@ void mglVertexAttribFormat(GLMContext ctx, GLuint attribindex, GLint size, GLenu
     setAttribFormat(ctx, ptr, attribindex, size, type, normalized, relativeoffset);
 }
 
-void mglVertexArrayAttribFormat(GLMContext ctx, GLuint vaobj, GLuint attribindex, GLint size, GLenum type, GLboolean normalized, GLuint relativeoffset)
+void mglVertexArrayAttribFormat(GLMContext ctx, GLuint vaobj, GLuint attribindex, GLint size, GLenum type,
+                                GLboolean normalized, GLuint relativeoffset)
 {
     VertexArray *ptr;
 
@@ -662,18 +667,19 @@ void mglVertexArrayAttribFormat(GLMContext ctx, GLuint vaobj, GLuint attribindex
     setAttribFormat(ctx, ptr, attribindex, size, type, normalized, relativeoffset);
 }
 
-void setAttribIFormat(GLMContext ctx, VertexArray *vao, GLuint attribindex, GLint size, GLenum type, GLuint relativeoffset)
+void setAttribIFormat(GLMContext ctx, VertexArray *vao, GLuint attribindex, GLint size, GLenum type,
+                      GLuint relativeoffset)
 {
     ERROR_CHECK_RETURN(attribindex < MAX_ATTRIBS, GL_INVALID_VALUE);
 
-    switch(type)
+    switch (type)
     {
-        case GL_UNSIGNED_INT:
-            ERROR_CHECK_RETURN((size >= 1 && size <=4), GL_INVALID_VALUE);
-            break;
+    case GL_UNSIGNED_INT:
+        ERROR_CHECK_RETURN((size >= 1 && size <= 4), GL_INVALID_VALUE);
+        break;
 
-        default:
-            ERROR_RETURN(GL_INVALID_ENUM);
+    default:
+        ERROR_RETURN(GL_INVALID_ENUM);
     }
 
     vao->attrib[attribindex].size = size;
@@ -695,7 +701,8 @@ void mglVertexAttribIFormat(GLMContext ctx, GLuint attribindex, GLint size, GLen
     setAttribIFormat(ctx, VAO(), attribindex, size, type, relativeoffset);
 }
 
-void mglVertexArrayAttribIFormat(GLMContext ctx, GLuint vaobj, GLuint attribindex, GLint size, GLenum type, GLuint relativeoffset)
+void mglVertexArrayAttribIFormat(GLMContext ctx, GLuint vaobj, GLuint attribindex, GLint size, GLenum type,
+                                 GLuint relativeoffset)
 {
     VertexArray *ptr;
 
@@ -706,24 +713,25 @@ void mglVertexArrayAttribIFormat(GLMContext ctx, GLuint vaobj, GLuint attribinde
     setAttribIFormat(ctx, VAO(), attribindex, size, type, relativeoffset);
 }
 
-void setAttribLFormat(GLMContext ctx, VertexArray *vao, GLuint attribindex, GLint size, GLenum type, GLuint relativeoffset)
+void setAttribLFormat(GLMContext ctx, VertexArray *vao, GLuint attribindex, GLint size, GLenum type,
+                      GLuint relativeoffset)
 {
     ERROR_CHECK_RETURN(attribindex < MAX_ATTRIBS, GL_INVALID_VALUE);
 
-    switch(type)
+    switch (type)
     {
-        case GL_INT_2_10_10_10_REV:
-        case GL_UNSIGNED_INT_2_10_10_10_REV:
-        case GL_UNSIGNED_INT_10F_11F_11F_REV:
-            ERROR_CHECK_RETURN(size == 1, GL_INVALID_VALUE);
-            break;
+    case GL_INT_2_10_10_10_REV:
+    case GL_UNSIGNED_INT_2_10_10_10_REV:
+    case GL_UNSIGNED_INT_10F_11F_11F_REV:
+        ERROR_CHECK_RETURN(size == 1, GL_INVALID_VALUE);
+        break;
 
-        case GL_UNSIGNED_INT:
-            ERROR_CHECK_RETURN((size >= 1 && size <=4), GL_INVALID_VALUE);
-            break;
+    case GL_UNSIGNED_INT:
+        ERROR_CHECK_RETURN((size >= 1 && size <= 4), GL_INVALID_VALUE);
+        break;
 
-        default:
-            ERROR_RETURN(GL_INVALID_ENUM);
+    default:
+        ERROR_RETURN(GL_INVALID_ENUM);
     }
 
     vao->attrib[attribindex].size = size;
@@ -745,7 +753,8 @@ void mglVertexAttribLFormat(GLMContext ctx, GLuint attribindex, GLint size, GLen
     setAttribLFormat(ctx, ptr, attribindex, size, type, relativeoffset);
 }
 
-void mglVertexArrayAttribLFormat(GLMContext ctx, GLuint vaobj, GLuint attribindex, GLint size, GLenum type, GLuint relativeoffset)
+void mglVertexArrayAttribLFormat(GLMContext ctx, GLuint vaobj, GLuint attribindex, GLint size, GLenum type,
+                                 GLuint relativeoffset)
 {
     VertexArray *ptr;
 
@@ -798,8 +807,6 @@ void mglVertexArrayBindingDivisor(GLMContext ctx, GLuint vaobj, GLuint bindingin
     setBindingDivisor(ctx, ptr, bindingindex, divisor);
 }
 
-
-
 void mglGetVertexArrayiv(GLMContext ctx, GLuint vaobj, GLenum pname, GLint *param)
 {
     // Unimplemented function
@@ -817,4 +824,3 @@ void mglGetVertexArrayIndexed64iv(GLMContext ctx, GLuint vaobj, GLuint index, GL
     // Unimplemented function
     assert(0);
 }
-
