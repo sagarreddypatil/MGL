@@ -218,8 +218,7 @@ GLMContext createGLMContext(GLenum format, GLenum type, GLenum depth_format, GLe
 
     init_dispatch(ctx);
 
-    // ctx->assert_on_error = GL_TRUE;
-    ctx->assert_on_error = GL_FALSE;
+    ctx->assert_on_error = GL_TRUE;
     ctx->error_func = error_func;
 
     ctx->temp_element_buffer = NULL;
